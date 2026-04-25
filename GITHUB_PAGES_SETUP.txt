@@ -1,0 +1,70 @@
+GITHUB PAGES SETUP
+
+What I created:
+
+- docs/index.html
+  A GitHub Pages-ready landing page for the project.
+
+What the page now says truthfully:
+
+- the current real model-backed path is local Whisper Tiny plus IBM ART white-box execution;
+- wrapper-based white-box and API-based black-box smoke paths exist for orchestration validation;
+- demo smoke paths are not the same as real provider-backed integrations.
+- the current UI includes preflight, artifact browsing, and terminal-style execution detail viewing.
+
+What I could not do directly from this machine:
+
+- create the GitHub repository remotely;
+- enable GitHub Pages remotely;
+- push to GitHub using your account.
+
+Why:
+
+- GitHub CLI is not installed here;
+- I do not have your GitHub authentication/session from inside this workspace.
+
+Recommended next steps:
+
+1. Replace the licensing placeholders first.
+   Files:
+   - LICENSE.txt
+   - NOTICE.txt
+   - README.md
+   - SECURITY.md
+   - .github/CODEOWNERS
+
+2. Initialize git and commit locally.
+
+   cd /Users/macmacmac/Documents/PyRit/IBM ART/whitebox_scan_platform
+   git init
+   git add .
+   git commit -m "Initial private-source release"
+
+3. Create a private repository on GitHub.
+
+4. Add your remote and push:
+
+   git branch -M main
+   git remote add origin git@github.com:YOUR_ORG_OR_USER/YOUR_REPO_NAME.git
+   git push -u origin main
+
+5. In GitHub:
+   - open Settings
+   - open Pages
+   - select the main branch
+   - select the /docs folder
+   - save
+
+6. Add the repo description and tags from docs/index.html if you want the GitHub project to read well.
+
+7. Refresh the screenshot whenever the UI changes:
+
+   cd /Users/macmacmac/Documents/PyRit/IBM ART/whitebox_scan_platform
+   ./scripts/refresh_product_screenshot.sh --source /absolute/path/to/new-product-screenshot.png --label "Describe UI change"
+
+Important caveat:
+
+GitHub Pages behavior for private repositories depends on your GitHub plan and org settings. If Pages is unavailable for the private repo, keep the repo private and either:
+
+- use this docs/index.html file as internal documentation only, or
+- publish a redacted public marketing page separately without private code or sensitive details.

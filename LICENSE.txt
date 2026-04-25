@@ -1,0 +1,88 @@
+PRIVATE SOURCE EVALUATION LICENSE
+Version 1.0
+
+Copyright (c) 2026 Bharath Srinivasan
+All rights reserved.
+
+IMPORTANT:
+This repository is intended for private use only. Access to the source code does not grant any open-source rights. Any production, commercial, customer-facing, managed-service, redistribution, sublicensing, resale, or derivative product use requires a separate written commercial license and compensation agreement with the rights holder.
+
+1. Definitions
+
+"Licensor" means Bharath Srinivasan.
+
+"Software" means all source code, configuration, UI assets, scripts, adapters, wrappers, reports, and documentation contained in this repository, excluding third-party software that remains subject to its own license.
+
+"Authorized User" means an individual or entity that has been explicitly granted access to this private repository by the Licensor.
+
+2. Limited Permission
+
+Subject to compliance with this license, the Licensor grants each Authorized User a limited, non-exclusive, non-transferable, non-sublicensable, revocable license to:
+
+- access the Software in a private repository;
+- review the source code internally;
+- run the Software internally for evaluation, due diligence, testing, and security assessment purposes;
+- make internal modifications solely for evaluation or integration planning.
+
+3. Commercial License Required
+
+The following activities are prohibited unless separately authorized in a signed written commercial agreement with the Licensor:
+
+- any production or operational deployment;
+- any commercial or revenue-generating use;
+- use on behalf of customers or third parties;
+- embedding the Software into a product, service, or platform;
+- offering the Software as a hosted or managed service;
+- selling, sublicensing, leasing, renting, or distributing the Software;
+- transferring the Software outside the Authorized User's organization;
+- creating or distributing derivative works for commercial use;
+- publishing benchmark results, competitive analysis, or security findings derived from the Software, except with prior written consent;
+- using the Software to train, fine-tune, or improve another model or commercial system.
+
+4. Ownership
+
+The Software is licensed, not sold. All right, title, and interest in and to the Software, including all intellectual property rights, remain exclusively with the Licensor and its licensors.
+
+5. Restrictions
+
+Authorized Users must not:
+
+- remove or alter copyright, license, attribution, or proprietary notices;
+- circumvent access controls or licensing controls;
+- redistribute the source code, documentation, reports, or generated assets outside the private repository without written approval;
+- represent the Software as open source;
+- use the Licensor's name, marks, or branding without written permission.
+
+6. Third-Party Components
+
+The Software may integrate third-party packages, model weights, datasets, tokenizers, processors, and other assets. Those components are not covered by this license and remain subject to their own license terms, model cards, usage policies, and export restrictions. You are responsible for reviewing and complying with all third-party terms before use or distribution.
+
+7. Confidentiality
+
+The Software and any non-public materials in this repository are confidential and proprietary. Authorized Users must use reasonable measures to protect them from unauthorized access, copying, or disclosure.
+
+8. Feedback
+
+Unless otherwise agreed in writing, any feedback, suggestions, or recommendations provided to the Licensor regarding the Software may be used by the Licensor without restriction or compensation.
+
+9. Termination
+
+This license terminates automatically if you violate any term of this license. Upon termination, you must stop using the Software and destroy or return all copies within your possession or control, except where retention is required by law.
+
+10. No Warranty
+
+THE SOFTWARE IS PROVIDED "AS IS" AND "AS AVAILABLE," WITHOUT WARRANTIES OF ANY KIND, WHETHER EXPRESS, IMPLIED, OR STATUTORY, INCLUDING MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT.
+
+11. Limitation of Liability
+
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE LICENSOR WILL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR FOR ANY LOSS OF DATA, PROFITS, REVENUE, GOODWILL, OR BUSINESS INTERRUPTION, ARISING FROM OR RELATED TO THE SOFTWARE OR THIS LICENSE.
+
+12. Governing Law
+
+This license is governed by the laws of India, excluding conflict-of-law rules.
+
+13. Contact
+
+For commercial licensing, production use, redistribution rights, or security/legal inquiries, contact:
+
+bharath.mailbox1@gmail.com

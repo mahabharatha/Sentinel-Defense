@@ -1,0 +1,101 @@
+<svg width="960" height="320" viewBox="0 0 960 320" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sentinel Adversarial Orchestrator">
+  <title>Sentinel Adversarial Orchestrator</title>
+  <desc>Sentinel banner mark with octopus brand cypher and wordmark.</desc>
+  <metadata>
+    Sentinel Adversarial Orchestrator banner.
+    Copyright (c) 2026 Bharath Srinivasan. All rights reserved.
+    Proprietary brand asset.
+  </metadata>
+
+  <defs>
+    <linearGradient id="bg" x1="40" y1="24" x2="920" y2="296" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#071323"/>
+      <stop offset="0.55" stop-color="#103157"/>
+      <stop offset="1" stop-color="#0a6db3"/>
+    </linearGradient>
+    <linearGradient id="bell" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#6ae6ff"/>
+      <stop offset="55%" stop-color="#2fb6ff"/>
+      <stop offset="100%" stop-color="#1a8cff"/>
+    </linearGradient>
+    <linearGradient id="tent" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#2fb6ff"/>
+      <stop offset="100%" stop-color="#1a8cff" stop-opacity="0.65"/>
+    </linearGradient>
+    <radialGradient id="pulse" cx="0.5" cy="0.5" r="0.6">
+      <stop offset="0%"  stop-color="#eef7ff" stop-opacity="0.95"/>
+      <stop offset="60%" stop-color="#6ae6ff" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#2fb6ff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="bevel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.18"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Card background -->
+  <rect x="0" y="0" width="960" height="320" rx="36" fill="url(#bg)"/>
+  <rect x="0" y="0" width="960" height="320" rx="36" fill="url(#bevel)"/>
+
+  <!-- Subtle grid overlay -->
+  <g opacity="0.18" stroke="#7ec0ff" stroke-width="0.8">
+    <path d="M0 80 H960" />
+    <path d="M0 160 H960"/>
+    <path d="M0 240 H960"/>
+    <path d="M120 0 V320"/>
+    <path d="M260 0 V320"/>
+    <path d="M860 0 V320"/>
+  </g>
+
+  <!-- Octopus mark on the left -->
+  <g transform="translate(60 60) scale(3.2)">
+    <g fill="none" stroke="url(#tent)" stroke-width="2.6" stroke-linecap="round" opacity="0.6">
+      <path d="M14 28 Q  8 34 10 42"/>
+      <path d="M50 28 Q 56 34 54 42"/>
+    </g>
+    <path d="M12 30 Q 12 10 32 10 Q 52 10 52 30 Q 52 38 46 40 L 18 40 Q 12 38 12 30 Z" fill="url(#bell)"/>
+    <path d="M22 14 Q 28 12 36 14 Q 30 16 24 18 Z" fill="#eef7ff" fill-opacity="0.18"/>
+    <g fill="none" stroke="url(#tent)" stroke-width="3" stroke-linecap="round">
+      <path d="M16 38 Q 10 46 12 56"/>
+      <path d="M22 40 Q 18 50 22 58"/>
+      <path d="M28 41 Q 26 50 28 60"/>
+      <path d="M36 41 Q 38 50 36 60"/>
+      <path d="M42 40 Q 46 50 42 58"/>
+      <path d="M48 38 Q 54 46 52 56"/>
+    </g>
+    <g fill="#6ae6ff">
+      <circle cx="12" cy="56" r="1.3"/>
+      <circle cx="22" cy="58" r="1.3"/>
+      <circle cx="28" cy="60" r="1.3"/>
+      <circle cx="36" cy="60" r="1.3"/>
+      <circle cx="42" cy="58" r="1.3"/>
+      <circle cx="52" cy="56" r="1.3"/>
+    </g>
+    <circle cx="24" cy="25" r="4.2" fill="#07111f"/>
+    <circle cx="40" cy="25" r="4.2" fill="#07111f"/>
+    <circle cx="24" cy="25" r="4.2" fill="none" stroke="#1a8cff" stroke-width="0.6"/>
+    <circle cx="40" cy="25" r="4.2" fill="none" stroke="#1a8cff" stroke-width="0.6"/>
+    <circle cx="25" cy="24" r="1.4" fill="#eef7ff"/>
+    <circle cx="41" cy="24" r="1.4" fill="#eef7ff"/>
+    <circle cx="32" cy="15" r="6"   fill="url(#pulse)"/>
+    <circle cx="32" cy="15" r="1.6" fill="#eef7ff"/>
+    <circle cx="32" cy="15" r="3.2" fill="none" stroke="#eef7ff" stroke-width="0.5" stroke-opacity="0.45"/>
+  </g>
+
+  <!-- Wordmark -->
+  <g fill="#eef7ff">
+    <text x="320" y="118" font-family="Inter, 'SF Pro Display', 'Avenir Next', 'Segoe UI', Arial, sans-serif" font-size="26" font-weight="700" letter-spacing="6" fill-opacity="0.85">SENTINEL</text>
+    <text x="320" y="186" font-family="Inter, 'SF Pro Display', 'Avenir Next', 'Segoe UI', Arial, sans-serif" font-size="56" font-weight="800" letter-spacing="-1">ADVERSARIAL</text>
+    <text x="320" y="244" font-family="Inter, 'SF Pro Display', 'Avenir Next', 'Segoe UI', Arial, sans-serif" font-size="56" font-weight="800" letter-spacing="-1">ORCHESTRATOR</text>
+  </g>
+
+  <!-- Tagline strip -->
+  <g fill="#a9bfd6" font-family="Inter, 'SF Pro Display', 'Avenir Next', 'Segoe UI', Arial, sans-serif">
+    <text x="320" y="282" font-size="16" font-weight="500" letter-spacing="3" fill-opacity="0.78">PRIVATE-SOURCE · LOCAL-FIRST · MULTI-FRAMEWORK</text>
+  </g>
+
+  <!-- Copyright stripe at bottom right -->
+  <text x="912" y="304" font-family="Inter, 'SF Pro Display', Arial, sans-serif"
+        font-size="11" font-weight="600" fill="#a9bfd6" fill-opacity="0.55"
+        text-anchor="end" letter-spacing="1">© 2026 Bharath Srinivasan</text>
+</svg>

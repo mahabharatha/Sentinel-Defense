@@ -1,0 +1,40 @@
+THIRD-PARTY COMPLIANCE CHECKLIST
+
+This repository does not relicense third-party software, model weights, datasets, or audio assets.
+
+Review before sharing or deploying:
+
+1. Python package licenses
+   - FastAPI
+   - Uvicorn
+   - Pydantic
+   - HTTPX
+   - PyTorch
+   - Torchaudio
+   - Transformers
+   - Accelerate
+   - IBM Adversarial Robustness Toolbox
+   - Librosa
+   - SoundFile
+
+2. Hugging Face models and assets
+   - confirm each model's license;
+   - confirm whether commercial use is allowed;
+   - confirm whether redistribution of weights is allowed;
+   - confirm gated or access-restricted terms if applicable.
+
+3. Audio samples
+   - confirm you have the right to store, test, and share the audio;
+   - avoid committing customer or personal data;
+   - avoid committing generated reports containing sensitive data.
+
+4. Wrapper code
+   - confirm user-supplied wrappers are either original or properly licensed;
+   - do not accept copied proprietary wrappers without approval.
+
+5. Release hygiene
+   - do not commit downloaded model weights;
+   - do not commit virtual environments;
+   - do not commit runtime scan artifacts unless explicitly intended;
+   - review generated reports before sharing.
+

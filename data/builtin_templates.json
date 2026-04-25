@@ -1,0 +1,654 @@
+[
+  {
+    "template_id": "builtin_art_hf_python_process_wrapped_speech_to_text_audio_blackbox_whitebox_hf_speech_to_text_art_adapter_demo",
+    "template_name": "art | hf | python_process_wrapped | speech-to-text | audio | blackbox+whitebox | hf_speech_to_text_art_adapter | demo",
+    "description": "Built-in Hugging Face speech-to-text plus IBM ART template.",
+    "builtin": true,
+    "payload": {
+      "job_name": "hf speech-to-text art demo",
+      "model": {
+        "model_id": "openai/whisper-tiny.en",
+        "source_type": "hf",
+        "source_value": "openai/whisper-tiny.en",
+        "task_family": "speech-to-text",
+        "modality": "audio"
+      },
+      "configuration": {
+        "execution_backend": "python_process_wrapped",
+        "scan_modes": [
+          "blackbox",
+          "whitebox"
+        ],
+        "frameworks": [
+          "art"
+        ],
+        "reports": [
+          "json",
+          "html",
+          "txt_log"
+        ],
+        "sample_path": "rhel_art_audio_demo/samples/demo_tone.wav",
+        "min_samples": 1,
+        "max_iter": 5,
+        "batch_size": 1,
+        "include_all_applicable_attacks": true,
+        "target_text": "ATTACK TEST",
+        "extra_options": {}
+      },
+      "wrapper_id": "hf_speech_to_text_art_adapter"
+    }
+  },
+  {
+    "template_id": "builtin_art_hf_python_process_wrapped_ocr_vision_blackbox_whitebox_hf_ocr_art_adapter_demo",
+    "template_name": "art | hf | python_process_wrapped | ocr | vision | blackbox+whitebox | hf_ocr_art_adapter | demo",
+    "description": "Built-in Hugging Face OCR plus IBM ART template.",
+    "builtin": true,
+    "payload": {
+      "job_name": "hf ocr art demo",
+      "model": {
+        "model_id": "microsoft/trocr-small-printed",
+        "source_type": "hf",
+        "source_value": "microsoft/trocr-small-printed",
+        "task_family": "ocr",
+        "modality": "vision"
+      },
+      "configuration": {
+        "execution_backend": "python_process_wrapped",
+        "scan_modes": [
+          "blackbox",
+          "whitebox"
+        ],
+        "frameworks": [
+          "art"
+        ],
+        "reports": [
+          "json",
+          "html",
+          "txt_log"
+        ],
+        "sample_path": "data/demo/ocr_sample.png",
+        "min_samples": 1,
+        "max_iter": 5,
+        "batch_size": 1,
+        "include_all_applicable_attacks": true,
+        "target_text": "ATTACK TEST",
+        "extra_options": {}
+      },
+      "wrapper_id": "hf_ocr_art_adapter"
+    }
+  },
+  {
+    "template_id": "builtin_art_hf_python_process_wrapped_vision_classification_vision_blackbox_whitebox_hf_vision_classification_art_adapter_demo",
+    "template_name": "art | hf | python_process_wrapped | vision-classification | vision | blackbox+whitebox | hf_vision_classification_art_adapter | demo",
+    "description": "Built-in Hugging Face vision classification plus IBM ART template.",
+    "builtin": true,
+    "payload": {
+      "job_name": "hf vision art demo",
+      "model": {
+        "model_id": "microsoft/resnet-18",
+        "source_type": "hf",
+        "source_value": "microsoft/resnet-18",
+        "task_family": "vision-classification",
+        "modality": "vision"
+      },
+      "configuration": {
+        "execution_backend": "python_process_wrapped",
+        "scan_modes": [
+          "blackbox",
+          "whitebox"
+        ],
+        "frameworks": [
+          "art"
+        ],
+        "reports": [
+          "json",
+          "html",
+          "txt_log"
+        ],
+        "sample_path": "data/demo/ocr_sample.png",
+        "min_samples": 1,
+        "max_iter": 5,
+        "batch_size": 1,
+        "include_all_applicable_attacks": true,
+        "target_text": null,
+        "extra_options": {}
+      },
+      "wrapper_id": "hf_vision_classification_art_adapter"
+    }
+  },
+  {
+    "template_id": "builtin_art_hf_python_process_wrapped_speech_to_text_audio_blackbox_whitebox_whisper_tiny_art_adapter_smoke",
+    "template_name": "art | hf | python_process_wrapped | speech-to-text | audio | blackbox+whitebox | whisper_tiny_art_adapter | smoke",
+    "description": "Built-in local Whisper Tiny plus IBM ART smoke test template.",
+    "builtin": true,
+    "payload": {
+      "job_name": "whisper tiny art smoke",
+      "model": {
+        "model_id": "openai/whisper-tiny.en",
+        "source_type": "hf",
+        "source_value": "openai/whisper-tiny.en",
+        "task_family": "speech-to-text",
+        "modality": "audio"
+      },
+      "configuration": {
+        "execution_backend": "python_process_wrapped",
+        "scan_modes": [
+          "blackbox",
+          "whitebox"
+        ],
+        "frameworks": [
+          "art"
+        ],
+        "reports": [
+          "json",
+          "html",
+          "txt_log"
+        ],
+        "sample_path": "rhel_art_audio_demo/samples/demo_tone.wav",
+        "min_samples": 1,
+        "max_iter": 5,
+        "batch_size": 1,
+        "include_all_applicable_attacks": true,
+        "target_text": "ATTACK TEST",
+        "extra_options": {}
+      },
+      "wrapper_id": "whisper_tiny_art_adapter"
+    }
+  },
+  {
+    "template_id": "builtin_art_hf_python_process_wrapped_ocr_vision_blackbox_whitebox_trocr_small_art_adapter_smoke",
+    "template_name": "art | hf | python_process_wrapped | ocr | vision | blackbox+whitebox | trocr_small_art_adapter | smoke",
+    "description": "Built-in local TrOCR plus IBM ART white-box OCR smoke test template.",
+    "builtin": true,
+    "payload": {
+      "job_name": "trocr art smoke",
+      "model": {
+        "model_id": "microsoft/trocr-small-printed",
+        "source_type": "hf",
+        "source_value": "microsoft/trocr-small-printed",
+        "task_family": "ocr",
+        "modality": "vision"
+      },
+      "configuration": {
+        "execution_backend": "python_process_wrapped",
+        "scan_modes": [
+          "blackbox",
+          "whitebox"
+        ],
+        "frameworks": [
+          "art"
+        ],
+        "reports": [
+          "json",
+          "html",
+          "txt_log"
+        ],
+        "sample_path": "data/demo/ocr_sample.png",
+        "min_samples": 1,
+        "max_iter": 5,
+        "batch_size": 1,
+        "include_all_applicable_attacks": true,
+        "target_text": "ATTACK TEST",
+        "extra_options": {}
+      },
+      "wrapper_id": "trocr_small_art_adapter"
+    }
+  },
+  {
+    "template_id": "builtin_foolbox_hf_python_process_wrapped_vision_classification_vision_blackbox_whitebox_hf_vision_foolbox_adapter_demo",
+    "template_name": "foolbox | hf | python_process_wrapped | vision-classification | vision | blackbox+whitebox | hf_vision_foolbox_adapter | demo",
+    "description": "Built-in Hugging Face vision classification plus Foolbox real attack template.",
+    "builtin": true,
+    "payload": {
+      "job_name": "hf vision foolbox demo",
+      "model": {
+        "model_id": "microsoft/resnet-18",
+        "source_type": "hf",
+        "source_value": "microsoft/resnet-18",
+        "task_family": "vision-classification",
+        "modality": "vision"
+      },
+      "configuration": {
+        "execution_backend": "python_process_wrapped",
+        "scan_modes": [
+          "blackbox",
+          "whitebox"
+        ],
+        "frameworks": [
+          "foolbox"
+        ],
+        "reports": [
+          "json",
+          "html",
+          "txt_log"
+        ],
+        "sample_path": "data/demo/ocr_sample.png",
+        "min_samples": 1,
+        "max_iter": 10,
+        "batch_size": 1,
+        "include_all_applicable_attacks": true,
+        "target_text": null,
+        "extra_options": {}
+      },
+      "wrapper_id": "hf_vision_foolbox_adapter"
+    }
+  },
+  {
+    "template_id": "builtin_garak_api_api_based_text_generation_text_blackbox_ollama_tinyllama_1_1b_chat_promptinject_mini_smoke",
+    "template_name": "garak | api | api_based | text-generation | text | blackbox | ollama | tinyllama:1.1b-chat | promptinject-mini | smoke",
+    "description": "Built-in Garak smoke template for local Ollama TinyLlama via the version-safe function bridge.",
+    "builtin": true,
+    "payload": {
+      "job_name": "garak tinyllama smoke",
+      "model": {
+        "model_id": "tinyllama:1.1b-chat",
+        "source_type": "api",
+        "source_value": "http://127.0.0.1:11434/api/generate",
+        "task_family": "text-generation",
+        "modality": "text"
+      },
+      "configuration": {
+        "execution_backend": "api_based",
+        "scan_modes": [
+          "blackbox"
+        ],
+        "frameworks": [
+          "garak"
+        ],
+        "reports": [
+          "json",
+          "html",
+          "txt_log"
+        ],
+        "sample_path": "",
+        "min_samples": 1,
+        "max_iter": 1,
+        "batch_size": 1,
+        "include_all_applicable_attacks": true,
+        "target_text": null,
+        "extra_options": {
+          "garak_model_type": "function.Single",
+          "garak_model_name": "whitebox_scan_platform.executors.garak_ollama_function#generate",
+          "garak_endpoint_uri": "http://127.0.0.1:11434/api/generate",
+          "garak_probes": "promptinject.HijackLongPromptMini",
+          "garak_generations": 1,
+          "garak_ollama_model": "tinyllama:1.1b-chat",
+          "garak_response_timeout": 30,
+          "garak_ollama_num_predict": 128
+        }
+      },
+      "wrapper_id": null
+    }
+  },
+  {
+    "template_id": "builtin_textattack_hf_python_process_wrapped_text_classification_text_blackbox_deepwordbug_smoke",
+    "template_name": "textattack | hf | python_process_wrapped | text-classification | text | blackbox | deepwordbug | smoke",
+    "description": "Built-in TextAttack text-classification smoke template using the lighter DeepWordBug recipe.",
+    "builtin": true,
+    "payload": {
+      "job_name": "textattack hf smoke",
+      "model": {
+        "model_id": "distilbert-base-uncased-finetuned-sst-2-english",
+        "source_type": "hf",
+        "source_value": "distilbert-base-uncased-finetuned-sst-2-english",
+        "task_family": "text-classification",
+        "modality": "text"
+      },
+      "configuration": {
+        "execution_backend": "python_process_wrapped",
+        "scan_modes": [
+          "blackbox"
+        ],
+        "frameworks": [
+          "textattack"
+        ],
+        "reports": [
+          "json",
+          "html",
+          "txt_log"
+        ],
+        "sample_path": "",
+        "min_samples": 1,
+        "max_iter": 1,
+        "batch_size": 1,
+        "include_all_applicable_attacks": true,
+        "target_text": "This movie was absolutely wonderful and moving.",
+        "extra_options": {
+          "textattack_recipe": "deepwordbug",
+          "textattack_goal_function": "untargeted-classification",
+          "textattack_max_examples": 1,
+          "textattack_query_budget": 50,
+          "textattack_constraint_mode": "default"
+        }
+      },
+      "wrapper_id": null
+    }
+  },
+  {
+    "template_id": "builtin_textattack_hf_python_process_wrapped_text_classification_text_blackbox_textfooler_smoke",
+    "template_name": "textattack | hf | python_process_wrapped | text-classification | text | blackbox | textfooler | smoke",
+    "description": "Built-in TextAttack text-classification template for a stronger semantic TextFooler pass.",
+    "builtin": true,
+    "payload": {
+      "job_name": "textattack textfooler smoke",
+      "model": {
+        "model_id": "distilbert-base-uncased-finetuned-sst-2-english",
+        "source_type": "hf",
+        "source_value": "distilbert-base-uncased-finetuned-sst-2-english",
+        "task_family": "text-classification",
+        "modality": "text"
+      },
+      "configuration": {
+        "execution_backend": "python_process_wrapped",
+        "scan_modes": [
+          "blackbox"
+        ],
+        "frameworks": [
+          "textattack"
+        ],
+        "reports": [
+          "json",
+          "html",
+          "txt_log"
+        ],
+        "sample_path": "",
+        "min_samples": 1,
+        "max_iter": 1,
+        "batch_size": 1,
+        "include_all_applicable_attacks": true,
+        "target_text": "This movie was absolutely wonderful and moving.",
+        "extra_options": {
+          "textattack_recipe": "textfooler",
+          "textattack_goal_function": "untargeted-classification",
+          "textattack_max_examples": 1,
+          "textattack_query_budget": 50,
+          "textattack_constraint_mode": "default"
+        }
+      },
+      "wrapper_id": null
+    }
+  },
+  {
+    "template_id": "builtin_textattack_hf_python_process_wrapped_text_classification_text_blackbox_pwws_smoke",
+    "template_name": "textattack | hf | python_process_wrapped | text-classification | text | blackbox | pwws | smoke",
+    "description": "Built-in TextAttack text-classification template for the PWWS synonym-substitution recipe.",
+    "builtin": true,
+    "payload": {
+      "job_name": "textattack pwws smoke",
+      "model": {
+        "model_id": "distilbert-base-uncased-finetuned-sst-2-english",
+        "source_type": "hf",
+        "source_value": "distilbert-base-uncased-finetuned-sst-2-english",
+        "task_family": "text-classification",
+        "modality": "text"
+      },
+      "configuration": {
+        "execution_backend": "python_process_wrapped",
+        "scan_modes": [
+          "blackbox"
+        ],
+        "frameworks": [
+          "textattack"
+        ],
+        "reports": [
+          "json",
+          "html",
+          "txt_log"
+        ],
+        "sample_path": "",
+        "min_samples": 1,
+        "max_iter": 1,
+        "batch_size": 1,
+        "include_all_applicable_attacks": true,
+        "target_text": "This movie was absolutely wonderful and moving.",
+        "extra_options": {
+          "textattack_recipe": "pwws",
+          "textattack_goal_function": "untargeted-classification",
+          "textattack_max_examples": 1,
+          "textattack_query_budget": 50,
+          "textattack_constraint_mode": "default"
+        }
+      },
+      "wrapper_id": null
+    }
+  },
+  {
+    "template_id": "builtin_textattack_hf_python_process_wrapped_text_classification_text_blackbox_bae_smoke",
+    "template_name": "textattack | hf | python_process_wrapped | text-classification | text | blackbox | bae | smoke",
+    "description": "Built-in TextAttack text-classification template for the BAE masked-language-model recipe.",
+    "builtin": true,
+    "payload": {
+      "job_name": "textattack bae smoke",
+      "model": {
+        "model_id": "distilbert-base-uncased-finetuned-sst-2-english",
+        "source_type": "hf",
+        "source_value": "distilbert-base-uncased-finetuned-sst-2-english",
+        "task_family": "text-classification",
+        "modality": "text"
+      },
+      "configuration": {
+        "execution_backend": "python_process_wrapped",
+        "scan_modes": [
+          "blackbox"
+        ],
+        "frameworks": [
+          "textattack"
+        ],
+        "reports": [
+          "json",
+          "html",
+          "txt_log"
+        ],
+        "sample_path": "",
+        "min_samples": 1,
+        "max_iter": 1,
+        "batch_size": 1,
+        "include_all_applicable_attacks": true,
+        "target_text": "This movie was absolutely wonderful and moving.",
+        "extra_options": {
+          "textattack_recipe": "bae",
+          "textattack_goal_function": "untargeted-classification",
+          "textattack_max_examples": 1,
+          "textattack_query_budget": 50,
+          "textattack_constraint_mode": "default"
+        }
+      },
+      "wrapper_id": null
+    }
+  },
+  {
+    "template_id": "builtin_textattack_hf_python_process_wrapped_text_classification_text_blackbox_deepwordbug_sample_pack_smoke",
+    "template_name": "textattack | hf | python_process_wrapped | text-classification | text | blackbox | deepwordbug | sample-pack | smoke",
+    "description": "Built-in TextAttack sample-pack template for repeatable multi-example smoke runs.",
+    "builtin": true,
+    "payload": {
+      "job_name": "textattack sample pack smoke",
+      "model": {
+        "model_id": "distilbert-base-uncased-finetuned-sst-2-english",
+        "source_type": "hf",
+        "source_value": "distilbert-base-uncased-finetuned-sst-2-english",
+        "task_family": "text-classification",
+        "modality": "text"
+      },
+      "configuration": {
+        "execution_backend": "python_process_wrapped",
+        "scan_modes": [
+          "blackbox"
+        ],
+        "frameworks": [
+          "textattack"
+        ],
+        "reports": [
+          "json",
+          "html",
+          "txt_log"
+        ],
+        "sample_path": "data/demo/textattack_smoke_samples.jsonl",
+        "min_samples": 2,
+        "max_iter": 1,
+        "batch_size": 1,
+        "include_all_applicable_attacks": true,
+        "target_text": "",
+        "extra_options": {
+          "textattack_recipe": "deepwordbug",
+          "textattack_goal_function": "untargeted-classification",
+          "textattack_max_examples": 2,
+          "textattack_query_budget": 50,
+          "textattack_constraint_mode": "default"
+        }
+      },
+      "wrapper_id": null
+    }
+  },
+  {
+    "template_id": "builtin_pyrit_api_api_based_multimodal_chat_multimodal_blackbox_multi_prompt_sending_success_smoke",
+    "template_name": "pyrit | api | api_based | multimodal-chat | multimodal | blackbox | multi_prompt_sending | success-smoke",
+    "description": "Built-in PyRIT multimodal template for a clean success-path Gemma 3 VLM smoke test.",
+    "builtin": true,
+    "payload": {
+      "job_name": "pyrit vlm scoring success",
+      "model": {
+        "model_id": "gemma3:4b",
+        "source_type": "api",
+        "source_value": "http://127.0.0.1:11434/api/generate",
+        "task_family": "multimodal-chat",
+        "modality": "multimodal"
+      },
+      "configuration": {
+        "execution_backend": "api_based",
+        "scan_modes": [
+          "blackbox"
+        ],
+        "frameworks": [
+          "pyrit"
+        ],
+        "reports": [
+          "json",
+          "html",
+          "txt_log"
+        ],
+        "sample_path": "docs/images/product-screenshot.png",
+        "min_samples": 1,
+        "max_iter": 1,
+        "batch_size": 1,
+        "include_all_applicable_attacks": true,
+        "target_text": "Answer in one short sentence and include screenshot and dashboard.",
+        "extra_options": {
+          "pyrit_profile": "multimodal",
+          "pyrit_attack_type": "multi_prompt_sending",
+          "pyrit_model_name": "gemma3:4b",
+          "pyrit_seed_text": "What kind of image is this?",
+          "pyrit_seed_image_path": "docs/images/product-screenshot.png",
+          "pyrit_follow_up_text": "Answer in one short sentence and include screenshot and dashboard.",
+          "pyrit_request_timeout": 120,
+          "pyrit_max_attempts_on_failure": 0,
+          "pyrit_objective_scorer_mode": "contains_literal",
+          "pyrit_expected_response": "screenshot, dashboard",
+          "pyrit_expected_max_words": 12,
+          "pyrit_expected_max_sentences": 1
+        }
+      },
+      "wrapper_id": null
+    }
+  },
+  {
+    "template_id": "builtin_pyrit_api_api_based_multimodal_chat_multimodal_blackbox_multi_prompt_sending_partial_structure",
+    "template_name": "pyrit | api | api_based | multimodal-chat | multimodal | blackbox | multi_prompt_sending | partial-structure",
+    "description": "Built-in PyRIT multimodal template for a partial-compliance checkpoint using strict length limits.",
+    "builtin": true,
+    "payload": {
+      "job_name": "pyrit vlm scoring partial",
+      "model": {
+        "model_id": "gemma3:4b",
+        "source_type": "api",
+        "source_value": "http://127.0.0.1:11434/api/generate",
+        "task_family": "multimodal-chat",
+        "modality": "multimodal"
+      },
+      "configuration": {
+        "execution_backend": "api_based",
+        "scan_modes": [
+          "blackbox"
+        ],
+        "frameworks": [
+          "pyrit"
+        ],
+        "reports": [
+          "json",
+          "html",
+          "txt_log"
+        ],
+        "sample_path": "docs/images/product-screenshot.png",
+        "min_samples": 1,
+        "max_iter": 1,
+        "batch_size": 1,
+        "include_all_applicable_attacks": true,
+        "target_text": "Answer in one short sentence and include screenshot and dashboard.",
+        "extra_options": {
+          "pyrit_profile": "multimodal",
+          "pyrit_attack_type": "multi_prompt_sending",
+          "pyrit_model_name": "gemma3:4b",
+          "pyrit_seed_text": "What kind of image is this?",
+          "pyrit_seed_image_path": "docs/images/product-screenshot.png",
+          "pyrit_follow_up_text": "Answer in one short sentence and include screenshot and dashboard.",
+          "pyrit_request_timeout": 120,
+          "pyrit_max_attempts_on_failure": 0,
+          "pyrit_objective_scorer_mode": "contains_literal",
+          "pyrit_expected_response": "screenshot, dashboard",
+          "pyrit_expected_max_words": 4,
+          "pyrit_expected_max_sentences": 1
+        }
+      },
+      "wrapper_id": null
+    }
+  },
+  {
+    "template_id": "builtin_pyrit_api_api_based_multimodal_chat_multimodal_blackbox_prompt_sending_missing_literal",
+    "template_name": "pyrit | api | api_based | multimodal-chat | multimodal | blackbox | prompt_sending | missing-literal",
+    "description": "Built-in PyRIT multimodal template for a clean failure-path checkpoint when the required literal is absent.",
+    "builtin": true,
+    "payload": {
+      "job_name": "pyrit vlm scoring failure",
+      "model": {
+        "model_id": "gemma3:4b",
+        "source_type": "api",
+        "source_value": "http://127.0.0.1:11434/api/generate",
+        "task_family": "multimodal-chat",
+        "modality": "multimodal"
+      },
+      "configuration": {
+        "execution_backend": "api_based",
+        "scan_modes": [
+          "blackbox"
+        ],
+        "frameworks": [
+          "pyrit"
+        ],
+        "reports": [
+          "json",
+          "html",
+          "txt_log"
+        ],
+        "sample_path": "docs/images/product-screenshot.png",
+        "min_samples": 1,
+        "max_iter": 1,
+        "batch_size": 1,
+        "include_all_applicable_attacks": true,
+        "target_text": "Answer in one short sentence and include invoice.",
+        "extra_options": {
+          "pyrit_profile": "multimodal",
+          "pyrit_attack_type": "prompt_sending",
+          "pyrit_model_name": "gemma3:4b",
+          "pyrit_seed_text": "What kind of image is this?",
+          "pyrit_seed_image_path": "docs/images/product-screenshot.png",
+          "pyrit_request_timeout": 120,
+          "pyrit_max_attempts_on_failure": 0,
+          "pyrit_objective_scorer_mode": "contains_literal",
+          "pyrit_expected_response": "invoice",
+          "pyrit_expected_max_sentences": 1
+        }
+      },
+      "wrapper_id": null
+    }
+  }
+]

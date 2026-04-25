@@ -1,0 +1,10 @@
+torch>=2.3
+torchaudio>=2.3
+transformers>=4.48
+accelerate>=1.1
+huggingface_hub>=0.28
+numpy>=1.26,<2.0
+scipy>=1.13
+librosa>=0.10
+soundfile>=0.12
+adversarial-robustness-toolbox>=1.19

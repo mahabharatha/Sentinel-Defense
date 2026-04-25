@@ -1,0 +1,93 @@
+PRIVATE GITHUB PUBLISHING PLAYBOOK
+
+Goal:
+Publish this project to a private GitHub repository with clear ownership, strict licensing language, and clean repository hygiene.
+
+Step 1. Replace placeholders
+
+Edit these files and replace all placeholder values:
+
+- LICENSE.txt
+- NOTICE.txt
+- README.md
+- SECURITY.md
+- .github/CODEOWNERS
+
+Minimum placeholders to replace:
+
+- Bharath Srinivasan
+- bharath.mailbox1@gmail.com
+- bharath.mailbox1@gmail.com
+- REPLACE_WITH_GOVERNING_LAW_JURISDICTION
+- BartAttack
+
+Step 2. Review what should not be committed
+
+Do not push:
+
+- `.venv/`
+- runtime outputs under `data/jobs/`, `data/demo/`, or `data/art_runs/`
+- downloaded model weights
+- customer or proprietary sample audio
+- generated reports with sensitive findings
+
+Important:
+
+- the repo now contains both real-path and demo-path artifacts during local smoke work;
+- keep those generated outputs off-repo unless you explicitly want sanitized demo evidence under version control;
+- prefer committing code, docs, screenshots, and static assets rather than runtime scan results.
+
+Step 3. Initialize the git repository
+
+Example:
+
+```bash
+cd whitebox_scan_platform
+git init
+git add .
+git commit -m "Initial private-source release"
+```
+
+Step 4. Create the private GitHub repository
+
+- create a new GitHub repository;
+- set visibility to `Private`;
+- do not add a public license from the GitHub picker;
+- do not enable public forking.
+
+Step 5. Push the repository
+
+Example:
+
+```bash
+git branch -M main
+git remote add origin git@github.com:YOUR_ORG_OR_USER/YOUR_PRIVATE_REPO.git
+git push -u origin main
+```
+
+Step 6. Configure repository protection
+
+Recommended:
+
+- require pull requests before merge;
+- require review from code owners;
+- restrict force pushes;
+- enable secret scanning if available;
+- enable dependency alerts if allowed for the plan you use.
+
+Step 7. Share access carefully
+
+- invite only approved collaborators;
+- point collaborators to `LICENSE.txt` and `NOTICE.txt`;
+- point collaborators to `README.md` so they understand the difference between the real Whisper path and the demo orchestration paths;
+- use separate agreements if contractors or customers need access.
+
+Step 8. Legal review
+
+Before external sharing, have counsel review:
+
+- compensation language;
+- derivative work restrictions;
+- confidentiality language;
+- governing law and venue;
+- any third-party dependency or model license conflicts.

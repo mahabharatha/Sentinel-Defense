@@ -1,0 +1,3902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sentinel Adversarial Orchestrator</title>
+  <style>
+    /* Bharath Srinivasan | Sentinel Adversarial Orchestrator UI system. Proprietary material. */
+    :root {
+      --bg: #07111f;
+      --bg-accent: #10243d;
+      --panel: rgba(11, 23, 39, 0.92);
+      --panel-strong: #10233a;
+      --panel-soft: rgba(19, 40, 66, 0.92);
+      --ink: #eef7ff;
+      --ink-soft: #a9bfd6;
+      --line: rgba(112, 170, 221, 0.16);
+      --line-strong: rgba(112, 170, 221, 0.28);
+      --accent: #2fb6ff;
+      --accent-strong: #1a8cff;
+      --accent-soft: rgba(47, 182, 255, 0.14);
+      --muted: #7f97b1;
+      --success: #23c788;
+      --success-soft: rgba(35, 199, 136, 0.14);
+      --warn: #ffb347;
+      --warn-soft: rgba(255, 179, 71, 0.16);
+      --danger: #ff6a7c;
+      --danger-soft: rgba(255, 106, 124, 0.15);
+      --shadow: 0 28px 70px rgba(2, 7, 15, 0.42);
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(47, 182, 255, 0.18), transparent 24%),
+        radial-gradient(circle at top right, rgba(0, 120, 255, 0.14), transparent 30%),
+        radial-gradient(circle at 20% 80%, rgba(26, 140, 255, 0.12), transparent 26%),
+        linear-gradient(180deg, #040a14 0%, #081323 46%, #0a1729 100%);
+      color: var(--ink);
+      font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(110, 168, 221, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(110, 168, 221, 0.1) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: linear-gradient(180deg, rgba(0,0,0,0.42), transparent 70%);
+      opacity: 0.55;
+    }
+    .wrap {
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 22px 20px 36px;
+    }
+    .hero {
+      background:
+        radial-gradient(circle at top right, rgba(94, 204, 255, 0.24), transparent 32%),
+        linear-gradient(135deg, rgba(255,255,255,0.08), transparent 34%),
+        linear-gradient(135deg, #071323 0%, #0d233e 38%, #103157 72%, #0a6db3 100%);
+      color: white;
+      border-radius: 24px;
+      padding: 24px 24px 20px;
+      margin-bottom: 18px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 24px 72px rgba(0, 0, 0, 0.34);
+      border: 1px solid rgba(122, 191, 255, 0.16);
+    }
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      pointer-events: none;
+    }
+    .hero::before {
+      width: 260px;
+      height: 260px;
+      top: -78px;
+      right: -46px;
+    }
+    .hero::after {
+      width: 180px;
+      height: 180px;
+      bottom: -82px;
+      left: 42%;
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.7fr) minmax(260px, 0.95fr);
+      gap: 18px;
+      align-items: end;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-copy {
+      max-width: 760px;
+    }
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .hero-kicker::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #4dd2ff;
+      box-shadow: 0 0 0 6px rgba(77, 210, 255, 0.18);
+    }
+    .hero p {
+      margin: 0 0 12px;
+      max-width: 760px;
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.55;
+      font-size: 14px;
+    }
+    .hero p:last-child {
+      margin-bottom: 0;
+    }
+    .hero-stats {
+      display: grid;
+      gap: 10px;
+    }
+    .hero-stat {
+      background: linear-gradient(180deg, rgba(9, 22, 38, 0.68) 0%, rgba(12, 30, 50, 0.72) 100%);
+      border: 1px solid rgba(122, 191, 255, 0.14);
+      border-radius: 16px;
+      padding: 12px 14px;
+      backdrop-filter: blur(10px);
+    }
+    .hero-stat-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(255, 255, 255, 0.66);
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+    .hero-stat-value {
+      font-size: 24px;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .hero-stat-note {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.84);
+      line-height: 1.45;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 16px;
+      align-items: start;
+    }
+    .primary-grid {
+      grid-template-columns: minmax(0, 1.55fr) minmax(320px, 0.95fr);
+    }
+    .utility-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .artifact-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .span-full {
+      grid-column: 1 / -1;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+      backdrop-filter: blur(16px);
+    }
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto auto 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, #1b8fff 0%, #47d4ff 55%, transparent 100%);
+      opacity: 0.9;
+    }
+    h1, h2, h3 {
+      margin-top: 0;
+      font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      letter-spacing: -0.02em;
+    }
+    h1 {
+      margin-bottom: 12px;
+      font-size: clamp(32px, 4vw, 48px);
+      line-height: 1.02;
+    }
+    h2 {
+      margin-bottom: 12px;
+      font-size: 22px;
+    }
+    h3 {
+      margin-bottom: 10px;
+      color: var(--ink);
+      font-size: 16px;
+    }
+    label {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 5px;
+      color: var(--muted);
+      font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+    .required-mark {
+      color: var(--danger);
+      font-weight: 700;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 11px 13px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      margin-bottom: 10px;
+      background: rgba(255, 255, 255, 0.96);
+      font-family: inherit;
+      color: #d8e8f7;
+      background: rgba(10, 21, 35, 0.94);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+      transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease, background 160ms ease;
+    }
+    input:hover, select:hover, textarea:hover {
+      border-color: var(--line-strong);
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: rgba(47, 182, 255, 0.7);
+      box-shadow: 0 0 0 4px rgba(47, 182, 255, 0.16);
+      background: var(--panel-strong);
+    }
+    input.invalid, select.invalid, textarea.invalid {
+      border-color: rgba(201, 71, 71, 0.55);
+      background: var(--danger-soft);
+      box-shadow: 0 0 0 4px rgba(201, 71, 71, 0.08);
+    }
+    textarea {
+      min-height: 168px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+    #wrapperCode {
+      min-height: 132px;
+    }
+    .compact-textarea {
+      min-height: 84px;
+      font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      font-size: 13px;
+    }
+    .row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .row > div {
+      flex: 1 1 150px;
+    }
+    .checks {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 8px 10px;
+      margin-bottom: 10px;
+    }
+    .checks label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0;
+      color: var(--ink);
+      font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: rgba(15, 30, 50, 0.9);
+      border: 1px solid rgba(77, 163, 221, 0.12);
+      border-radius: 13px;
+      padding: 9px 10px;
+    }
+    .checks input {
+      width: auto;
+      margin: 0;
+      accent-color: var(--accent);
+    }
+    .group-title {
+      margin: 10px 0 6px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      font-weight: 800;
+    }
+    .selection-note {
+      text-transform: none;
+      letter-spacing: normal;
+      font-weight: 600;
+      color: var(--accent);
+      margin-left: 6px;
+    }
+    .hint {
+      margin: -2px 0 10px;
+      font-size: 12px;
+      color: var(--muted);
+      font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.45;
+    }
+    .framework-panel {
+      display: none;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(12, 25, 42, 0.98) 0%, rgba(14, 31, 52, 0.92) 100%);
+      padding: 14px;
+      margin-bottom: 12px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+    .framework-panel.active {
+      display: block;
+    }
+    .advanced-box {
+      margin-top: 10px;
+      border-top: 1px dashed var(--line-strong);
+      padding-top: 10px;
+    }
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 6px;
+      position: relative;
+      z-index: 2;
+    }
+    button {
+      background: linear-gradient(135deg, #1182d9 0%, #2fb6ff 58%, #6ae6ff 100%);
+      color: white;
+      border: 0;
+      border-radius: 999px;
+      padding: 10px 16px;
+      cursor: pointer;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      margin-right: 0;
+      position: relative;
+      z-index: 3;
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28);
+      transition: transform 160ms ease, box-shadow 160ms ease, filter 160ms ease;
+    }
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 34px rgba(0, 0, 0, 0.34);
+      filter: saturate(1.02);
+    }
+    button:active {
+      transform: translateY(0);
+      box-shadow: 0 10px 18px rgba(0, 0, 0, 0.24);
+    }
+    pre {
+      background: linear-gradient(180deg, #081321 0%, #0d1d31 100%);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-size: 12px;
+      max-height: 300px;
+      overflow: auto;
+      line-height: 1.55;
+    }
+    .terminal-view {
+      background: linear-gradient(180deg, #082039 0%, #0e2e4d 100%);
+      color: #dff2ff;
+      border-color: rgba(144, 204, 255, 0.22);
+      min-height: 220px;
+      max-height: 420px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+    iframe {
+      width: 100%;
+      min-height: 420px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #0e1b2d;
+    }
+    .mini-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 10px;
+      font-size: 12px;
+      color: var(--muted);
+      font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    }
+    .status-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .status-card {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 10px 12px;
+      background: linear-gradient(180deg, rgba(11, 25, 41, 0.98) 0%, rgba(13, 29, 49, 0.94) 100%);
+    }
+    .status-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      margin-bottom: 4px;
+    }
+    .status-value {
+      font-size: 26px;
+      font-weight: 800;
+      font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    }
+    .badge {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      line-height: 1;
+      font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      border: 1px solid var(--line);
+      background: rgba(17, 38, 61, 0.92);
+      color: #c2d6ea;
+      white-space: nowrap;
+      font-weight: 700;
+    }
+    .badge.ok {
+      background: var(--success-soft);
+      border-color: rgba(13, 143, 97, 0.18);
+      color: var(--success);
+    }
+    .badge.warn {
+      background: var(--warn-soft);
+      border-color: rgba(183, 117, 8, 0.2);
+      color: var(--warn);
+    }
+    .badge.error {
+      background: var(--danger-soft);
+      border-color: rgba(201, 71, 71, 0.18);
+      color: var(--danger);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      table-layout: fixed;
+    }
+    th, td {
+      border-bottom: 1px solid var(--line);
+      padding: 8px 10px;
+      vertical-align: top;
+      text-align: left;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+    th {
+      font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      background: #0f2136;
+      position: sticky;
+      top: 0;
+    }
+    .table-wrap {
+      overflow: auto;
+      max-height: 320px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(10, 21, 35, 0.94);
+      margin-bottom: 10px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+    }
+    .path-cell,
+    .artifact-file {
+      display: block;
+      max-width: 100%;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+    .collapsible-panel {
+      margin-top: 10px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(10, 21, 35, 0.72);
+      padding: 0;
+      overflow: hidden;
+    }
+    .collapsible-panel summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 11px 13px;
+      margin: 0;
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      list-style: none;
+    }
+    .collapsible-panel summary::-webkit-details-marker {
+      display: none;
+    }
+    .collapsible-panel summary::after {
+      content: "Expand";
+      color: var(--accent);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .collapsible-panel[open] summary::after {
+      content: "Collapse";
+    }
+    .collapsible-panel-body {
+      padding: 0 13px 13px;
+    }
+    .collapsible-panel textarea,
+    .collapsible-panel pre {
+      margin-bottom: 0;
+    }
+    .muted-block {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: 10px;
+      font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    }
+    .form-error {
+      margin: -2px 0 10px;
+      color: var(--danger);
+      font-size: 12px;
+      line-height: 1.45;
+      font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      display: none;
+    }
+    .artifact-summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 10px;
+      margin: 10px 0;
+    }
+    .artifact-stat {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(11, 25, 41, 0.98) 0%, rgba(13, 29, 49, 0.94) 100%);
+      padding: 10px 12px;
+    }
+    .artifact-stat-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      margin-bottom: 4px;
+    }
+    .artifact-stat-value {
+      font-size: 14px;
+      line-height: 1.35;
+      font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      word-break: break-word;
+    }
+    .artifact-table-wrap {
+      max-height: 260px;
+    }
+    .artifact-row-selected {
+      background: rgba(47, 182, 255, 0.12);
+    }
+    .artifact-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .artifact-link {
+      font-size: 12px;
+      color: var(--accent);
+      text-decoration: none;
+      font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      font-weight: 600;
+    }
+    .artifact-link:hover {
+      text-decoration: underline;
+    }
+    .artifact-action-btn {
+      background: rgba(14, 31, 52, 0.96);
+      color: var(--accent-strong);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 11px;
+      font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      margin: 0;
+      font-weight: 700;
+    }
+    .attack-choice-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .attack-choice {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 10px 12px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(238, 247, 255, 0.92) 100%);
+      font-size: 12px;
+      line-height: 1.4;
+      color: var(--text);
+      font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    }
+    .attack-choice input {
+      margin: 0;
+    }
+    .attack-choice code {
+      font-size: 11px;
+    }
+    details summary {
+      cursor: pointer;
+      font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+    #scanJobCard {
+      order: 1;
+    }
+    #registerWrapperCard {
+      order: 2;
+    }
+    @media (max-width: 960px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero-stats {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      }
+      .primary-grid,
+      .artifact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (max-width: 720px) {
+      .wrap {
+        padding: 16px 12px 28px;
+      }
+      .hero {
+        padding: 20px 16px 18px;
+        border-radius: 22px;
+      }
+      .card {
+        padding: 16px;
+        border-radius: 18px;
+      }
+      .checks {
+        grid-template-columns: 1fr;
+      }
+      .toolbar button {
+        flex: 1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <div class="hero-kicker">Sentinel | RedTeam Control Plane</div>
+          <h1>Sentinel Adversarial Orchestrator</h1>
+          <p>Plan, launch, and audit adversarial AI evaluations from one local-first command surface with cleaner defaults, collapsible evidence, and report-first workflows.</p>
+          <p><strong>Live engines:</strong> IBM ART, Foolbox, PyRIT, Garak, and TextAttack are orchestrated through version-aware compatibility boundaries.</p>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="hero-stat-label">Execution Modes</div>
+            <div class="hero-stat-value">2</div>
+            <div class="hero-stat-note">Black-box and white-box runs stay visible in the same operator surface.</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-label">Live Engines</div>
+            <div class="hero-stat-value">5</div>
+            <div class="hero-stat-note">ART, Foolbox, PyRIT, Garak, and TextAttack stay visible in one operator surface.</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-label">Audit Layer</div>
+            <div class="hero-stat-value">Norm</div>
+            <div class="hero-stat-note">Original evidence and normalized artefacts stay separated for cleaner review.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="grid primary-grid">
+      <section class="card" id="registerWrapperCard">
+        <h2>Register Wrapper</h2>
+        <div class="muted-block">Fields marked <span class="required-mark">*</span> are required.</div>
+
+        <label>Wrapper ID <span class="required-mark">*</span></label>
+        <input id="wrapperId" placeholder="whisper_tiny_art_adapter" required />
+
+        <label>Display Name <span class="required-mark">*</span></label>
+        <input id="wrapperName" placeholder="Whisper Tiny ART Adapter" required />
+
+        <label>Class Name <span class="required-mark">*</span></label>
+        <input id="wrapperClass" placeholder="WhisperTinyArtAdapter" required />
+
+        <label>Supported Modalities (comma-separated)</label>
+        <input id="wrapperModalities" placeholder="audio,multimodal" />
+
+        <label>Supported Task Families (comma-separated)</label>
+        <input id="wrapperTaskFamilies" placeholder="speech-to-text,vision-classification" />
+
+        <div class="group-title">Scan Modes <span class="selection-note">Multi-select allowed</span></div>
+        <div class="checks">
+          <label><input type="checkbox" id="wBlackbox" /> Black-box</label>
+          <label><input type="checkbox" id="wWhitebox" /> White-box</label>
+        </div>
+
+        <div class="group-title">Model Access <span class="selection-note">Multi-select allowed</span></div>
+        <div class="checks">
+          <label><input type="checkbox" id="wApi" /> API models</label>
+          <label><input type="checkbox" id="wProcess" /> Python-process models</label>
+        </div>
+
+        <div class="group-title">Supported Frameworks <span class="selection-note">Multi-select allowed</span></div>
+        <div class="checks">
+          <label><input type="checkbox" id="wArt" /> IBM ART</label>
+          <label><input type="checkbox" id="wFoolbox" /> Foolbox</label>
+          <label><input type="checkbox" id="wPyrit" /> PyRIT</label>
+          <label><input type="checkbox" id="wGarak" /> Garak</label>
+          <label><input type="checkbox" id="wTextAttack" /> TextAttack</label>
+        </div>
+
+        <div class="group-title">Estimator Signals <span class="selection-note">Multi-select allowed</span></div>
+        <div class="checks">
+          <label><input type="checkbox" id="wLogits" /> Logits</label>
+          <label><input type="checkbox" id="wGradients" /> Gradients</label>
+        </div>
+
+        <label>Notes</label>
+        <input id="wrapperNotes" placeholder="Supports a real Whisper Tiny IBM ART execution path." />
+
+        <details class="collapsible-panel">
+          <summary>Wrapper Code <span class="required-mark">*</span></summary>
+          <div class="collapsible-panel-body">
+            <div class="hint">Paste a real adapter implementation here when registering a custom wrapper. Built-in wrappers do not need to be re-registered.</div>
+            <textarea id="wrapperCode" required>from whitebox_scan_platform.contracts import BaseScanAdapter, WrapperCapabilities
+
+class CustomScanAdapter(BaseScanAdapter):
+    def capabilities(self):
+        return WrapperCapabilities(
+            wrapper_id="custom_scan_adapter_v1",
+            display_name="Custom Scan Adapter",
+            supports_blackbox=True,
+            supports_whitebox=True,
+            supports_api_models=True,
+            supports_python_process_models=True,
+            supports_art=True,
+            supports_foolbox=True,
+            supports_pyrit=False,
+            supports_garak=True,
+            supports_textattack=False,
+            supports_logits=True,
+            supports_gradients=True,
+            supported_modalities=["audio", "multimodal"],
+            supported_frameworks=["art", "foolbox", "garak"],
+            notes="Custom adapter boundary"
+        )
+
+    def run_blackbox_scan(self, config):
+        return {
+            "status": "planned",
+            "message": "Custom black-box path pending implementation.",
+            "frameworks": config["configuration"]["frameworks"],
+        }
+
+    def run_whitebox_scan(self, config):
+        return {
+            "status": "planned",
+            "message": "Custom white-box path pending implementation.",
+            "frameworks": config["configuration"]["frameworks"],
+        }
+
+    def run_framework_scan(self, framework, config):
+        return {
+            "status": "planned",
+            "framework": framework,
+            "message": f"Custom {framework} integration pending implementation.",
+        }
+</textarea>
+          </div>
+        </details>
+        <div class="form-error" id="wrapperFormError"></div>
+        <button type="button" onclick="registerWrapper()">Save Wrapper</button>
+      </section>
+
+      <section class="card" id="scanJobCard">
+        <h2>Create Scan Job</h2>
+        <div class="muted-block">Fields marked <span class="required-mark">*</span> are required.</div>
+        <div class="row">
+          <div>
+            <label>Quick Start Template</label>
+            <select id="templateSelect"></select>
+          </div>
+          <div>
+            <label>Template Action</label>
+            <div class="toolbar" style="margin-top:0;">
+              <button type="button" onclick="applySelectedTemplate()">Apply Template</button>
+              <button type="button" onclick="exportSelectedTemplate()">Export Selected</button>
+              <button type="button" onclick="updateSelectedTemplate()">Update Selected</button>
+              <button type="button" onclick="deleteSelectedTemplate()">Delete Selected</button>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label>Save Current As Template</label>
+            <input id="templateName" placeholder="PyRIT VLM custom checkpoint" />
+          </div>
+          <div>
+            <label>Template Description (optional)</label>
+            <input id="templateDescription" placeholder="Saved from the current job form" />
+          </div>
+          <div>
+            <label>Template Save</label>
+            <div class="toolbar" style="margin-top:0;">
+              <button type="button" onclick="saveCurrentTemplate()">Save Current As Template</button>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label>Import Template JSON</label>
+            <textarea id="templateImportJson" class="compact-textarea" placeholder='Paste exported template JSON here'></textarea>
+          </div>
+          <div>
+            <label>Import Action</label>
+            <div class="toolbar" style="margin-top:0;">
+              <button type="button" onclick="importTemplateFromJson()">Import Template JSON</button>
+            </div>
+          </div>
+        </div>
+        <div class="hint" id="templateHint">Choose a built-in template to prefill the form with a known-good starting point.</div>
+        <label>Job Name <span class="required-mark">*</span></label>
+        <input id="jobName" placeholder="AF3 full scan" required />
+
+        <label>Model ID / Key <span class="required-mark">*</span></label>
+        <input id="modelId" placeholder="nvidia/audio-flamingo-3-hf" required />
+
+        <div class="row">
+          <div>
+            <label>Source Type <span class="selection-note">Single select</span></label>
+            <select id="sourceType">
+              <option value="hf">hf</option>
+              <option value="local">local</option>
+              <option value="url">url</option>
+              <option value="s3">s3</option>
+              <option value="api">api</option>
+            </select>
+          </div>
+          <div>
+            <label>Task Family <span class="required-mark">*</span></label>
+            <input id="taskFamily" value="audio-language" required />
+          </div>
+          <div>
+            <label>Modality <span class="required-mark">*</span></label>
+            <input id="modality" value="audio" required />
+          </div>
+        </div>
+
+        <label>Source Value <span class="required-mark">*</span></label>
+        <input id="sourceValue" placeholder="HF repo, local path, URL, S3 key, or API endpoint" required />
+
+        <div class="row">
+          <div>
+            <label>Execution Backend <span class="selection-note">Single select</span></label>
+            <select id="executionBackend">
+              <option value="python_process_wrapped">python_process_wrapped</option>
+              <option value="api_based">api_based</option>
+            </select>
+          </div>
+          <div>
+            <label>Wrapper <span class="selection-note">Single select</span></label>
+            <select id="wrapperSelect"></select>
+            <div class="hint" id="wrapperHint">Compatible wrappers will appear here based on the selected backend, modality, modes, and frameworks.</div>
+          </div>
+        </div>
+
+        <label>Sample Path</label>
+        <input id="samplePath" placeholder="/path/to/samples" />
+
+        <div class="row">
+          <div>
+            <label>Min Samples</label>
+            <input id="minSamples" type="number" value="5" />
+          </div>
+          <div>
+            <label>Max Iter</label>
+            <input id="maxIter" type="number" value="5" />
+          </div>
+          <div>
+            <label>Batch Size</label>
+            <input id="batchSize" type="number" value="1" />
+          </div>
+        </div>
+
+        <label>Target Text (optional)</label>
+        <input id="targetText" placeholder="ATTACK TEST" />
+
+        <div class="form-error" id="jobFormError"></div>
+
+        <label>Scan Modes <span class="selection-note">Multi-select allowed</span></label>
+        <div class="checks">
+          <label><input type="checkbox" id="modeBlackbox" /> blackbox</label>
+          <label><input type="checkbox" id="modeWhitebox" /> whitebox</label>
+        </div>
+
+        <label>Frameworks <span class="selection-note">Multi-select allowed</span></label>
+        <div class="checks">
+          <label><input type="checkbox" id="fwArt" /> art</label>
+          <label><input type="checkbox" id="fwFoolbox" /> foolbox</label>
+          <label><input type="checkbox" id="fwPyrit" /> pyrit</label>
+          <label><input type="checkbox" id="fwGarak" /> garak</label>
+          <label><input type="checkbox" id="fwTextAttack" /> textattack</label>
+        </div>
+
+        <section class="framework-panel" id="garakPanel">
+          <h3>Garak Options</h3>
+          <div class="hint">Use these fields for common Garak runs. The Advanced JSON box stays available for uncommon settings and explicit overrides.</div>
+          <div class="row">
+            <div>
+              <label>Probe</label>
+              <input id="garakProbe" list="garakProbeSuggestions" value="test.Blank" placeholder="promptinject.HijackLongPromptMini" />
+              <datalist id="garakProbeSuggestions">
+                <option value="test.Blank"></option>
+                <option value="goodside.Tag"></option>
+                <option value="promptinject.HijackLongPromptMini"></option>
+                <option value="promptinject.HijackKillHumansMini"></option>
+                <option value="packagehallucination.Python"></option>
+                <option value="xss.MarkdownImageExfil"></option>
+              </datalist>
+            </div>
+            <div>
+              <label>Timeout (seconds)</label>
+              <input id="garakTimeout" type="number" min="1" value="60" />
+            </div>
+            <div>
+              <label>Generations</label>
+              <input id="garakGenerations" type="number" min="1" value="1" />
+            </div>
+          </div>
+          <div class="row">
+            <div>
+              <label>Request Model (optional)</label>
+              <input id="garakRuntimeModel" placeholder="tinyllama:1.1b-chat" />
+            </div>
+            <div>
+              <label>Request Prompt Field</label>
+              <input id="garakPromptField" value="prompt" />
+            </div>
+            <div>
+              <label>Response Field</label>
+              <input id="garakResponseField" value="response" />
+            </div>
+          </div>
+        </section>
+
+        <section class="framework-panel" id="textattackPanel">
+          <h3>TextAttack Options</h3>
+          <div class="hint">This first TextAttack landing is real, but intentionally narrow: `text` + `text-classification` + `python_process_wrapped` + black-box only.</div>
+          <div class="hint">Out of scope in this build: API endpoints, text generation, multimodal inputs, targeted classification, and white-box TextAttack execution.</div>
+          <div class="hint" id="textattackRecipeHint">`deepwordbug` is the lightest smoke recipe and a good first validation pass.</div>
+          <div class="row">
+            <div>
+              <label>Recipe</label>
+              <select id="textattackRecipe">
+                <option value="deepwordbug">deepwordbug</option>
+                <option value="textfooler">textfooler</option>
+                <option value="pwws">pwws</option>
+                <option value="bae">bae</option>
+              </select>
+            </div>
+            <div>
+              <label>Goal Function</label>
+              <select id="textattackGoalFunction">
+                <option value="untargeted-classification" selected>untargeted-classification</option>
+              </select>
+            </div>
+            <div>
+              <label>Max Examples</label>
+              <input id="textattackMaxExamples" type="number" min="1" value="1" />
+            </div>
+          </div>
+          <div class="row">
+            <div>
+              <label>Query Budget (optional)</label>
+              <input id="textattackQueryBudget" type="number" min="1" placeholder="50" />
+            </div>
+            <div>
+              <label>Constraint Mode</label>
+              <select id="textattackConstraintMode">
+                <option value="default" selected>default</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <section class="framework-panel" id="pyritPanel">
+          <h3>PyRIT Options</h3>
+          <div class="hint">Use this panel for structured PyRIT runs without hand-writing JSON. The selected attack is declared explicitly here, and local Ollama `.../api/generate` targets are normalized to `.../api/chat` automatically.</div>
+          <div class="hint">Profiles keep the tested text path separate from the new multimodal path. Multimodal in this build means Vision-Language support only: `text + image -> text`.</div>
+          <div class="hint" id="pyritAttackPresetHint">Single-turn default: `prompt_sending` with one turn and auto scoring.</div>
+          <div class="row">
+            <div>
+              <label>Profile</label>
+              <select id="pyritProfile">
+                <option value="text" selected>text</option>
+                <option value="multimodal">multimodal (vision-language support only)</option>
+              </select>
+            </div>
+            <div>
+              <label id="pyritAttackLabel">Attack</label>
+              <div id="pyritAttackChoices" class="attack-choice-grid" role="group" aria-label="PyRIT attacks"></div>
+              <div class="hint" id="pyritAttackSelectionHint">Select one or more attacks. The available set adapts when you switch between the text and multimodal profiles.</div>
+            </div>
+            <div>
+              <label id="pyritRuntimeModelLabel">Request Model (optional)</label>
+              <input id="pyritRuntimeModel" placeholder="tinyllama:1.1b-chat" />
+            </div>
+          </div>
+          <div class="row" id="pyritMultimodalSeedRow" hidden>
+            <div>
+              <label>Seed Text (multimodal)</label>
+              <textarea id="pyritSeedText" class="compact-textarea" placeholder="Seed instruction paired with the image for multimodal VLM execution."></textarea>
+            </div>
+            <div>
+              <label>Configured Seed Image Path (multimodal)</label>
+              <input id="pyritSeedImagePath" placeholder="/absolute/path/to/image.png" />
+              <div class="hint">This is the image path you configure explicitly for the VLM run. If this is blank, PyRIT will resolve the actual seed image from the global `Sample Path` and the report will show that fallback.</div>
+              <div class="artifact-actions" style="margin-top:8px;">
+                <button type="button" class="artifact-action-btn" onclick="useSamplePathForPyritSeedImage()">Use Sample Path</button>
+              </div>
+            </div>
+            <div>
+              <label>Follow-up Text (multi_prompt_sending)</label>
+              <textarea id="pyritFollowUpText" class="compact-textarea" placeholder="Optional second-turn text for multimodal multi_prompt_sending. Leave blank to reuse the objective as the follow-up turn."></textarea>
+            </div>
+          </div>
+          <div class="row">
+            <div>
+              <label>Request Timeout (sec)</label>
+              <input id="pyritTimeout" type="number" min="1" step="1" value="120" />
+            </div>
+            <div>
+              <label>Retry Attempts on Failure</label>
+              <input id="pyritMaxAttempts" type="number" min="0" step="1" value="0" />
+            </div>
+          </div>
+          <div class="row">
+            <div>
+              <label id="pyritManyShotLabel">Many-Shot Example Count</label>
+              <input id="pyritManyShotExampleCount" type="number" min="1" step="1" value="25" />
+            </div>
+            <div>
+              <label id="pyritMaxTurnsLabel">Max Turns</label>
+              <input id="pyritMaxTurns" type="number" min="1" step="1" value="10" />
+            </div>
+          </div>
+          <div class="row" id="pyritAdvancedAttackRow">
+            <div>
+              <label id="pyritMaxBacktracksLabel">Max Backtracks</label>
+              <input id="pyritMaxBacktracks" type="number" min="0" step="1" value="10" />
+            </div>
+            <div>
+              <label id="pyritAdversarialModelLabel">Adversarial Model (optional)</label>
+              <input id="pyritAdversarialModel" placeholder="Defaults to Request Model" />
+            </div>
+          </div>
+          <div class="row" id="pyritAdversarialEndpointRow">
+            <div>
+              <label id="pyritAdversarialEndpointLabel">Adversarial Endpoint (optional)</label>
+              <input id="pyritAdversarialEndpoint" placeholder="Defaults to Source Value" />
+            </div>
+            <div>
+              <label>Objective Scorer</label>
+              <select id="pyritObjectiveScorerMode">
+                <option value="auto">auto</option>
+                <option value="exact_literal">exact_literal</option>
+                <option value="contains_literal">contains_literal</option>
+                <option value="contains_any_literal">contains_any_literal</option>
+                <option value="ordered_literals">ordered_literals</option>
+                <option value="disabled">disabled</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div>
+              <label id="pyritExpectedResponseLabel">Expected Response / Required Literals (optional)</label>
+              <input id="pyritExpectedResponse" placeholder="PYRIT_SKELETON_KEY_SUCCESS or screenshot, dashboard" />
+            </div>
+            <div>
+              <label id="pyritScoringNotesLabel">Scoring Notes</label>
+              <div class="hint" id="pyritScoringHint">Set this when you want scoring to use an explicit success string instead of inferring it from the objective. For multiple required words or tokens, enter a comma- or newline-separated list. Use `contains_literal` when all literals must appear, `contains_any_literal` when any one is enough, and `ordered_literals` when the literals must appear in sequence.</div>
+            </div>
+          </div>
+          <div class="row">
+            <div>
+              <label>Forbidden Words / Phrases (optional)</label>
+              <input id="pyritForbiddenLiterals" placeholder="apologize, cannot comply" />
+            </div>
+            <div>
+              <label>Max Words (optional)</label>
+              <input id="pyritExpectedMaxWords" type="number" min="1" step="1" placeholder="20" />
+            </div>
+            <div>
+              <label>Max Sentences (optional)</label>
+              <input id="pyritExpectedMaxSentences" type="number" min="1" step="1" placeholder="1" />
+            </div>
+          </div>
+          <div id="pyritSkeletonKeyRow">
+            <label id="pyritSkeletonKeyLabel">Skeleton Key Prompt Override (optional)</label>
+            <textarea id="pyritSkeletonKeyPrompt" class="compact-textarea" placeholder="Only used for skeleton_key. Leave blank to use PyRIT's bundled skeleton key prompt."></textarea>
+          </div>
+          <div class="row">
+            <div>
+              <label id="pyritAttackNotesLabel">Attack Notes</label>
+          <div class="hint" id="pyritAttackUsageHint">`many_shot_jailbreak` uses the bundled dataset count above. `flip` and `skeleton_key` run with their built-in PyRIT templates. `red_teaming` and `crescendo` are text-profile multi-turn attacks and use the adversarial model or endpoint when provided, otherwise they default to the same local target.</div>
+            </div>
+          </div>
+          <label id="pyritObjectiveLabel">Objective Override</label>
+          <textarea id="pyritObjective" class="compact-textarea" placeholder="If blank, PyRIT uses the global Target Text field. Example: Return the exact string PYRIT_SMOKE_TEST."></textarea>
+          <div class="hint" id="pyritObjectiveHint">Common local test: set `Source Value` to your Ollama endpoint, `Model ID` to the runtime model, and either fill this objective or use the global `Target Text` field.</div>
+        </section>
+
+        <details class="advanced-box">
+          <summary>Advanced Framework Overrides</summary>
+          <label style="margin-top:10px;">Extra Options (JSON)</label>
+          <textarea id="extraOptions" placeholder='{"garak_headers":{"Content-Type":"application/json"}}'>{}</textarea>
+          <div class="hint">Optional advanced framework settings. Values here override the structured PyRIT and Garak fields when keys overlap.</div>
+        </details>
+
+        <label>Reports <span class="selection-note">Multi-select allowed</span></label>
+        <div class="checks">
+          <label><input type="checkbox" id="repJson" /> json</label>
+          <label><input type="checkbox" id="repHtml" /> html</label>
+          <label><input type="checkbox" id="repPdf" /> pdf</label>
+          <label><input type="checkbox" id="repXlsx" /> xlsx</label>
+          <label><input type="checkbox" id="repTxt" /> txt_log</label>
+        </div>
+
+        <div class="toolbar">
+          <button type="button" onclick="preflightCheck()">Preflight Check</button>
+          <button type="button" onclick="submitScan()">Click Go</button>
+          <button type="button" onclick="refreshData()">Refresh Data</button>
+        </div>
+      </section>
+    </div>
+
+    <div class="grid utility-grid" style="margin-top:14px;">
+      <section class="card span-full">
+        <h2>Wrapper Capability Matrix</h2>
+        <div class="muted-block">Compare registered wrapper support for backend types, frameworks, and white-box signals before you choose one for a job.</div>
+        <h3>Framework Runtime Matrix</h3>
+        <div class="hint" id="frameworkRuntimeNote">Shows which framework engines are installed in the current platform environment. Local inference servers such as Ollama remain external even when the scan framework itself is bundled.</div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Framework</th>
+                <th>Installed</th>
+                <th>Version</th>
+                <th>Package</th>
+                <th>Delivery</th>
+                <th>Notes</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="frameworkRuntimeBody">
+              <tr><td colspan="7">Loading framework runtime status...</td></tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="7" style="padding:10px 4px 4px;">
+                  <button type="button" id="installAllBtn" onclick="installAllFrameworks()" style="margin-right:8px;">Install / Upgrade All</button>
+                  <span id="installAllStatus" style="font-size:12px;color:var(--ink-soft);"></span>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <h3>Runtime Environment</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Field</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody id="runtimeEnvironmentBody">
+              <tr><td colspan="2">Loading runtime environment...</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h3>Local Service Health</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Service</th>
+                <th>Reachable</th>
+                <th>Endpoint</th>
+                <th>Models</th>
+                <th>Details</th>
+              </tr>
+            </thead>
+            <tbody id="localServiceBody">
+              <tr><td colspan="5">Loading local service health...</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Wrapper</th>
+                <th>Modalities</th>
+                <th>Task Families</th>
+                <th>API</th>
+                <th>Local</th>
+                <th>Black-box</th>
+                <th>White-box</th>
+                <th>ART</th>
+                <th>Foolbox</th>
+                <th>Logits</th>
+                <th>Gradients</th>
+              </tr>
+            </thead>
+            <tbody id="wrapperMatrixBody">
+              <tr><td colspan="11">Loading wrappers...</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <details class="collapsible-panel">
+          <summary>Wrapper Registry JSON</summary>
+          <div class="collapsible-panel-body">
+            <pre id="wrappersOut">Loading...</pre>
+          </div>
+        </details>
+      </section>
+      <section class="card">
+        <h2>Live Job Status</h2>
+        <div class="mini-toolbar">
+          <label style="margin:0; display:flex; align-items:center; gap:8px;">
+            <input id="autoRefreshToggle" type="checkbox" checked style="width:auto; margin:0;">
+            Auto refresh every 5s
+          </label>
+          <span id="lastRefreshLabel">Last refresh: pending</span>
+        </div>
+        <div class="status-strip" id="jobStatusStrip">
+          <div class="status-card"><div class="status-label">Queued</div><div class="status-value">0</div></div>
+          <div class="status-card"><div class="status-label">Running</div><div class="status-value">0</div></div>
+          <div class="status-card"><div class="status-label">Completed</div><div class="status-value">0</div></div>
+          <div class="status-card"><div class="status-label">Failed</div><div class="status-value">0</div></div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Job</th>
+                <th>Status</th>
+                <th>Wrapper</th>
+                <th>Backend</th>
+                <th>Frameworks</th>
+                <th>Updated</th>
+              </tr>
+            </thead>
+            <tbody id="jobTableBody">
+              <tr><td colspan="6">Loading jobs...</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <details class="collapsible-panel">
+          <summary>Job JSON</summary>
+          <div class="collapsible-panel-body">
+            <pre id="jobsOut">Loading...</pre>
+          </div>
+        </details>
+      </section>
+    </div>
+
+    <div class="grid utility-grid" style="margin-top:14px;">
+      <section class="card">
+        <h2>Preflight</h2>
+        <details class="collapsible-panel">
+          <summary>Readiness Details</summary>
+          <div class="collapsible-panel-body">
+            <pre id="preflightOut">Run a preflight check to see compatible wrappers, blockers, warnings, and report expectations before launching a job.</pre>
+          </div>
+        </details>
+      </section>
+      <section class="card">
+        <h2>Terminal View</h2>
+        <div class="muted-block">Shows a terminal-style execution view for the selected job. When a real text log exists, it is shown here. Otherwise the UI shows a synthesized execution transcript from the backend job record.</div>
+        <label>Job ID</label>
+        <input id="terminalJobId" placeholder="Enter a job id or refresh to use the latest job" />
+        <div class="toolbar">
+          <button type="button" onclick="loadTerminalView()">Load Terminal</button>
+          <button type="button" onclick="copyTerminalView()">Copy Terminal</button>
+        </div>
+        <pre id="terminalOut" class="terminal-view">Terminal-style execution details will appear here.</pre>
+      </section>
+    </div>
+ 
+    <div class="grid artifact-grid" style="margin-top:14px;">
+      <section class="card">
+        <h2>Original Artefacts</h2>
+        <div class="muted-block">Load original framework and platform artefacts by job id. Open previews the real file in a new tab, and Download sends it to the browser as an attachment.</div>
+        <div class="row">
+          <div>
+            <label>Job ID</label>
+            <input id="artifactJobId" placeholder="Enter a job id and press Enter" />
+          </div>
+          <div>
+            <label>Recent Jobs <span class="selection-note">Single select</span></label>
+            <select id="artifactJobPicker">
+              <option value="">Choose a recent job</option>
+            </select>
+          </div>
+        </div>
+        <div class="toolbar">
+          <button type="button" onclick="loadArtifacts()">Load Original Artefacts</button>
+          <button type="button" onclick="viewArtifact()">Preview Selected</button>
+          <button type="button" onclick="downloadArtifact()">Download Selected</button>
+        </div>
+        <div class="artifact-summary" id="artifactSummary">
+          <div class="artifact-stat">
+            <div class="artifact-stat-label">Selected Job</div>
+            <div class="artifact-stat-value">None</div>
+          </div>
+          <div class="artifact-stat">
+            <div class="artifact-stat-label">Artefact Count</div>
+            <div class="artifact-stat-value">0</div>
+          </div>
+          <div class="artifact-stat">
+            <div class="artifact-stat-label">Selected Artefact</div>
+            <div class="artifact-stat-value">None</div>
+          </div>
+        </div>
+        <div class="table-wrap artifact-table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Group</th>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Size</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="artifactTableBody">
+              <tr><td colspan="5">No original artefacts loaded yet.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <pre id="artifactPreview">Selected original artefact details will appear here.</pre>
+        <details class="collapsible-panel">
+          <summary>Original Artefact JSON</summary>
+          <div class="collapsible-panel-body">
+            <pre id="artifactMeta">No original artefacts loaded yet.</pre>
+          </div>
+        </details>
+      </section>
+      <section class="card">
+        <h2>Normalized Artefacts</h2>
+        <div class="muted-block">Review the additive normalized-severity artefacts separately from original framework evidence.</div>
+        <div class="row">
+          <div>
+            <label>Job ID</label>
+            <input id="normalizedSeverityJobId" placeholder="Enter a job id and press Enter" />
+          </div>
+          <div>
+            <label>Recent Jobs <span class="selection-note">Single select</span></label>
+            <select id="normalizedSeverityJobPicker">
+              <option value="">Choose a recent job</option>
+            </select>
+          </div>
+        </div>
+        <div class="toolbar">
+          <button type="button" onclick="loadNormalizedSeverityArtifacts()">Load Normalized Artefacts</button>
+          <button type="button" onclick="viewNormalizedSeverityArtifact()">Preview Selected</button>
+          <button type="button" onclick="downloadNormalizedSeverityArtifact()">Download Selected</button>
+        </div>
+        <div class="artifact-summary" id="normalizedSeveritySummary">
+          <div class="artifact-stat">
+            <div class="artifact-stat-label">Selected Job</div>
+            <div class="artifact-stat-value">None</div>
+          </div>
+          <div class="artifact-stat">
+            <div class="artifact-stat-label">Artefact Count</div>
+            <div class="artifact-stat-value">0</div>
+          </div>
+          <div class="artifact-stat">
+            <div class="artifact-stat-label">Selected Artefact</div>
+            <div class="artifact-stat-value">None</div>
+          </div>
+        </div>
+        <div class="table-wrap artifact-table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Group</th>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Size</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="normalizedSeverityTableBody">
+              <tr><td colspan="5">No normalized artefacts loaded yet.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <pre id="normalizedSeverityPreview">Selected normalized artefact details will appear here.</pre>
+        <details class="collapsible-panel">
+          <summary>Normalized Artefact JSON</summary>
+          <div class="collapsible-panel-body">
+            <pre id="normalizedSeverityMeta">No normalized artefacts loaded yet.</pre>
+          </div>
+        </details>
+      </section>
+    </div>
+
+  </div>
+
+  <script>
+    let wrapperRegistry = [];
+    let templateRegistry = [];
+    let platformOptions = {};
+    let lastJobs = [];
+    let lastArtifacts = [];
+    let lastNormalizedSeverityArtifacts = [];
+    let autoRefreshTimer = null;
+    let focusedJobId = "";
+    let selectedArtifactPath = "";
+    let selectedNormalizedSeverityPath = "";
+    let templateOperationInFlight = false;
+    let templateInteractionEpoch = 0;
+
+    async function api(path, options = {}) {
+      const res = await fetch(path, {
+        headers: {"Content-Type": "application/json"},
+        ...options,
+      });
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(text);
+      }
+      return res.json();
+    }
+
+    function pretty(value) {
+      return JSON.stringify(value, null, 2);
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function boolBadge(value) {
+      return value
+        ? '<span class="badge ok">Yes</span>'
+        : '<span class="badge">No</span>';
+    }
+
+    function statusBadge(status) {
+      const normalized = String(status || "unknown").toLowerCase();
+      const cls = normalized === "completed" ? "ok" : normalized === "failed" ? "error" : normalized === "running" ? "warn" : "";
+      return `<span class="badge ${cls}">${escapeHtml(status || "unknown")}</span>`;
+    }
+
+    function deliveryLabel(delivery) {
+      const normalized = String(delivery || "").replaceAll("_", " ").trim();
+      return normalized || "-";
+    }
+
+    function selectedJobId() {
+      const artifactJobId = document.getElementById("artifactJobId");
+      const normalizedSeverityJobId = document.getElementById("normalizedSeverityJobId");
+      const terminalJobId = document.getElementById("terminalJobId");
+      return String(
+        (artifactJobId ? artifactJobId.value : "")
+        || (normalizedSeverityJobId ? normalizedSeverityJobId.value : "")
+        || (terminalJobId ? terminalJobId.value : "")
+        || focusedJobId
+      ).trim();
+    }
+
+    function setSelectedJob(jobId) {
+      const normalized = String(jobId || "").trim();
+      if (!normalized) {
+        return "";
+      }
+      focusedJobId = normalized;
+      const artifactJobId = document.getElementById("artifactJobId");
+      const artifactJobPicker = document.getElementById("artifactJobPicker");
+      const normalizedSeverityJobId = document.getElementById("normalizedSeverityJobId");
+      const normalizedSeverityJobPicker = document.getElementById("normalizedSeverityJobPicker");
+      const terminalJobId = document.getElementById("terminalJobId");
+      if (artifactJobId) {
+        artifactJobId.value = normalized;
+      }
+      if (artifactJobPicker && [...artifactJobPicker.options].some(option => option.value === normalized)) {
+        artifactJobPicker.value = normalized;
+      }
+      if (normalizedSeverityJobId) {
+        normalizedSeverityJobId.value = normalized;
+      }
+      if (normalizedSeverityJobPicker && [...normalizedSeverityJobPicker.options].some(option => option.value === normalized)) {
+        normalizedSeverityJobPicker.value = normalized;
+      }
+      if (terminalJobId) {
+        terminalJobId.value = normalized;
+      }
+      return normalized;
+    }
+
+    function artifactFileName(path) {
+      return String(path || "").split("/").pop() || "artifact";
+    }
+
+    function artifactViewUrl(path) {
+      return `/api/artifacts/view?path=${encodeURIComponent(path)}`;
+    }
+
+    function artifactDownloadUrl(path) {
+      return `/api/artifacts/download?path=${encodeURIComponent(path)}`;
+    }
+
+    function existingArtifactCount(artifacts) {
+      return (Array.isArray(artifacts) ? artifacts : []).filter(artifact => artifact && artifact.exists).length;
+    }
+
+    function formatBytes(value) {
+      if (typeof value !== "number" || Number.isNaN(value) || value < 0) {
+        return "-";
+      }
+      if (value < 1024) {
+        return `${value} B`;
+      }
+      if (value < 1024 * 1024) {
+        return `${(value / 1024).toFixed(1)} KB`;
+      }
+      return `${(value / (1024 * 1024)).toFixed(1)} MB`;
+    }
+
+    function selectedArtifact() {
+      return lastArtifacts.find(artifact => artifact.path === selectedArtifactPath) || null;
+    }
+
+    function isNormalizedSeverityArtifact(artifact) {
+      return String(artifact?.name || "").trim().startsWith("normalized_severity_");
+    }
+
+    function selectedNormalizedSeverityArtifact() {
+      return lastNormalizedSeverityArtifacts.find(artifact => artifact.path === selectedNormalizedSeverityPath) || null;
+    }
+
+    function setCheckboxValue(id, value) {
+      const node = document.getElementById(id);
+      if (node) {
+        node.checked = Boolean(value);
+        node.classList.remove("invalid");
+      }
+    }
+
+    function setInputValue(id, value) {
+      const node = document.getElementById(id);
+      if (!node) {
+        return;
+      }
+      node.value = value == null ? "" : String(value);
+      node.classList.remove("invalid");
+    }
+
+    function markTemplateInteraction() {
+      templateInteractionEpoch = Date.now();
+    }
+
+    function isTemplateInteractionActive() {
+      if (templateOperationInFlight) {
+        return true;
+      }
+      const active = document.activeElement;
+      if (active && ["templateSelect", "templateName", "templateDescription"].includes(active.id || "")) {
+        return true;
+      }
+      return Date.now() - templateInteractionEpoch < 1500;
+    }
+
+    function captureTemplateUiState() {
+      return {
+        selectedTemplateId: String(document.getElementById("templateSelect")?.value || "").trim(),
+        templateName: document.getElementById("templateName")?.value || "",
+        templateDescription: document.getElementById("templateDescription")?.value || "",
+        hintText: document.getElementById("templateHint")?.textContent || "",
+      };
+    }
+
+    function restoreTemplateUiState(state = {}, options = {}) {
+      const select = document.getElementById("templateSelect");
+      const hint = document.getElementById("templateHint");
+      const preserveDraft = options.preserveDraft !== false;
+      const preserveHint = options.preserveHint === true;
+      const selectedTemplateId = String(options.selectedTemplateId || state.selectedTemplateId || "").trim();
+      if (select && selectedTemplateId && [...select.options].some(option => option.value === selectedTemplateId)) {
+        select.value = selectedTemplateId;
+      }
+      if (preserveDraft) {
+        setInputValue("templateName", state.templateName || "");
+        setInputValue("templateDescription", state.templateDescription || "");
+      }
+      if (hint && preserveHint && state.hintText) {
+        hint.textContent = state.hintText;
+      }
+    }
+
+    async function withTemplateOperation(fn) {
+      templateOperationInFlight = true;
+      markTemplateInteraction();
+      try {
+        return await fn();
+      } finally {
+        templateOperationInFlight = false;
+        markTemplateInteraction();
+      }
+    }
+
+    function renderTemplateOptions(options = {}) {
+      const select = document.getElementById("templateSelect");
+      const hint = document.getElementById("templateHint");
+      if (!select) {
+        return;
+      }
+      const priorState = options.state || captureTemplateUiState();
+      const templates = Array.isArray(templateRegistry) ? templateRegistry : [];
+      select.innerHTML = "<option value=''>Choose a template</option>" + templates.map(template => `
+        <option value="${escapeHtml(template.template_id || "")}">${escapeHtml(template.template_name || template.template_id || "template")}${template.builtin ? " [built-in]" : ""}</option>
+      `).join("");
+      restoreTemplateUiState(priorState, {
+        preserveDraft: options.preserveDraft,
+        preserveHint: options.preserveHint,
+        selectedTemplateId: options.selectedTemplateId,
+      });
+      if (hint && !(options.preserveHint && priorState.hintText)) {
+        hint.textContent = templates.length
+          ? "Choose a built-in template to prefill the form with a known-good starting point."
+          : "No templates are available in the current environment.";
+      }
+    }
+
+    function selectedTemplateRecord() {
+      const templateId = String(document.getElementById("templateSelect")?.value || "").trim();
+      if (!templateId) {
+        return null;
+      }
+      return templateRegistry.find(row => String(row.template_id || "") === templateId) || null;
+    }
+
+    function applySelectedTemplate() {
+      markTemplateInteraction();
+      const hint = document.getElementById("templateHint");
+      const template = selectedTemplateRecord();
+      if (!template || !template.payload) {
+        setFormError("jobFormError", "Choose a template first.");
+        return;
+      }
+
+      const payload = template.payload || {};
+      const model = payload.model || {};
+      const configuration = payload.configuration || {};
+      const extra = configuration.extra_options || {};
+      const frameworks = Array.isArray(configuration.frameworks) ? configuration.frameworks : [];
+      const scanModes = Array.isArray(configuration.scan_modes) ? configuration.scan_modes : [];
+      const reports = Array.isArray(configuration.reports) ? configuration.reports : [];
+
+      setFormError("jobFormError", "");
+      setInputValue("jobName", payload.job_name || "");
+      setInputValue("modelId", model.model_id || "");
+      setInputValue("sourceType", model.source_type || "api");
+      setInputValue("sourceValue", model.source_value || "");
+      setInputValue("taskFamily", model.task_family || "");
+      setInputValue("modality", model.modality || "");
+      setInputValue("executionBackend", configuration.execution_backend || "api_based");
+      setInputValue("samplePath", configuration.sample_path || "");
+      setInputValue("minSamples", configuration.min_samples ?? 1);
+      setInputValue("maxIter", configuration.max_iter ?? 1);
+      setInputValue("batchSize", configuration.batch_size ?? 1);
+      setInputValue("targetText", configuration.target_text || "");
+
+      setCheckboxValue("modeBlackbox", scanModes.includes("blackbox"));
+      setCheckboxValue("modeWhitebox", scanModes.includes("whitebox"));
+      setCheckboxValue("fwArt", frameworks.includes("art"));
+      setCheckboxValue("fwFoolbox", frameworks.includes("foolbox"));
+      setCheckboxValue("fwPyrit", frameworks.includes("pyrit"));
+      setCheckboxValue("fwGarak", frameworks.includes("garak"));
+      setCheckboxValue("fwTextAttack", frameworks.includes("textattack"));
+
+      setCheckboxValue("repJson", reports.includes("json"));
+      setCheckboxValue("repHtml", reports.includes("html"));
+      setCheckboxValue("repPdf", reports.includes("pdf"));
+      setCheckboxValue("repXlsx", reports.includes("xlsx"));
+      setCheckboxValue("repTxt", reports.includes("txt_log"));
+
+      setInputValue("pyritProfile", extra.pyrit_profile || "text");
+      syncPyritProfileOptions();
+      setInputValue("pyritRuntimeModel", extra.pyrit_model_name || "");
+      setInputValue("pyritTimeout", extra.pyrit_request_timeout ?? extra.pyrit_response_timeout ?? 120);
+      setInputValue("pyritMaxAttempts", extra.pyrit_max_attempts_on_failure ?? 0);
+      setInputValue("pyritManyShotExampleCount", extra.pyrit_many_shot_example_count ?? 25);
+      setInputValue("pyritMaxTurns", extra.pyrit_max_turns ?? 10);
+      setInputValue("pyritMaxBacktracks", extra.pyrit_max_backtracks ?? 10);
+      setInputValue("pyritAdversarialModel", extra.pyrit_adversarial_model_name || "");
+      setInputValue("pyritAdversarialEndpoint", extra.pyrit_adversarial_endpoint_uri || "");
+      setInputValue("pyritObjectiveScorerMode", extra.pyrit_objective_scorer_mode || "auto");
+      setInputValue(
+        "pyritExpectedResponse",
+        Array.isArray(extra.pyrit_expected_responses) && extra.pyrit_expected_responses.length
+          ? extra.pyrit_expected_responses.join(", ")
+          : extra.pyrit_expected_response || ""
+      );
+      setInputValue(
+        "pyritForbiddenLiterals",
+        Array.isArray(extra.pyrit_forbidden_literals) && extra.pyrit_forbidden_literals.length
+          ? extra.pyrit_forbidden_literals.join(", ")
+          : extra.pyrit_forbidden_literals || ""
+      );
+      setInputValue("pyritExpectedMaxWords", extra.pyrit_expected_max_words ?? "");
+      setInputValue("pyritExpectedMaxSentences", extra.pyrit_expected_max_sentences ?? "");
+      setInputValue("pyritSkeletonKeyPrompt", extra.pyrit_skeleton_key_prompt || "");
+      setInputValue("pyritObjective", extra.pyrit_objective || configuration.target_text || "");
+      setInputValue("pyritSeedText", extra.pyrit_seed_text || "");
+      setInputValue("pyritSeedImagePath", extra.pyrit_seed_image_path || "");
+      setInputValue("pyritFollowUpText", extra.pyrit_follow_up_text || extra.pyrit_multimodal_follow_up_text || "");
+
+      renderPyritAttackChoices(String(extra.pyrit_profile || "text"));
+      const selectedAttackTypes = Array.isArray(extra.pyrit_attack_types) && extra.pyrit_attack_types.length
+        ? extra.pyrit_attack_types
+        : [String(extra.pyrit_attack_type || "prompt_sending")];
+      const attackContainer = document.getElementById("pyritAttackChoices");
+      if (attackContainer) {
+        Array.from(attackContainer.querySelectorAll("input[type='checkbox']")).forEach(node => {
+          node.checked = selectedAttackTypes.includes(String(node.value || ""));
+        });
+      }
+      applyPyritAttackPreset();
+
+      setInputValue("garakProbe", extra.garak_probes || "test.Blank");
+      setInputValue("garakTimeout", extra.garak_response_timeout ?? 60);
+      setInputValue("garakGenerations", extra.garak_generations ?? 1);
+      setInputValue("garakRuntimeModel", extra.garak_request_template_json_object?.model || "");
+      setInputValue("garakPromptField", extra.garak_prompt_field || "prompt");
+      setInputValue("garakResponseField", extra.garak_response_json_field || "response");
+
+      setInputValue("textattackRecipe", extra.textattack_recipe || "deepwordbug");
+      setInputValue("textattackGoalFunction", extra.textattack_goal_function || "untargeted-classification");
+      setInputValue("textattackMaxExamples", extra.textattack_max_examples ?? 1);
+      setInputValue("textattackQueryBudget", extra.textattack_query_budget ?? "");
+      setInputValue("textattackConstraintMode", extra.textattack_constraint_mode || "default");
+      applyTextAttackRecipeHint();
+
+      setInputValue("extraOptions", JSON.stringify({}, null, 2));
+      renderFrameworkPanels();
+      renderWrapperOptions();
+      if (payload.wrapper_id) {
+        const wrapperSelect = document.getElementById("wrapperSelect");
+        if (wrapperSelect && [...wrapperSelect.options].some(option => option.value === payload.wrapper_id)) {
+          wrapperSelect.value = payload.wrapper_id;
+        }
+      }
+      if (hint) {
+        hint.textContent = template.description || `Applied template: ${template.template_name || template.template_id}`;
+      }
+      setInputValue("templateName", "");
+      setInputValue("templateDescription", "");
+      markTemplateInteraction();
+    }
+
+    async function updateSelectedTemplate() {
+      markTemplateInteraction();
+      const template = selectedTemplateRecord();
+      if (!template) {
+        setFormError("jobFormError", "Choose a template first.");
+        alert("Choose a template first.");
+        return;
+      }
+      if (template.builtin) {
+        const message = "Built-in templates cannot be modified. Save the current form as a new template instead.";
+        setFormError("jobFormError", message);
+        alert(message);
+        return;
+      }
+
+      const templateFieldsOk = validateRequiredText([
+        {id: "jobName", label: "Job Name"},
+        {id: "modelId", label: "Model ID / Key"},
+        {id: "taskFamily", label: "Task Family"},
+        {id: "modality", label: "Modality"},
+        {id: "sourceValue", label: "Source Value"},
+      ], "jobFormError");
+      const scanModesOk = validateCheckboxGroup(["modeBlackbox", "modeWhitebox"], "Scan Modes", "jobFormError");
+      const frameworksOk = validateCheckboxGroup(["fwArt", "fwFoolbox", "fwPyrit", "fwGarak", "fwTextAttack"], "Frameworks", "jobFormError", 0);
+      const reportsOk = validateCheckboxGroup(["repJson", "repHtml", "repPdf", "repXlsx", "repTxt"], "Reports", "jobFormError");
+      const pyritOk = validatePyritConfiguration("jobFormError");
+      if (!(templateFieldsOk && scanModesOk && frameworksOk && reportsOk && pyritOk)) {
+        return;
+      }
+
+      try {
+        await withTemplateOperation(async () => {
+          parseExtraOptions({ strict: true });
+          const payload = {
+            template_name: String(template.template_name || "").trim(),
+            description: String(template.description || "").trim(),
+            payload: scanPayload(),
+          };
+          const result = await api(`/api/templates/${encodeURIComponent(template.template_id)}`, {method: "PUT", body: JSON.stringify(payload)});
+          templateRegistry = templateRegistry.map(row => String(row.template_id || "") === String(result.template.template_id || "") ? result.template : row);
+          renderTemplateOptions({
+            selectedTemplateId: result.template.template_id || "",
+            preserveDraft: false,
+            preserveHint: false,
+          });
+          const hint = document.getElementById("templateHint");
+          if (hint) {
+            hint.textContent = `Updated template: ${result.template.template_name || result.template.template_id}`;
+          }
+          alert(`Template updated: ${result.template.template_name || result.template.template_id}`);
+          await refreshData();
+        });
+      } catch (err) {
+        setFormError("jobFormError", `Template update failed: ${describeError(err)}`);
+      }
+    }
+
+    async function exportSelectedTemplate() {
+      markTemplateInteraction();
+      const template = selectedTemplateRecord();
+      if (!template) {
+        setFormError("jobFormError", "Choose a template first.");
+        alert("Choose a template first.");
+        return;
+      }
+      try {
+        const result = await api(`/api/templates/${encodeURIComponent(template.template_id)}/export`);
+        const exported = result.template || template;
+        const text = JSON.stringify(exported, null, 2);
+        setInputValue("templateImportJson", text);
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(text);
+        }
+        const hint = document.getElementById("templateHint");
+        if (hint) {
+          hint.textContent = `Exported template: ${exported.template_name || exported.template_id}`;
+        }
+        alert(`Template exported: ${exported.template_name || exported.template_id}`);
+      } catch (err) {
+        setFormError("jobFormError", `Template export failed: ${describeError(err)}`);
+      }
+    }
+
+    async function deleteSelectedTemplate() {
+      markTemplateInteraction();
+      const template = selectedTemplateRecord();
+      if (!template) {
+        setFormError("jobFormError", "Choose a template first.");
+        alert("Choose a template first.");
+        return;
+      }
+      if (template.builtin) {
+        const message = "Built-in templates cannot be deleted.";
+        setFormError("jobFormError", message);
+        alert(message);
+        return;
+      }
+      if (!window.confirm(`Delete template "${template.template_name || template.template_id}"?`)) {
+        return;
+      }
+
+      try {
+        await withTemplateOperation(async () => {
+          await api(`/api/templates/${encodeURIComponent(template.template_id)}`, {method: "DELETE"});
+          templateRegistry = templateRegistry.filter(row => String(row.template_id || "") !== String(template.template_id || ""));
+          renderTemplateOptions({
+            selectedTemplateId: "",
+            preserveDraft: true,
+            preserveHint: false,
+          });
+          const hint = document.getElementById("templateHint");
+          if (hint) {
+            hint.textContent = `Deleted template: ${template.template_name || template.template_id}`;
+          }
+          alert(`Template deleted: ${template.template_name || template.template_id}`);
+          await refreshData();
+        });
+      } catch (err) {
+        setFormError("jobFormError", `Template delete failed: ${describeError(err)}`);
+      }
+    }
+
+    async function importTemplateFromJson() {
+      markTemplateInteraction();
+      const importNode = document.getElementById("templateImportJson");
+      const rawText = String(importNode ? importNode.value || "" : "").trim();
+      if (!rawText) {
+        setFormError("jobFormError", "Paste template JSON first.");
+        alert("Paste template JSON first.");
+        return;
+      }
+      let parsed;
+      try {
+        parsed = JSON.parse(rawText);
+      } catch (err) {
+        setFormError("jobFormError", `Template import failed: ${describeError(err)}`);
+        alert("Template JSON is not valid.");
+        return;
+      }
+
+      try {
+        await withTemplateOperation(async () => {
+          const result = await api("/api/templates/import", {
+            method: "POST",
+            body: JSON.stringify({ template: parsed }),
+          });
+          templateRegistry = [...templateRegistry, result.template];
+          renderTemplateOptions({
+            selectedTemplateId: result.template.template_id || "",
+            preserveDraft: true,
+            preserveHint: false,
+          });
+          const hint = document.getElementById("templateHint");
+          if (hint) {
+            hint.textContent = `Imported template: ${result.template.template_name || result.template.template_id}`;
+          }
+          alert(`Template imported: ${result.template.template_name || result.template.template_id}`);
+          await refreshData();
+        });
+      } catch (err) {
+        setFormError("jobFormError", `Template import failed: ${describeError(err)}`);
+      }
+    }
+
+    async function saveCurrentTemplate() {
+      markTemplateInteraction();
+      const templateFieldsOk = validateRequiredText([
+        {id: "jobName", label: "Job Name"},
+        {id: "modelId", label: "Model ID / Key"},
+        {id: "taskFamily", label: "Task Family"},
+        {id: "modality", label: "Modality"},
+        {id: "sourceValue", label: "Source Value"},
+        {id: "templateName", label: "Template Name"},
+      ], "jobFormError");
+      const scanModesOk = validateCheckboxGroup(["modeBlackbox", "modeWhitebox"], "Scan Modes", "jobFormError");
+      const frameworksOk = validateCheckboxGroup(["fwArt", "fwFoolbox", "fwPyrit", "fwGarak", "fwTextAttack"], "Frameworks", "jobFormError", 0);
+      const reportsOk = validateCheckboxGroup(["repJson", "repHtml", "repPdf", "repXlsx", "repTxt"], "Reports", "jobFormError");
+      const pyritOk = validatePyritConfiguration("jobFormError");
+      if (!(templateFieldsOk && scanModesOk && frameworksOk && reportsOk && pyritOk)) {
+        return;
+      }
+
+      try {
+        await withTemplateOperation(async () => {
+          parseExtraOptions({ strict: true });
+          const payload = {
+            template_name: document.getElementById("templateName").value.trim(),
+            description: document.getElementById("templateDescription").value.trim(),
+            payload: scanPayload(),
+          };
+          const result = await api("/api/templates", {method: "POST", body: JSON.stringify(payload)});
+          templateRegistry = [...templateRegistry, result.template];
+          renderTemplateOptions({
+            selectedTemplateId: result.template.template_id || "",
+            preserveDraft: false,
+            preserveHint: false,
+          });
+          const templateSelect = document.getElementById("templateSelect");
+          if (templateSelect) {
+            templateSelect.value = result.template.template_id || "";
+          }
+          const hint = document.getElementById("templateHint");
+          if (hint) {
+            hint.textContent = `Saved template: ${result.template.template_name || result.template.template_id}`;
+          }
+          alert(`Template saved: ${result.template.template_name || result.template.template_id}`);
+          await refreshData();
+        });
+      } catch (err) {
+        setFormError("jobFormError", `Template save failed: ${describeError(err)}`);
+      }
+    }
+
+    function renderArtifactSummary(jobId) {
+      const artifact = selectedArtifact();
+      const totalCount = lastArtifacts.length;
+      const availableCount = existingArtifactCount(lastArtifacts);
+      const summary = document.getElementById("artifactSummary");
+      summary.innerHTML = `
+        <div class="artifact-stat">
+          <div class="artifact-stat-label">Selected Job</div>
+          <div class="artifact-stat-value">${escapeHtml(jobId || "None")}</div>
+        </div>
+        <div class="artifact-stat">
+          <div class="artifact-stat-label">Artefact Count</div>
+          <div class="artifact-stat-value">${String(availableCount)} / ${String(totalCount)}</div>
+        </div>
+        <div class="artifact-stat">
+          <div class="artifact-stat-label">Missing</div>
+          <div class="artifact-stat-value">${String(Math.max(totalCount - availableCount, 0))}</div>
+        </div>
+        <div class="artifact-stat">
+          <div class="artifact-stat-label">Selected Artefact</div>
+          <div class="artifact-stat-value">${escapeHtml(artifact ? artifactFileName(artifact.path) : "None")}</div>
+        </div>
+      `;
+    }
+
+    function renderNormalizedSeveritySummary(jobId) {
+      const artifact = selectedNormalizedSeverityArtifact();
+      const totalCount = lastNormalizedSeverityArtifacts.length;
+      const availableCount = existingArtifactCount(lastNormalizedSeverityArtifacts);
+      const summary = document.getElementById("normalizedSeveritySummary");
+      summary.innerHTML = `
+        <div class="artifact-stat">
+          <div class="artifact-stat-label">Selected Job</div>
+          <div class="artifact-stat-value">${escapeHtml(jobId || "None")}</div>
+        </div>
+        <div class="artifact-stat">
+          <div class="artifact-stat-label">Artefact Count</div>
+          <div class="artifact-stat-value">${String(availableCount)} / ${String(totalCount)}</div>
+        </div>
+        <div class="artifact-stat">
+          <div class="artifact-stat-label">Missing</div>
+          <div class="artifact-stat-value">${String(Math.max(totalCount - availableCount, 0))}</div>
+        </div>
+        <div class="artifact-stat">
+          <div class="artifact-stat-label">Selected Artefact</div>
+          <div class="artifact-stat-value">${escapeHtml(artifact ? artifactFileName(artifact.path) : "None")}</div>
+        </div>
+      `;
+    }
+
+    function renderArtifactSelectionDetails() {
+      const artifact = selectedArtifact();
+      const preview = document.getElementById("artifactPreview");
+      if (!artifact) {
+        preview.textContent = "Selected original artefact details will appear here.";
+        return;
+      }
+      preview.textContent = [
+        `job_id=${selectedJobId() || "-"}`,
+        `group=${artifact.group || "-"}`,
+        `name=${artifact.name || "-"}`,
+        `file=${artifactFileName(artifact.path)}`,
+        `status=${artifact.exists ? "exists" : "missing"}`,
+        `size=${formatBytes(artifact.size_bytes)}`,
+        `path=${artifact.path}`,
+      ].join("\n");
+    }
+
+    function renderNormalizedSeveritySelectionDetails() {
+      const artifact = selectedNormalizedSeverityArtifact();
+      const preview = document.getElementById("normalizedSeverityPreview");
+      if (!artifact) {
+        preview.textContent = "Selected normalized artefact details will appear here.";
+        return;
+      }
+      preview.textContent = [
+        `job_id=${selectedJobId() || "-"}`,
+        `group=${artifact.group || "-"}`,
+        `name=${artifact.name || "-"}`,
+        `file=${artifactFileName(artifact.path)}`,
+        `status=${artifact.exists ? "exists" : "missing"}`,
+        `size=${formatBytes(artifact.size_bytes)}`,
+        `path=${artifact.path}`,
+      ].join("\n");
+    }
+
+    function setSelectedArtifact(path) {
+      selectedArtifactPath = String(path || "").trim();
+      renderArtifactSummary(selectedJobId());
+      renderArtifactSelectionDetails();
+      const rows = document.querySelectorAll("#artifactTableBody tr[data-path]");
+      rows.forEach(row => {
+        row.classList.toggle("artifact-row-selected", decodeURIComponent(row.dataset.path || "") === selectedArtifactPath);
+      });
+    }
+
+    function setSelectedNormalizedSeverityArtifact(path) {
+      selectedNormalizedSeverityPath = String(path || "").trim();
+      renderNormalizedSeveritySummary(selectedJobId());
+      renderNormalizedSeveritySelectionDetails();
+      const rows = document.querySelectorAll("#normalizedSeverityTableBody tr[data-path]");
+      rows.forEach(row => {
+        row.classList.toggle("artifact-row-selected", decodeURIComponent(row.dataset.path || "") === selectedNormalizedSeverityPath);
+      });
+    }
+
+    function resetArtifactPanel(message = "Selected original artefact details will appear here.") {
+      selectedArtifactPath = "";
+      lastArtifacts = [];
+      document.getElementById("artifactTableBody").innerHTML = "<tr><td colspan='5'>No original artefacts loaded yet.</td></tr>";
+      renderArtifactSummary(selectedJobId());
+      document.getElementById("artifactMeta").textContent = "No original artefacts loaded yet.";
+      document.getElementById("artifactPreview").textContent = message;
+      resetNormalizedSeverityPanel("Selected normalized artefact details will appear here.");
+    }
+
+    function resetNormalizedSeverityPanel(message = "Selected normalized artefact details will appear here.") {
+      selectedNormalizedSeverityPath = "";
+      lastNormalizedSeverityArtifacts = [];
+      document.getElementById("normalizedSeverityTableBody").innerHTML = "<tr><td colspan='5'>No normalized artefacts loaded yet.</td></tr>";
+      renderNormalizedSeveritySummary(selectedJobId());
+      document.getElementById("normalizedSeverityMeta").textContent = "No normalized artefacts loaded yet.";
+      document.getElementById("normalizedSeverityPreview").textContent = message;
+    }
+
+    function renderArtifactJobPicker() {
+      const picker = document.getElementById("artifactJobPicker");
+      const current = selectedJobId();
+      picker.innerHTML = "<option value=''>Choose a recent job</option>";
+      for (const job of lastJobs.slice(0, 50)) {
+        const option = document.createElement("option");
+        option.value = job.job_id || "";
+        option.textContent = `${job.job_name || job.job_id} :: ${job.status || "unknown"} :: ${job.job_id || ""}`;
+        picker.appendChild(option);
+      }
+      if (current && lastJobs.some(job => job.job_id === current)) {
+        picker.value = current;
+      }
+    }
+
+    function renderNormalizedSeverityJobPicker() {
+      const picker = document.getElementById("normalizedSeverityJobPicker");
+      const current = selectedJobId();
+      picker.innerHTML = "<option value=''>Choose a recent job</option>";
+      for (const job of lastJobs.slice(0, 50)) {
+        const option = document.createElement("option");
+        option.value = job.job_id || "";
+        option.textContent = `${job.job_name || job.job_id} :: ${job.status || "unknown"} :: ${job.job_id || ""}`;
+        picker.appendChild(option);
+      }
+      if (current && lastJobs.some(job => job.job_id === current)) {
+        picker.value = current;
+      }
+    }
+
+    function renderArtifactTable(jobId) {
+      const body = document.getElementById("artifactTableBody");
+      if (!lastArtifacts.length) {
+        body.innerHTML = "<tr><td colspan='5'>No original artefacts were recorded for this job yet.</td></tr>";
+        renderArtifactSummary(jobId);
+        renderArtifactSelectionDetails();
+        return;
+      }
+      if (!selectedArtifactPath || !lastArtifacts.some(artifact => artifact.path === selectedArtifactPath)) {
+        selectedArtifactPath = lastArtifacts[0].path;
+      }
+      body.innerHTML = lastArtifacts.map(artifact => {
+        const encodedPath = encodeURIComponent(artifact.path);
+        const selectedClass = artifact.path === selectedArtifactPath ? "artifact-row-selected" : "";
+        return `
+          <tr class="${selectedClass}" data-path="${encodedPath}">
+            <td>${escapeHtml(artifact.group || "-")}</td>
+            <td><strong>${escapeHtml(artifact.name || "-")}</strong><br><span class="hint artifact-file">${escapeHtml(artifactFileName(artifact.path))}</span></td>
+            <td>${artifact.exists ? '<span class="badge ok">Exists</span>' : '<span class="badge error">Missing</span>'}</td>
+            <td>${escapeHtml(formatBytes(artifact.size_bytes))}</td>
+            <td>
+              <div class="artifact-actions">
+                <button type="button" class="artifact-action-btn" data-action="select" data-path="${encodedPath}">Select</button>
+                <a class="artifact-link" href="${artifactViewUrl(artifact.path)}" target="_blank" rel="noopener">Open</a>
+                <a class="artifact-link" href="${artifactDownloadUrl(artifact.path)}" download="${escapeHtml(artifactFileName(artifact.path))}" rel="noopener">Download</a>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join("");
+      renderArtifactSummary(jobId);
+      renderArtifactSelectionDetails();
+    }
+
+    function renderNormalizedSeverityTable(jobId) {
+      const body = document.getElementById("normalizedSeverityTableBody");
+      if (!lastNormalizedSeverityArtifacts.length) {
+        body.innerHTML = "<tr><td colspan='5'>No normalized artefacts were recorded for this job yet.</td></tr>";
+        renderNormalizedSeveritySummary(jobId);
+        renderNormalizedSeveritySelectionDetails();
+        return;
+      }
+      if (!selectedNormalizedSeverityPath || !lastNormalizedSeverityArtifacts.some(artifact => artifact.path === selectedNormalizedSeverityPath)) {
+        selectedNormalizedSeverityPath = lastNormalizedSeverityArtifacts[0].path;
+      }
+      body.innerHTML = lastNormalizedSeverityArtifacts.map(artifact => {
+        const encodedPath = encodeURIComponent(artifact.path);
+        const selectedClass = artifact.path === selectedNormalizedSeverityPath ? "artifact-row-selected" : "";
+        return `
+          <tr class="${selectedClass}" data-path="${encodedPath}">
+            <td>${escapeHtml(artifact.group || "-")}</td>
+            <td><strong>${escapeHtml(artifact.name || "-")}</strong><br><span class="hint artifact-file">${escapeHtml(artifactFileName(artifact.path))}</span></td>
+            <td>${artifact.exists ? '<span class="badge ok">Exists</span>' : '<span class="badge error">Missing</span>'}</td>
+            <td>${escapeHtml(formatBytes(artifact.size_bytes))}</td>
+            <td>
+              <div class="artifact-actions">
+                <button type="button" class="artifact-action-btn" data-action="select" data-path="${encodedPath}">Select</button>
+                <a class="artifact-link" href="${artifactViewUrl(artifact.path)}" target="_blank" rel="noopener">Open</a>
+                <a class="artifact-link" href="${artifactDownloadUrl(artifact.path)}" download="${escapeHtml(artifactFileName(artifact.path))}" rel="noopener">Download</a>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join("");
+      renderNormalizedSeveritySummary(jobId);
+      renderNormalizedSeveritySelectionDetails();
+    }
+
+    async function useJob(jobId) {
+      const normalized = setSelectedJob(jobId);
+      if (!normalized) {
+        return;
+      }
+        document.getElementById("artifactMeta").textContent = `Loading original artefacts for ${normalized}...`;
+      await Promise.allSettled([
+        loadArtifacts({jobId: normalized, silent: true}),
+        loadTerminalView({jobId: normalized, silent: true}),
+      ]);
+    }
+
+    async function syncSelectedPanels(options = {}) {
+      const jobId = options.jobId ? setSelectedJob(options.jobId) : selectedJobId();
+      if (!jobId) {
+        return;
+      }
+      await Promise.allSettled([
+        options.loadArtifacts === false ? Promise.resolve() : loadArtifacts({jobId, silent: true}),
+        options.loadTerminal === false ? Promise.resolve() : loadTerminalView({jobId, silent: true}),
+      ]);
+    }
+
+    function watchJob(jobId) {
+      const normalized = String(jobId || "").trim();
+      if (!normalized) {
+        return;
+      }
+      [1200, 3000, 6000].forEach(delayMs => {
+        window.setTimeout(() => {
+          if (selectedJobId() === normalized) {
+            refreshData({jobId: normalized}).catch(() => {});
+          }
+        }, delayMs);
+      });
+    }
+
+    function checked(id) {
+      return document.getElementById(id).checked;
+    }
+
+    function clearFieldErrors(ids) {
+      for (const id of ids) {
+        const node = document.getElementById(id);
+        if (node) {
+          node.classList.remove("invalid");
+        }
+      }
+    }
+
+    function setFormError(targetId, message) {
+      const node = document.getElementById(targetId);
+      if (!node) {
+        return;
+      }
+      node.textContent = message || "";
+      node.style.display = message ? "block" : "none";
+    }
+
+    function describeError(err) {
+      if (!err) {
+        return "Unknown error.";
+      }
+      if (typeof err === "string") {
+        return err;
+      }
+      if (err instanceof Error) {
+        return err.message || String(err);
+      }
+      try {
+        return JSON.stringify(err);
+      } catch (_) {
+        return String(err);
+      }
+    }
+
+    function validateRequiredText(fields, errorTargetId) {
+      const missing = [];
+      clearFieldErrors(fields.map(field => field.id));
+      setFormError(errorTargetId, "");
+
+      for (const field of fields) {
+        const node = document.getElementById(field.id);
+        const value = node ? node.value.trim() : "";
+        if (!value) {
+          missing.push(field.label);
+          if (node) {
+            node.classList.add("invalid");
+          }
+        }
+      }
+
+      if (!missing.length) {
+        return true;
+      }
+
+      setFormError(errorTargetId, `Complete the required field(s): ${missing.join(", ")}.`);
+      return false;
+    }
+
+    function validateCheckboxGroup(ids, label, errorTargetId, minimum = 1) {
+      const ok = ids.some(id => checked(id));
+      if (!ok && minimum > 0) {
+        setFormError(errorTargetId, `Select at least one option for ${label}.`);
+      }
+      return ok || minimum === 0;
+    }
+
+    function selectedValues(ids) {
+      return ids.filter(checked);
+    }
+
+    function reportValues() {
+      return [
+        ["repJson", "json"],
+        ["repHtml", "html"],
+        ["repPdf", "pdf"],
+        ["repXlsx", "xlsx"],
+        ["repTxt", "txt_log"],
+      ].filter(([id]) => checked(id)).map(([, value]) => value);
+    }
+
+    function parseExtraOptions(options = {}) {
+      const { strict = false, errorTargetId = "jobFormError" } = options;
+      const node = document.getElementById("extraOptions");
+      const raw = String(node ? node.value || "" : "").trim();
+
+      if (!node || !raw) {
+        if (node) {
+          node.classList.remove("invalid");
+        }
+        return {};
+      }
+
+      try {
+        const parsed = JSON.parse(raw);
+        if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+          throw new Error("Extra Options must be a JSON object.");
+        }
+        node.classList.remove("invalid");
+        return parsed;
+      } catch (err) {
+        if (strict) {
+          node.classList.add("invalid");
+          setFormError(errorTargetId, `Extra Options JSON is invalid: ${describeError(err)}`);
+          throw err;
+        }
+        return {};
+      }
+    }
+
+    function frameworkSelections() {
+      return selectedValues(["fwArt", "fwFoolbox", "fwPyrit", "fwGarak", "fwTextAttack"])
+        .map(id => ({fwArt: "art", fwFoolbox: "foolbox", fwPyrit: "pyrit", fwGarak: "garak", fwTextAttack: "textattack"})[id]);
+    }
+
+    function looksLikeOllamaGenerateEndpoint(endpoint) {
+      const value = String(endpoint || "").trim().toLowerCase();
+      return value.includes("/api/generate") && (value.includes("127.0.0.1:11434") || value.includes("localhost:11434"));
+    }
+
+    function applyFrameworkRecommendations() {
+      if (!(checked("fwGarak") || checked("fwPyrit"))) {
+        return;
+      }
+
+      const taskFamily = document.getElementById("taskFamily");
+      const modality = document.getElementById("modality");
+      const pyritProfileNode = document.getElementById("pyritProfile");
+      const pyritProfile = String(pyritProfileNode ? pyritProfileNode.value || "text" : "text").trim().toLowerCase() || "text";
+      const currentTaskFamily = taskFamily.value.trim().toLowerCase();
+      const currentModality = modality.value.trim().toLowerCase();
+
+      if (checked("fwPyrit") && pyritProfile === "multimodal") {
+        if (!currentTaskFamily || currentTaskFamily === "text-generation" || currentTaskFamily === "audio-language") {
+          taskFamily.value = "multimodal-chat";
+        }
+        if (!currentModality || currentModality === "text" || currentModality === "audio") {
+          modality.value = "multimodal";
+        }
+        return;
+      }
+
+      if (!currentTaskFamily || currentTaskFamily === "audio-language") {
+        taskFamily.value = "text-generation";
+      }
+      if (!currentModality || currentModality === "audio") {
+        modality.value = "text";
+      }
+    }
+
+    function pyritAttackCatalog() {
+      return {
+        prompt_sending: "prompt_sending",
+        multi_prompt_sending: "multi_prompt_sending",
+        flip: "flip",
+        many_shot_jailbreak: "many_shot_jailbreak",
+        skeleton_key: "skeleton_key",
+        red_teaming: "red_teaming",
+        crescendo: "crescendo",
+      };
+    }
+
+    function allowedPyritAttacks(profile) {
+      return profile === "multimodal"
+        ? ["prompt_sending", "multi_prompt_sending"]
+        : ["prompt_sending", "flip", "many_shot_jailbreak", "skeleton_key", "red_teaming", "crescendo"];
+    }
+
+    function getSelectedPyritAttackTypes() {
+      const container = document.getElementById("pyritAttackChoices");
+      const selected = Array.from(container ? container.querySelectorAll("input[type='checkbox']:checked") : [])
+        .map(node => String(node.value || "").trim())
+        .filter(Boolean);
+      return selected.length ? selected : ["prompt_sending"];
+    }
+
+    function renderPyritAttackChoices(profile) {
+      const container = document.getElementById("pyritAttackChoices");
+      if (!container) {
+        return;
+      }
+
+      const priorSelected = new Set(getSelectedPyritAttackTypes());
+      const catalog = pyritAttackCatalog();
+      const allowedAttacks = allowedPyritAttacks(profile);
+      const resolvedSelected = allowedAttacks.filter(attack => priorSelected.has(attack));
+      const finalSelected = resolvedSelected.length ? resolvedSelected : ["prompt_sending"];
+
+      container.innerHTML = allowedAttacks.map(attack => {
+        const label = catalog[attack] || attack;
+        const checked = finalSelected.includes(attack) ? " checked" : "";
+        return `<label class="attack-choice"><input type="checkbox" value="${attack}"${checked} /><code>${label}</code></label>`;
+      }).join("");
+    }
+
+    function buildStructuredExtraOptions(frameworks) {
+      const extra = {};
+      const sourceValue = document.getElementById("sourceValue").value.trim();
+      const samplePath = document.getElementById("samplePath").value.trim();
+      if (frameworks.includes("garak")) {
+        const probe = document.getElementById("garakProbe").value.trim();
+        const timeout = Number(document.getElementById("garakTimeout").value || "0");
+        const generations = Number(document.getElementById("garakGenerations").value || "0");
+        const runtimeModel = document.getElementById("garakRuntimeModel").value.trim();
+        const promptField = document.getElementById("garakPromptField").value.trim() || "prompt";
+        const responseField = document.getElementById("garakResponseField").value.trim() || "response";
+        const ollamaEndpoint = looksLikeOllamaGenerateEndpoint(sourceValue);
+
+        if (probe) {
+          extra.garak_probes = probe;
+        }
+        if (sourceValue) {
+          extra.garak_endpoint_uri = sourceValue;
+        }
+        if (timeout > 0) {
+          extra.garak_response_timeout = timeout;
+        }
+        if (generations > 0) {
+          extra.garak_generations = generations;
+        }
+        if (responseField) {
+          extra.garak_response_json = true;
+          extra.garak_response_json_field = responseField;
+        }
+
+        const requestTemplate = {
+          [promptField]: "$INPUT",
+        };
+        if (runtimeModel) {
+          requestTemplate.model = runtimeModel;
+        }
+        if (ollamaEndpoint && requestTemplate.stream === undefined) {
+          requestTemplate.stream = false;
+        }
+        extra.garak_request_template_json_object = requestTemplate;
+      }
+
+      if (frameworks.includes("pyrit")) {
+        const profile = (document.getElementById("pyritProfile").value || "text").trim().toLowerCase() || "text";
+        const selectedAttacks = getSelectedPyritAttackTypes();
+        const attackTypes = selectedAttacks.length ? selectedAttacks : ["prompt_sending"];
+        const primaryAttackType = attackTypes[0];
+        const includesAttack = name => attackTypes.includes(name);
+        const multiTurnAttack = includesAttack("red_teaming") || includesAttack("crescendo");
+        const runtimeModel = document.getElementById("pyritRuntimeModel").value.trim();
+        const timeout = document.getElementById("pyritTimeout").value.trim();
+        const maxAttempts = document.getElementById("pyritMaxAttempts").value.trim();
+        const manyShotExampleCount = document.getElementById("pyritManyShotExampleCount").value.trim();
+        const maxTurns = document.getElementById("pyritMaxTurns").value.trim();
+        const maxBacktracks = document.getElementById("pyritMaxBacktracks").value.trim();
+        const adversarialModel = document.getElementById("pyritAdversarialModel").value.trim();
+        const adversarialEndpoint = document.getElementById("pyritAdversarialEndpoint").value.trim();
+        const objectiveScorerMode = document.getElementById("pyritObjectiveScorerMode").value.trim();
+        const expectedResponse = document.getElementById("pyritExpectedResponse").value.trim();
+        const expectedResponseList = expectedResponse
+          .split(/[\n,;]+/)
+          .map(value => value.trim())
+          .filter(Boolean);
+        const forbiddenLiteralText = document.getElementById("pyritForbiddenLiterals").value.trim();
+        const forbiddenLiteralList = forbiddenLiteralText
+          .split(/[\n,;]+/)
+          .map(value => value.trim())
+          .filter(Boolean);
+        const expectedMaxWords = document.getElementById("pyritExpectedMaxWords").value.trim();
+        const expectedMaxSentences = document.getElementById("pyritExpectedMaxSentences").value.trim();
+        const skeletonKeyPrompt = document.getElementById("pyritSkeletonKeyPrompt").value.trim();
+        const objective = document.getElementById("pyritObjective").value.trim();
+        const seedText = document.getElementById("pyritSeedText").value.trim();
+        const seedImagePath = document.getElementById("pyritSeedImagePath").value.trim();
+        const followUpText = document.getElementById("pyritFollowUpText").value.trim();
+
+        if (sourceValue) {
+          extra.pyrit_endpoint_uri = sourceValue;
+        }
+        extra.pyrit_profile = profile;
+        if (attackTypes.length) {
+          extra.pyrit_attack_types = attackTypes;
+          extra.pyrit_attack_type = primaryAttackType;
+        }
+        if (runtimeModel) {
+          extra.pyrit_model_name = runtimeModel;
+        }
+        if (timeout) {
+          extra.pyrit_request_timeout = Number(timeout);
+        }
+        if (maxAttempts) {
+          extra.pyrit_max_attempts_on_failure = Number(maxAttempts);
+        }
+        if (includesAttack("many_shot_jailbreak") && manyShotExampleCount) {
+          extra.pyrit_many_shot_example_count = Number(manyShotExampleCount);
+        }
+        if ((multiTurnAttack || includesAttack("skeleton_key")) && maxTurns) {
+          extra.pyrit_max_turns = Number(maxTurns);
+        }
+        if (includesAttack("crescendo") && maxBacktracks) {
+          extra.pyrit_max_backtracks = Number(maxBacktracks);
+        }
+        if (multiTurnAttack && adversarialModel) {
+          extra.pyrit_adversarial_model_name = adversarialModel;
+        }
+        if (multiTurnAttack && adversarialEndpoint) {
+          extra.pyrit_adversarial_endpoint_uri = adversarialEndpoint;
+        }
+        if (objectiveScorerMode) {
+          extra.pyrit_objective_scorer_mode = objectiveScorerMode;
+        }
+        if (expectedResponseList.length > 1) {
+          extra.pyrit_expected_responses = expectedResponseList;
+          extra.pyrit_expected_response = expectedResponseList[0];
+        } else if (expectedResponse) {
+          extra.pyrit_expected_response = expectedResponse;
+        }
+        if (forbiddenLiteralList.length) {
+          extra.pyrit_forbidden_literals = forbiddenLiteralList;
+        }
+        if (expectedMaxWords) {
+          extra.pyrit_expected_max_words = Number(expectedMaxWords);
+        }
+        if (expectedMaxSentences) {
+          extra.pyrit_expected_max_sentences = Number(expectedMaxSentences);
+        }
+        if (includesAttack("skeleton_key") && skeletonKeyPrompt) {
+          extra.pyrit_skeleton_key_prompt = skeletonKeyPrompt;
+        }
+        if (objective) {
+          extra.pyrit_objective = objective;
+        }
+        if (profile === "multimodal") {
+          if (seedText) {
+            extra.pyrit_seed_text = seedText;
+          }
+          if (seedImagePath || samplePath) {
+            extra.pyrit_seed_image_path = seedImagePath || samplePath;
+          }
+          if (followUpText) {
+            extra.pyrit_follow_up_text = followUpText;
+          }
+        }
+      }
+
+      if (frameworks.includes("textattack")) {
+        const recipe = document.getElementById("textattackRecipe").value.trim();
+        const goalFunction = document.getElementById("textattackGoalFunction").value.trim();
+        const maxExamples = document.getElementById("textattackMaxExamples").value.trim();
+        const queryBudget = document.getElementById("textattackQueryBudget").value.trim();
+        const constraintMode = document.getElementById("textattackConstraintMode").value.trim();
+
+        if (recipe) {
+          extra.textattack_recipe = recipe;
+        }
+        if (goalFunction) {
+          extra.textattack_goal_function = goalFunction;
+        }
+        if (maxExamples) {
+          extra.textattack_max_examples = Number(maxExamples);
+        }
+        if (queryBudget) {
+          extra.textattack_query_budget = Number(queryBudget);
+        }
+        if (constraintMode) {
+          extra.textattack_constraint_mode = constraintMode;
+        }
+      }
+
+      return extra;
+    }
+
+    function useSamplePathForPyritSeedImage() {
+      const samplePathNode = document.getElementById("samplePath");
+      const seedImagePathNode = document.getElementById("pyritSeedImagePath");
+      if (!samplePathNode || !seedImagePathNode) {
+        return;
+      }
+      const samplePath = String(samplePathNode.value || "").trim();
+      if (!samplePath) {
+        setFormError("scanFormError", "Set Sample Path first if you want to reuse it as the PyRIT multimodal seed image.");
+        samplePathNode.classList.add("invalid");
+        return;
+      }
+      samplePathNode.classList.remove("invalid");
+      seedImagePathNode.classList.remove("invalid");
+      seedImagePathNode.value = samplePath;
+      clearFormError("scanFormError");
+    }
+
+    function updatePyritProfileLabels(profile) {
+      const resolvedProfile = String(profile || "text").trim().toLowerCase() || "text";
+      const multimodal = resolvedProfile === "multimodal";
+
+      const setText = (id, value) => {
+        const node = document.getElementById(id);
+        if (node) {
+          node.textContent = value;
+        }
+      };
+      const setPlaceholder = (id, value) => {
+        const node = document.getElementById(id);
+        if (node) {
+          node.placeholder = value;
+        }
+      };
+      const setHidden = (id, hidden) => {
+        const node = document.getElementById(id);
+        if (node) {
+          node.hidden = Boolean(hidden);
+        }
+      };
+
+      setText("pyritAttackLabel", multimodal ? "Attack Set" : "Attack");
+      setText("pyritRuntimeModelLabel", multimodal ? "Target VLM Model (optional)" : "Request Model (optional)");
+      setText("pyritExpectedResponseLabel", multimodal ? "Required Words / Phrases (optional)" : "Expected Response / Required Literals (optional)");
+      setText("pyritScoringNotesLabel", multimodal ? "Multimodal Scoring Notes" : "Scoring Notes");
+      setText("pyritObjectiveLabel", multimodal ? "Target Instruction Override" : "Objective Override");
+      setText("pyritAttackNotesLabel", multimodal ? "Multimodal Attack Notes" : "Attack Notes");
+      setText("pyritManyShotLabel", multimodal ? "Many-Shot Example Count (text-only)" : "Many-Shot Example Count");
+      setText("pyritMaxTurnsLabel", multimodal ? "Conversation Turns" : "Max Turns");
+      setText("pyritMaxBacktracksLabel", multimodal ? "Max Backtracks (text-only)" : "Max Backtracks");
+      setText("pyritAdversarialModelLabel", multimodal ? "Adversarial Model (text-only)" : "Adversarial Model (optional)");
+      setText("pyritAdversarialEndpointLabel", multimodal ? "Adversarial Endpoint (text-only)" : "Adversarial Endpoint (optional)");
+      setText("pyritSkeletonKeyLabel", multimodal ? "Skeleton Key Prompt Override (text-only)" : "Skeleton Key Prompt Override (optional)");
+
+      setPlaceholder(
+        "pyritExpectedResponse",
+        multimodal
+          ? "screenshot, dashboard"
+          : "PYRIT_SKELETON_KEY_SUCCESS or screenshot, dashboard"
+      );
+      setPlaceholder(
+        "pyritObjective",
+        multimodal
+          ? "Optional override for the VLM instruction. If blank, PyRIT uses Target Text or Seed Text."
+          : "If blank, PyRIT uses the global Target Text field. Example: Return the exact string PYRIT_SMOKE_TEST."
+      );
+
+      setHidden("pyritAdvancedAttackRow", multimodal);
+      setHidden("pyritAdversarialEndpointRow", multimodal);
+      setHidden("pyritSkeletonKeyRow", multimodal);
+
+      const objectiveHint = document.getElementById("pyritObjectiveHint");
+      if (objectiveHint) {
+        objectiveHint.textContent = multimodal
+          ? "For VLM runs, set Source Value to the model endpoint, provide a Seed Image Path or reuse Sample Path, and optionally use this field to override the target instruction that PyRIT scores."
+          : "Common local test: set `Source Value` to your Ollama endpoint, `Model ID` to the runtime model, and either fill this objective or use the global `Target Text` field.";
+      }
+
+      const forbiddenNode = document.getElementById("pyritForbiddenLiterals");
+      if (forbiddenNode && multimodal && !forbiddenNode.placeholder) {
+        forbiddenNode.placeholder = "sorry, cannot comply";
+      }
+    }
+
+    function syncPyritProfileOptions() {
+      const profileNode = document.getElementById("pyritProfile");
+      const multimodalSeedRow = document.getElementById("pyritMultimodalSeedRow");
+      const profile = String(profileNode ? profileNode.value || "text" : "text").trim().toLowerCase() || "text";
+      renderPyritAttackChoices(profile);
+
+      if (multimodalSeedRow) {
+        multimodalSeedRow.hidden = profile !== "multimodal";
+      }
+
+      updatePyritProfileLabels(profile);
+    }
+
+    function validatePyritConfiguration(errorTargetId) {
+      if (!checked("fwPyrit")) {
+        return true;
+      }
+
+      const profile = String(document.getElementById("pyritProfile").value || "text").trim().toLowerCase() || "text";
+      const taskFamilyNode = document.getElementById("taskFamily");
+      const modalityNode = document.getElementById("modality");
+      const targetTextNode = document.getElementById("targetText");
+      const objectiveNode = document.getElementById("pyritObjective");
+      const seedTextNode = document.getElementById("pyritSeedText");
+      const seedImagePathNode = document.getElementById("pyritSeedImagePath");
+      const followUpTextNode = document.getElementById("pyritFollowUpText");
+      const samplePathNode = document.getElementById("samplePath");
+      const selectedAttacks = getSelectedPyritAttackTypes();
+      const attackTypes = selectedAttacks.length ? selectedAttacks : ["prompt_sending"];
+      const hasAttack = name => attackTypes.includes(name);
+
+      const nodesToClear = [
+        taskFamilyNode,
+        modalityNode,
+        targetTextNode,
+        objectiveNode,
+        seedTextNode,
+        seedImagePathNode,
+        followUpTextNode,
+        samplePathNode,
+      ].filter(Boolean);
+      clearFieldErrors(nodesToClear.map(node => node.id));
+
+      if (profile !== "multimodal") {
+        return true;
+      }
+
+      const taskFamily = String(taskFamilyNode ? taskFamilyNode.value || "" : "").trim().toLowerCase();
+      const modality = String(modalityNode ? modalityNode.value || "" : "").trim().toLowerCase();
+      const targetText = String(targetTextNode ? targetTextNode.value || "" : "").trim();
+      const objective = String(objectiveNode ? objectiveNode.value || "" : "").trim();
+      const seedText = String(seedTextNode ? seedTextNode.value || "" : "").trim();
+      const seedImagePath = String(seedImagePathNode ? seedImagePathNode.value || "" : "").trim();
+      const samplePath = String(document.getElementById("samplePath").value || "").trim();
+      const followUpText = String(followUpTextNode ? followUpTextNode.value || "" : "").trim();
+
+      const issues = [];
+      if (taskFamily !== "multimodal-chat") {
+        issues.push("Task Family must be 'multimodal-chat' for the PyRIT multimodal profile.");
+        if (taskFamilyNode) {
+          taskFamilyNode.classList.add("invalid");
+        }
+      }
+      if (modality !== "multimodal") {
+        issues.push("Modality must be 'multimodal' for the PyRIT multimodal profile.");
+        if (modalityNode) {
+          modalityNode.classList.add("invalid");
+        }
+      }
+      if (!(seedImagePath || samplePath)) {
+        issues.push("Seed Image Path or Sample Path is required for the PyRIT multimodal profile.");
+        if (seedImagePathNode) {
+          seedImagePathNode.classList.add("invalid");
+        }
+        if (samplePathNode) {
+          samplePathNode.classList.add("invalid");
+        }
+      }
+      if (!(seedText || objective || targetText)) {
+        issues.push("Provide Seed Text, Objective Override, or Target Text for the PyRIT multimodal profile.");
+        if (seedTextNode) {
+          seedTextNode.classList.add("invalid");
+        }
+        if (objectiveNode) {
+          objectiveNode.classList.add("invalid");
+        }
+        if (targetTextNode) {
+          targetTextNode.classList.add("invalid");
+        }
+      }
+      if (hasAttack("multi_prompt_sending") && !(followUpText || objective || targetText)) {
+        issues.push("multi_prompt_sending needs Follow-up Text, Objective Override, or Target Text.");
+        if (followUpTextNode) {
+          followUpTextNode.classList.add("invalid");
+        }
+        if (objectiveNode) {
+          objectiveNode.classList.add("invalid");
+        }
+        if (targetTextNode) {
+          targetTextNode.classList.add("invalid");
+        }
+      }
+
+      if (!issues.length) {
+        return true;
+      }
+
+      setFormError(errorTargetId, issues.join(" "));
+      return false;
+    }
+
+    function applyPyritAttackPreset() {
+      syncPyritProfileOptions();
+      applyFrameworkRecommendations();
+      const profileNode = document.getElementById("pyritProfile");
+      const profile = String(profileNode ? profileNode.value || "text" : "text").trim().toLowerCase() || "text";
+      const attackTypes = getSelectedPyritAttackTypes();
+      const selectedAttackTypes = attackTypes.length ? attackTypes : ["prompt_sending"];
+      const primaryAttackType = selectedAttackTypes[0];
+      const hasAttack = name => selectedAttackTypes.includes(name);
+      const manyShotNode = document.getElementById("pyritManyShotExampleCount");
+      const maxTurnsNode = document.getElementById("pyritMaxTurns");
+      const maxBacktracksNode = document.getElementById("pyritMaxBacktracks");
+      const adversarialModelNode = document.getElementById("pyritAdversarialModel");
+      const adversarialEndpointNode = document.getElementById("pyritAdversarialEndpoint");
+      const skeletonKeyPromptNode = document.getElementById("pyritSkeletonKeyPrompt");
+      const followUpTextNode = document.getElementById("pyritFollowUpText");
+      const presetHintNode = document.getElementById("pyritAttackPresetHint");
+      const usageHintNode = document.getElementById("pyritAttackUsageHint");
+      const scoringHintNode = document.getElementById("pyritScoringHint");
+      const selectionHintNode = document.getElementById("pyritAttackSelectionHint");
+
+      const presets = {
+        prompt_sending: {
+          maxTurns: "1",
+          maxBacktracks: "0",
+          hint: "Preset: single-turn baseline with one turn and no backtracking.",
+          usage: "Best for a quick smoke test. Use `Expected Response` plus `exact_literal` for strict success checks.",
+          scoring: "Explicit expected-response text is optional here, but it makes the verdict more reliable.",
+          enableManyShot: false,
+          enableMultiTurn: false,
+          enableSkeletonPrompt: false,
+        },
+        multi_prompt_sending: {
+          maxTurns: "2",
+          maxBacktracks: "0",
+          hint: "Preset: multimodal-safe multi-prompt sending with one seed turn and one follow-up turn.",
+          usage: "Use this when you want a real multi-turn VLM test: the first turn carries seed text plus image, and the optional follow-up text becomes the second user turn.",
+          scoring: "For VLM runs, `contains_literal` is a good default when the model may embed the expected token in a longer sentence.",
+          enableManyShot: false,
+          enableMultiTurn: false,
+          enableSkeletonPrompt: false,
+        },
+        flip: {
+          maxTurns: "1",
+          maxBacktracks: "0",
+          hint: "Preset: single-turn Flip attack with one turn and no backtracking.",
+          usage: "Flip mutates the request and still behaves like a single-turn run.",
+          scoring: "Use `Expected Response` if you want the report to check for a precise success marker.",
+          enableManyShot: false,
+          enableMultiTurn: false,
+          enableSkeletonPrompt: false,
+        },
+        many_shot_jailbreak: {
+          maxTurns: "1",
+          maxBacktracks: "0",
+          hint: "Preset: single-turn many-shot jailbreak with bundled examples.",
+          usage: "Only `Many-Shot Example Count` matters here from the attack-specific controls.",
+          scoring: "Use `contains_literal` if the model tends to wrap the target string inside a longer answer.",
+          enableManyShot: true,
+          enableMultiTurn: false,
+          enableSkeletonPrompt: false,
+        },
+        skeleton_key: {
+          maxTurns: "2",
+          maxBacktracks: "0",
+          hint: "Preset: two-turn skeleton key flow, one priming turn plus one objective turn.",
+          usage: "Use `Skeleton Key Prompt Override` only when you want to replace PyRIT's bundled priming prompt.",
+          scoring: "Strict `exact_literal` works well when your objective says `reply with exactly:`.",
+          enableManyShot: false,
+          enableMultiTurn: false,
+          enableSkeletonPrompt: true,
+        },
+        red_teaming: {
+          maxTurns: "6",
+          maxBacktracks: "0",
+          hint: "Preset: multi-turn red teaming with six turns and a separate adversarial chat loop.",
+          usage: "Set `Adversarial Model` or `Adversarial Endpoint` only when you want a different attacker model from the target.",
+          scoring: "Multi-turn attacks should usually keep scoring enabled and use an explicit expected response.",
+          enableManyShot: false,
+          enableMultiTurn: true,
+          enableSkeletonPrompt: false,
+        },
+        crescendo: {
+          maxTurns: "8",
+          maxBacktracks: "3",
+          hint: "Preset: Crescendo multi-turn attack with backtracking enabled.",
+          usage: "Crescendo benefits from a clear success string and can use the same local model as both attacker and target for testing.",
+          scoring: "Use `contains_literal` if the model may embed the success token in a longer response.",
+          enableManyShot: false,
+          enableMultiTurn: true,
+          enableSkeletonPrompt: false,
+        },
+      };
+
+      const preset = presets[primaryAttackType] || presets.prompt_sending;
+      if (maxTurnsNode) {
+        const value = hasAttack("crescendo") ? "8" : hasAttack("red_teaming") ? "6" : hasAttack("skeleton_key") ? "2" : preset.maxTurns;
+        maxTurnsNode.value = value;
+      }
+      if (maxBacktracksNode) {
+        maxBacktracksNode.value = hasAttack("crescendo") ? "3" : "0";
+      }
+      if (presetHintNode) {
+        presetHintNode.textContent = profile === "multimodal"
+          ? selectedAttackTypes.length > 1
+          ? `Preset: multimodal profile is enabled. ${selectedAttackTypes.join(", ")} will run sequentially for Vision-Language testing.`
+          : "Preset: multimodal profile is enabled. This build certifies `prompt_sending` and `multi_prompt_sending` for Vision-Language testing."
+          : selectedAttackTypes.length > 1
+          ? `Preset: ${selectedAttackTypes.join(", ")} selected. Shared knobs are enabled only where they apply.`
+          : preset.hint;
+      }
+      if (usageHintNode) {
+        usageHintNode.textContent = profile === "multimodal"
+          ? "Multimodal (Vision-Language support only) supports `prompt_sending` and `multi_prompt_sending` in this phase. Provide the seed image path, and add follow-up text when you want a second user turn."
+          : selectedAttackTypes.length > 1
+          ? "This PyRIT job will run the selected attacks sequentially and aggregate them into one report."
+          : preset.usage;
+      }
+      if (selectionHintNode) {
+        selectionHintNode.textContent = profile === "multimodal"
+          ? `Selected attacks: ${selectedAttackTypes.join(", ")}. Multimodal mode only exposes the VLM-certified attack set.`
+          : `Selected attacks: ${selectedAttackTypes.join(", ")}. You can pick one or more text attacks in a single PyRIT job.`;
+      }
+      if (scoringHintNode) {
+        scoringHintNode.textContent = profile === "multimodal"
+          ? "Scoring remains text-based in this phase, but now supports stronger response-shape checks. Use expected literals for content, forbidden literals for blocked phrasing, and Max Words / Max Sentences when you want the VLM answer constrained to a short format."
+          : selectedAttackTypes.length > 1
+          ? "For multi-attack runs, set an explicit expected response so the platform can score each attack consistently. Optional forbidden literals and response-length limits can add a stricter platform verdict."
+          : preset.scoring;
+      }
+      if (manyShotNode) {
+        manyShotNode.disabled = !hasAttack("many_shot_jailbreak");
+      }
+      if (adversarialModelNode) {
+        adversarialModelNode.disabled = !(hasAttack("red_teaming") || hasAttack("crescendo"));
+      }
+      if (adversarialEndpointNode) {
+        adversarialEndpointNode.disabled = !(hasAttack("red_teaming") || hasAttack("crescendo"));
+      }
+      if (maxBacktracksNode) {
+        maxBacktracksNode.disabled = !hasAttack("crescendo");
+      }
+      if (skeletonKeyPromptNode) {
+        skeletonKeyPromptNode.disabled = !hasAttack("skeleton_key");
+      }
+      if (followUpTextNode) {
+        followUpTextNode.disabled = !(profile === "multimodal" && hasAttack("multi_prompt_sending"));
+      }
+    }
+
+    function scanPayload() {
+      const frameworks = frameworkSelections();
+      const structuredExtraOptions = buildStructuredExtraOptions(frameworks);
+      const advancedExtraOptions = parseExtraOptions();
+      return {
+        job_name: document.getElementById("jobName").value.trim(),
+        model: {
+          model_id: document.getElementById("modelId").value.trim(),
+          source_type: document.getElementById("sourceType").value,
+          source_value: document.getElementById("sourceValue").value.trim(),
+          task_family: document.getElementById("taskFamily").value.trim().toLowerCase(),
+          modality: document.getElementById("modality").value.trim().toLowerCase(),
+        },
+        configuration: {
+          execution_backend: document.getElementById("executionBackend").value,
+          scan_modes: selectedValues(["modeBlackbox", "modeWhitebox"]).map(id => id === "modeBlackbox" ? "blackbox" : "whitebox"),
+          frameworks,
+          reports: reportValues(),
+          sample_path: document.getElementById("samplePath").value.trim(),
+          min_samples: Number(document.getElementById("minSamples").value || "1"),
+          max_iter: Number(document.getElementById("maxIter").value || "1"),
+          batch_size: Number(document.getElementById("batchSize").value || "1"),
+          include_all_applicable_attacks: true,
+          target_text: document.getElementById("targetText").value.trim() || null,
+          extra_options: {
+            ...structuredExtraOptions,
+            ...advancedExtraOptions,
+          },
+        },
+        wrapper_id: document.getElementById("wrapperSelect").value || null,
+      };
+    }
+
+    function frameworkSupported(capabilities, framework) {
+      const map = {
+        art: "supports_art",
+        foolbox: "supports_foolbox",
+        pyrit: "supports_pyrit",
+        garak: "supports_garak",
+        textattack: "supports_textattack",
+      };
+      const supportedFrameworks = capabilities.supported_frameworks || [];
+      const flag = map[framework];
+      const flagValue = flag ? !!capabilities[flag] : false;
+      if (supportedFrameworks.length) {
+        return supportedFrameworks.includes(framework) || flagValue;
+      }
+      return flagValue;
+    }
+
+    function normalizeTaskFamily(taskFamily) {
+      const value = String(taskFamily || "").trim().toLowerCase();
+      if (value === "image-classification") {
+        return "vision-classification";
+      }
+      return value;
+    }
+
+    function evaluateWrapperCompatibility(wrapper, payload) {
+      const capabilities = wrapper.capabilities || {};
+      const reasons = [];
+      const warnings = [];
+      const backend = payload.configuration.execution_backend;
+      const modality = String(payload.model.modality || "").trim().toLowerCase();
+      const taskFamily = normalizeTaskFamily(payload.model.task_family);
+
+      if (backend === "api_based" && !capabilities.supports_api_models) {
+        reasons.push("Does not advertise support for API-based models.");
+      }
+      if (backend === "python_process_wrapped" && !capabilities.supports_python_process_models) {
+        reasons.push("Does not advertise support for python-process-wrapped models.");
+      }
+
+      const supportedModalities = capabilities.supported_modalities || [];
+      if (supportedModalities.length && modality && !supportedModalities.includes(modality)) {
+        reasons.push(`Does not advertise support for modality '${modality}'.`);
+      }
+
+      const supportedTaskFamilies = (capabilities.supported_task_families || []).map(normalizeTaskFamily);
+      if (supportedTaskFamilies.length && taskFamily && !supportedTaskFamilies.includes(taskFamily)) {
+        reasons.push(`Does not advertise support for task family '${payload.model.task_family}'.`);
+      }
+
+      if (payload.configuration.scan_modes.includes("blackbox") && !capabilities.supports_blackbox) {
+        reasons.push("Does not support black-box scans.");
+      }
+      if (payload.configuration.scan_modes.includes("whitebox") && !capabilities.supports_whitebox) {
+        reasons.push("Does not support white-box scans.");
+      }
+
+      const unsupportedFrameworks = payload.configuration.frameworks.filter(framework => !frameworkSupported(capabilities, framework));
+      if (unsupportedFrameworks.length) {
+        reasons.push(`Does not support framework(s): ${unsupportedFrameworks.join(", ")}.`);
+      }
+
+      if (backend === "api_based" && payload.configuration.scan_modes.includes("whitebox")) {
+        warnings.push("API-based white-box runs usually require a richer adapter boundary than a plain hosted endpoint.");
+      }
+
+      if (
+        payload.configuration.scan_modes.includes("whitebox") &&
+        payload.configuration.frameworks.some(framework => ["art", "foolbox"].includes(framework))
+      ) {
+        if (!capabilities.supports_gradients) {
+          warnings.push("Gradient-based white-box workflows may be limited because this wrapper does not advertise gradients.");
+        }
+        if (!capabilities.supports_logits) {
+          warnings.push("Some estimator workflows may be limited because this wrapper does not advertise logits.");
+        }
+      }
+
+      return { compatible: reasons.length === 0, reasons, warnings };
+    }
+
+    function renderFrameworkPanels() {
+      applyFrameworkRecommendations();
+      const garakPanel = document.getElementById("garakPanel");
+      if (garakPanel) {
+        garakPanel.classList.toggle("active", checked("fwGarak"));
+      }
+      const textattackPanel = document.getElementById("textattackPanel");
+      if (textattackPanel) {
+        textattackPanel.classList.toggle("active", checked("fwTextAttack"));
+      }
+      const pyritPanel = document.getElementById("pyritPanel");
+      if (pyritPanel) {
+        pyritPanel.classList.toggle("active", checked("fwPyrit"));
+      }
+      applyTextAttackRecipeHint();
+    }
+
+    function applyTextAttackRecipeHint() {
+      const recipe = String(document.getElementById("textattackRecipe")?.value || "deepwordbug").trim().toLowerCase();
+      const hint = document.getElementById("textattackRecipeHint");
+      if (!hint) return;
+      const hints = {
+        deepwordbug: "`deepwordbug` is the lightest smoke recipe and a good first validation pass.",
+        textfooler: "`textfooler` is the strongest semantic baseline here, but usually the heaviest and slowest of the certified set.",
+        pwws: "`pwws` is a balanced synonym-substitution recipe that is often easier to smoke test than TextFooler.",
+        bae: "`bae` uses masked-language-model substitutions, so it is usually the richest but can be the most download-heavy recipe in this first lane.",
+      };
+      hint.textContent = hints[recipe] || "`deepwordbug` is the lightest smoke recipe and a good first validation pass.";
+    }
+
+    function renderWrapperOptions() {
+      const select = document.getElementById("wrapperSelect");
+      const hint = document.getElementById("wrapperHint");
+      const current = select.value;
+      const payload = scanPayload();
+      const evaluations = wrapperRegistry.map(wrapper => ({ wrapper, compatibility: evaluateWrapperCompatibility(wrapper, payload) }));
+      const compatible = evaluations.filter(row => row.compatibility.compatible);
+      const selected = evaluations.find(row => row.wrapper.wrapper_id === current);
+
+      select.innerHTML = "<option value=''>None</option>";
+      for (const row of compatible) {
+        const option = document.createElement("option");
+        option.value = row.wrapper.wrapper_id;
+        option.textContent = `${row.wrapper.display_name} (${row.wrapper.wrapper_id})`;
+        select.appendChild(option);
+      }
+
+      if (current && compatible.some(row => row.wrapper.wrapper_id === current)) {
+        select.value = current;
+      }
+
+      if (current && !compatible.some(row => row.wrapper.wrapper_id === current) && selected) {
+        const option = document.createElement("option");
+        option.value = selected.wrapper.wrapper_id;
+        option.textContent = `${selected.wrapper.display_name} (${selected.wrapper.wrapper_id}) [incompatible]`;
+        select.appendChild(option);
+        select.value = current;
+      }
+
+      if (!compatible.length) {
+        const topReasons = evaluations
+          .filter(row => row.compatibility.reasons.length)
+          .slice(0, 3)
+          .map(row => `${row.wrapper.wrapper_id}: ${row.compatibility.reasons.join(" ")}`)
+          .join(" | ");
+        hint.textContent = topReasons
+          ? `No saved wrappers currently match the selected backend, modality, scan modes, and frameworks. ${topReasons}`
+          : "No saved wrappers currently match the selected backend, modality, scan modes, and frameworks.";
+      } else if (selected && !selected.compatibility.compatible) {
+        hint.textContent = `Selected wrapper is incompatible: ${selected.compatibility.reasons.join(" ")}`;
+      } else {
+        hint.textContent = `${compatible.length} compatible wrapper(s) match the current selection.`;
+      }
+    }
+
+    function renderWrapperMatrix() {
+      const body = document.getElementById("wrapperMatrixBody");
+      if (!wrapperRegistry.length) {
+        body.innerHTML = "<tr><td colspan='11'>No wrappers registered yet.</td></tr>";
+        return;
+      }
+
+      body.innerHTML = wrapperRegistry.map(wrapper => {
+        const caps = wrapper.capabilities || {};
+        const modalities = (caps.supported_modalities || []).join(", ") || "any";
+        const taskFamilies = (caps.supported_task_families || []).join(", ") || "any";
+        return `
+          <tr>
+            <td><strong>${escapeHtml(wrapper.display_name)}</strong><br><span class="hint">${escapeHtml(wrapper.wrapper_id)}</span></td>
+            <td>${escapeHtml(modalities)}</td>
+            <td>${escapeHtml(taskFamilies)}</td>
+            <td>${boolBadge(caps.supports_api_models)}</td>
+            <td>${boolBadge(caps.supports_python_process_models)}</td>
+            <td>${boolBadge(caps.supports_blackbox)}</td>
+            <td>${boolBadge(caps.supports_whitebox)}</td>
+            <td>${boolBadge(caps.supports_art)}</td>
+            <td>${boolBadge(caps.supports_foolbox)}</td>
+            <td>${boolBadge(caps.supports_logits)}</td>
+            <td>${boolBadge(caps.supports_gradients)}</td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function renderFrameworkRuntime() {
+      const body = document.getElementById("frameworkRuntimeBody");
+      const runtimeInventory = (platformOptions && platformOptions.framework_runtime) || {};
+      const rows = Object.values(runtimeInventory);
+      if (!rows.length) {
+        body.innerHTML = "<tr><td colspan='7'>Framework runtime status is not available yet.</td></tr>";
+        return;
+      }
+
+      body.innerHTML = rows.map(row => {
+        const fw = row.framework || "-";
+        const versionLabel = row.installed_version
+          ? `<span style="color:var(--ink)">${escapeHtml(row.installed_version)}</span>`
+          : `<span style="color:var(--ink-soft)">—</span>`;
+        const versionWarning = row.installed && row.version_ok === false
+          ? ` <span style="color:#f59e0b;font-size:11px;">below minimum ${escapeHtml(row.minimum_version || "")}</span>`
+          : "";
+        const installBtn = `<button type="button" style="font-size:11px;padding:3px 10px;"
+          id="installBtn_${escapeHtml(fw)}"
+          onclick="installFramework('${escapeHtml(fw)}')"
+          >${row.installed ? "Upgrade" : "Install"}</button>`;
+        return `
+        <tr id="fwrow_${escapeHtml(fw)}">
+          <td><strong>${escapeHtml(fw)}</strong></td>
+          <td>${boolBadge(row.installed)}</td>
+          <td>${versionLabel}${versionWarning}</td>
+          <td>${escapeHtml(row.package_name || "-")}</td>
+          <td>${escapeHtml(deliveryLabel(row.delivery))}</td>
+          <td>${escapeHtml([
+            row.python_requirement ? `python ${row.python_requirement}` : "",
+            row.python_compatible === false ? "⚠ python incompatible" : "",
+            row.notes || ""
+          ].filter(Boolean).join(" | ") || "-")}</td>
+          <td>${installBtn}</td>
+        </tr>`;
+      }).join("");
+
+      const runtimeNotes = platformOptions.runtime_notes || {};
+      const note = [
+        String(runtimeNotes.local_model_servers || "").trim(),
+        String(runtimeNotes.deployment_bootstrap || "").trim(),
+      ].filter(Boolean).join(" ");
+      document.getElementById("frameworkRuntimeNote").textContent = note
+        || "Shows which framework engines are installed in the current platform environment.";
+    }
+
+    async function installFramework(framework) {
+      const btn = document.getElementById(`installBtn_${framework}`);
+      const statusEl = document.getElementById("installAllStatus");
+      if (btn) { btn.disabled = true; btn.textContent = "Installing…"; }
+      if (statusEl) statusEl.textContent = `Installing ${framework}…`;
+      try {
+        const resp = await fetch(`/api/install/${encodeURIComponent(framework)}`, { method: "POST" });
+        const data = await resp.json();
+        if (data.status === "installed") {
+          if (btn) { btn.textContent = "Upgrade"; btn.disabled = false; }
+          if (statusEl) statusEl.textContent = `${framework} ${data.installed_version || ""} installed ✓`;
+        } else {
+          if (btn) { btn.textContent = "Retry"; btn.disabled = false; }
+          if (statusEl) statusEl.textContent = `${framework} install failed: ${data.error || data.stderr || "unknown error"}`;
+        }
+        await refreshData();
+      } catch (err) {
+        if (btn) { btn.textContent = "Retry"; btn.disabled = false; }
+        if (statusEl) statusEl.textContent = `Error: ${err.message}`;
+      }
+    }
+
+    async function installAllFrameworks() {
+      const btn = document.getElementById("installAllBtn");
+      const statusEl = document.getElementById("installAllStatus");
+      if (btn) { btn.disabled = true; btn.textContent = "Installing all…"; }
+      if (statusEl) statusEl.textContent = "Running pip install for all frameworks — this may take a few minutes…";
+      try {
+        const resp = await fetch("/api/install", { method: "POST" });
+        const data = await resp.json();
+        const results = data.frameworks || {};
+        const passed = Object.values(results).filter(r => r.status === "installed").length;
+        const total = Object.keys(results).length;
+        if (statusEl) statusEl.textContent = `Done: ${passed}/${total} installed ✓`;
+        if (btn) { btn.disabled = false; btn.textContent = "Install / Upgrade All"; }
+        await refreshData();
+      } catch (err) {
+        if (statusEl) statusEl.textContent = `Error: ${err.message}`;
+        if (btn) { btn.disabled = false; btn.textContent = "Install / Upgrade All"; }
+      }
+    }
+
+    function renderRuntimeEnvironment() {
+      const body = document.getElementById("runtimeEnvironmentBody");
+      const runtimeEnvironment = (platformOptions && platformOptions.runtime_environment) || {};
+      const rows = [
+        ["Python Executable", runtimeEnvironment.python_executable || "-"],
+        ["Python Version", runtimeEnvironment.python_version || "-"],
+        ["PyRIT-Supported Python", runtimeEnvironment.pyrit_supported_python ? "Yes" : "No"],
+        ["Workspace Root", runtimeEnvironment.workspace_root || "-"],
+      ];
+      body.innerHTML = rows.map(row => `
+        <tr>
+          <td>${escapeHtml(row[0])}</td>
+          <td>${escapeHtml(row[1])}</td>
+        </tr>
+      `).join("");
+    }
+
+    function renderLocalServiceHealth() {
+      const body = document.getElementById("localServiceBody");
+      const localServices = (platformOptions && platformOptions.local_services) || {};
+      const rows = Object.values(localServices);
+      if (!rows.length) {
+        body.innerHTML = "<tr><td colspan='5'>No local service checks are available.</td></tr>";
+        return;
+      }
+      body.innerHTML = rows.map(row => `
+        <tr>
+          <td><strong>${escapeHtml(row.service || "-")}</strong></td>
+          <td>${boolBadge(!!row.reachable)}</td>
+          <td>${escapeHtml(row.endpoint || "-")}</td>
+          <td>${escapeHtml(String(row.model_count ?? 0))}</td>
+          <td>${escapeHtml(row.error || (row.reachable ? "OK" : "Unavailable"))}</td>
+        </tr>
+      `).join("");
+    }
+
+    async function loadWrappers() {
+      const templateState = captureTemplateUiState();
+      const preserveTemplateState = isTemplateInteractionActive();
+      const payload = await api("/api/options");
+      platformOptions = payload.options || {};
+      wrapperRegistry = payload.wrappers || [];
+      templateRegistry = payload.templates || [];
+      document.getElementById("wrappersOut").textContent = pretty(payload.wrappers);
+      renderTemplateOptions({
+        state: templateState,
+        preserveDraft: preserveTemplateState,
+        preserveHint: preserveTemplateState,
+      });
+      renderFrameworkRuntime();
+      renderRuntimeEnvironment();
+      renderLocalServiceHealth();
+      renderWrapperMatrix();
+      renderWrapperOptions();
+    }
+
+    function renderJobSummary() {
+      const counts = { queued: 0, running: 0, completed: 0, failed: 0 };
+      for (const job of lastJobs) {
+        const status = String(job.status || "").toLowerCase();
+        if (status in counts) {
+          counts[status] += 1;
+        }
+      }
+      const strip = document.getElementById("jobStatusStrip");
+      strip.innerHTML = [
+        ["Queued", counts.queued],
+        ["Running", counts.running],
+        ["Completed", counts.completed],
+        ["Failed", counts.failed],
+      ].map(([label, value]) => `
+        <div class="status-card">
+          <div class="status-label">${label}</div>
+          <div class="status-value">${value}</div>
+        </div>
+      `).join("");
+
+      const body = document.getElementById("jobTableBody");
+      if (!lastJobs.length) {
+        body.innerHTML = "<tr><td colspan='6'>No jobs yet.</td></tr>";
+        return;
+      }
+
+      body.innerHTML = lastJobs.slice(0, 12).map(job => {
+        const frameworks = ((job.configuration || {}).frameworks || []).join(", ");
+        const useJobCall = `useJob(${JSON.stringify(job.job_id || "")})`;
+        return `
+          <tr>
+            <td>
+              <strong>${escapeHtml(job.job_name || job.job_id)}</strong><br>
+              <span class="hint">${escapeHtml(job.job_id || "")}</span><br>
+              <button type="button" onclick='${useJobCall}'>Use In Panels</button>
+            </td>
+            <td>${statusBadge(job.status)}</td>
+            <td>${escapeHtml(job.wrapper_id || "None")}</td>
+            <td>${escapeHtml((job.configuration || {}).execution_backend || "")}</td>
+            <td>${escapeHtml(frameworks || "-")}</td>
+            <td>${escapeHtml(job.updated_at_utc || job.created_at_utc || "")}</td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    async function loadJobs() {
+      const payload = await api("/api/scans");
+      lastJobs = payload.jobs || [];
+      document.getElementById("jobsOut").textContent = pretty(payload.jobs);
+      renderJobSummary();
+      renderArtifactJobPicker();
+      renderNormalizedSeverityJobPicker();
+      document.getElementById("lastRefreshLabel").textContent = `Last refresh: ${new Date().toLocaleTimeString()}`;
+      const currentSelection = selectedJobId();
+      if (currentSelection) {
+        setSelectedJob(currentSelection);
+      } else if (lastJobs.length) {
+        setSelectedJob(lastJobs[0].job_id);
+      }
+    }
+
+    async function refreshData(options = {}) {
+      try {
+        await loadWrappers();
+        await loadJobs();
+        await syncSelectedPanels(options);
+      } catch (err) {
+        const message = `Refresh failed: ${describeError(err)}`;
+        setFormError("jobFormError", message);
+        document.getElementById("jobsOut").textContent = message;
+      }
+    }
+
+    async function registerWrapper() {
+      const wrapperFieldsOk = validateRequiredText([
+        {id: "wrapperId", label: "Wrapper ID"},
+        {id: "wrapperName", label: "Display Name"},
+        {id: "wrapperClass", label: "Class Name"},
+        {id: "wrapperCode", label: "Wrapper Code"},
+      ], "wrapperFormError");
+      if (!wrapperFieldsOk) {
+        return;
+      }
+
+      const payload = {
+        wrapper_id: document.getElementById("wrapperId").value.trim(),
+        display_name: document.getElementById("wrapperName").value.trim(),
+        class_name: document.getElementById("wrapperClass").value.trim(),
+        code: document.getElementById("wrapperCode").value,
+        supports_blackbox: checked("wBlackbox"),
+        supports_whitebox: checked("wWhitebox"),
+        supports_api_models: checked("wApi"),
+        supports_python_process_models: checked("wProcess"),
+        supports_art: checked("wArt"),
+        supports_foolbox: checked("wFoolbox"),
+        supports_pyrit: checked("wPyrit"),
+        supports_garak: checked("wGarak"),
+        supports_textattack: checked("wTextAttack"),
+        supports_logits: checked("wLogits"),
+        supports_gradients: checked("wGradients"),
+        supported_modalities: document.getElementById("wrapperModalities").value.split(",").map(x => x.trim()).filter(Boolean),
+        supported_task_families: document.getElementById("wrapperTaskFamilies").value.split(",").map(x => x.trim()).filter(Boolean),
+        supported_frameworks: [
+          ["wArt", "art"],
+          ["wFoolbox", "foolbox"],
+          ["wPyrit", "pyrit"],
+          ["wGarak", "garak"],
+          ["wTextAttack", "textattack"],
+        ].filter(([id]) => checked(id)).map(([, value]) => value),
+        notes: document.getElementById("wrapperNotes").value.trim(),
+      };
+      try {
+        const result = await api("/api/wrappers/register", {method: "POST", body: JSON.stringify(payload)});
+        alert(`Wrapper saved: ${result.wrapper.wrapper_id}`);
+        await refreshData();
+      } catch (err) {
+        setFormError("wrapperFormError", `Save failed: ${describeError(err)}`);
+      }
+    }
+
+    async function preflightCheck() {
+      const jobFieldsOk = validateRequiredText([
+        {id: "jobName", label: "Job Name"},
+        {id: "modelId", label: "Model ID / Key"},
+        {id: "taskFamily", label: "Task Family"},
+        {id: "modality", label: "Modality"},
+        {id: "sourceValue", label: "Source Value"},
+      ], "jobFormError");
+      const scanModesOk = validateCheckboxGroup(["modeBlackbox", "modeWhitebox"], "Scan Modes", "jobFormError");
+      const frameworksOk = validateCheckboxGroup(["fwArt", "fwFoolbox", "fwPyrit", "fwGarak", "fwTextAttack"], "Frameworks", "jobFormError", 0);
+      const reportsOk = validateCheckboxGroup(["repJson", "repHtml", "repPdf", "repXlsx", "repTxt"], "Reports", "jobFormError");
+      const pyritOk = validatePyritConfiguration("jobFormError");
+      if (!(jobFieldsOk && scanModesOk && frameworksOk && reportsOk && pyritOk)) {
+        return;
+      }
+
+      try {
+        parseExtraOptions({ strict: true });
+        const payload = scanPayload();
+        const result = await api("/api/scans/preflight", {method: "POST", body: JSON.stringify(payload)});
+        document.getElementById("preflightOut").textContent = pretty(result.preflight);
+        renderWrapperOptions();
+      } catch (err) {
+        const message = `Preflight failed: ${describeError(err)}`;
+        setFormError("jobFormError", message);
+        document.getElementById("preflightOut").textContent = message;
+      }
+    }
+
+    async function submitScan() {
+      const jobFieldsOk = validateRequiredText([
+        {id: "jobName", label: "Job Name"},
+        {id: "modelId", label: "Model ID / Key"},
+        {id: "taskFamily", label: "Task Family"},
+        {id: "modality", label: "Modality"},
+        {id: "sourceValue", label: "Source Value"},
+      ], "jobFormError");
+      const scanModesOk = validateCheckboxGroup(["modeBlackbox", "modeWhitebox"], "Scan Modes", "jobFormError");
+      const frameworksOk = validateCheckboxGroup(["fwArt", "fwFoolbox", "fwPyrit", "fwGarak", "fwTextAttack"], "Frameworks", "jobFormError", 0);
+      const reportsOk = validateCheckboxGroup(["repJson", "repHtml", "repPdf", "repXlsx", "repTxt"], "Reports", "jobFormError");
+      const pyritOk = validatePyritConfiguration("jobFormError");
+      if (!(jobFieldsOk && scanModesOk && frameworksOk && reportsOk && pyritOk)) {
+        return;
+      }
+
+      try {
+        parseExtraOptions({ strict: true });
+        const payload = scanPayload();
+        const result = await api("/api/scans", {method: "POST", body: JSON.stringify(payload)});
+        const jobId = setSelectedJob(result.job.job_id);
+        document.getElementById("artifactMeta").textContent = `Watching ${jobId} for generated original artefacts...`;
+        resetArtifactPanel("Original artefacts for the selected job will appear here as soon as they are written.");
+        alert(`Scan job queued: ${jobId}`);
+        await refreshData({jobId});
+        watchJob(jobId);
+      } catch (err) {
+        setFormError("jobFormError", `Submit failed: ${describeError(err)}`);
+      }
+    }
+
+    async function loadArtifacts(options = {}) {
+      const jobId = options.jobId ? setSelectedJob(options.jobId) : selectedJobId();
+      if (!jobId) {
+        if (!options.silent) {
+          alert("Enter or select a job id first.");
+        }
+        return;
+      }
+      try {
+        const payload = await api(`/api/scans/${encodeURIComponent(jobId)}/artifacts`);
+        const allArtifacts = payload.artifacts || [];
+        lastArtifacts = allArtifacts.filter(artifact => !isNormalizedSeverityArtifact(artifact));
+        lastNormalizedSeverityArtifacts = allArtifacts.filter(isNormalizedSeverityArtifact);
+        document.getElementById("artifactMeta").textContent = pretty(lastArtifacts);
+        renderArtifactTable(jobId);
+        document.getElementById("normalizedSeverityMeta").textContent = pretty(lastNormalizedSeverityArtifacts);
+        renderNormalizedSeverityTable(jobId);
+      } catch (err) {
+        if (!options.silent) {
+          throw err;
+        }
+        document.getElementById("artifactMeta").textContent = `Original artefact load failed for ${jobId}: ${describeError(err)}`;
+        document.getElementById("normalizedSeverityMeta").textContent = `Normalized artefact load failed for ${jobId}: ${describeError(err)}`;
+        resetArtifactPanel("Selected original artefact details will appear here once the selected job has previewable outputs.");
+      }
+    }
+
+    function openArtifactPath(path) {
+      const link = document.createElement("a");
+      link.href = artifactViewUrl(path);
+      link.target = "_blank";
+      link.rel = "noopener";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    }
+
+    function triggerArtifactDownload(path) {
+      const link = document.createElement("a");
+      link.href = artifactDownloadUrl(path);
+      link.download = artifactFileName(path);
+      link.rel = "noopener";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    }
+
+    async function viewArtifact() {
+      const artifact = selectedArtifact();
+      const path = artifact ? artifact.path : "";
+      if (!path) {
+        alert("Load a job and select an original artefact first.");
+        return;
+      }
+      openArtifactPath(path);
+      document.getElementById("artifactPreview").textContent = `Opened ${artifactFileName(path)} in a new tab.`;
+    }
+
+    function downloadArtifact() {
+      const artifact = selectedArtifact();
+      const path = artifact ? artifact.path : "";
+      if (!path) {
+        alert("Load a job and select an original artefact first.");
+        return;
+      }
+      triggerArtifactDownload(path);
+      document.getElementById("artifactPreview").textContent = `Started download for ${artifactFileName(path)}.`;
+    }
+
+    async function loadNormalizedSeverityArtifacts(options = {}) {
+      await loadArtifacts(options);
+    }
+
+    async function viewNormalizedSeverityArtifact() {
+      const artifact = selectedNormalizedSeverityArtifact();
+      const path = artifact ? artifact.path : "";
+      if (!path) {
+        alert("Load a job and select a normalized artefact first.");
+        return;
+      }
+      openArtifactPath(path);
+      document.getElementById("normalizedSeverityPreview").textContent = `Opened ${artifactFileName(path)} in a new tab.`;
+    }
+
+    function downloadNormalizedSeverityArtifact() {
+      const artifact = selectedNormalizedSeverityArtifact();
+      const path = artifact ? artifact.path : "";
+      if (!path) {
+        alert("Load a job and select a normalized artefact first.");
+        return;
+      }
+      triggerArtifactDownload(path);
+      document.getElementById("normalizedSeverityPreview").textContent = `Started download for ${artifactFileName(path)}.`;
+    }
+
+    async function loadTerminalView(options = {}) {
+      const jobId = options.jobId ? setSelectedJob(options.jobId) : selectedJobId();
+      if (!jobId) {
+        if (!options.silent) {
+          alert("Enter or select a job id first.");
+        }
+        return;
+      }
+      try {
+        const payload = await api(`/api/scans/${encodeURIComponent(jobId)}/terminal`);
+        const terminal = payload.terminal || {};
+        const header = [
+          `[terminal] job_id=${terminal.job_id || jobId}`,
+          `[terminal] status=${terminal.status || "unknown"}`,
+          `[terminal] source=${terminal.log_source || "unknown"}`,
+          terminal.artifact_path ? `[terminal] artifact=${terminal.artifact_path}` : "[terminal] artifact=none",
+          terminal.truncated ? "[terminal] note=output truncated to the most recent content" : "",
+        ].filter(Boolean).join("\n");
+        document.getElementById("terminalOut").textContent = `${header}\n\n${terminal.content || ""}`;
+      } catch (err) {
+        if (!options.silent) {
+          throw err;
+        }
+      }
+    }
+
+    async function copyTerminalView() {
+      const terminalNode = document.getElementById("terminalOut");
+      const text = String(terminalNode ? terminalNode.textContent || "" : "").trim();
+      if (!text || text === "Terminal-style execution details will appear here.") {
+        alert("Load terminal output first.");
+        return;
+      }
+
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          const helper = document.createElement("textarea");
+          helper.value = text;
+          helper.setAttribute("readonly", "readonly");
+          helper.style.position = "fixed";
+          helper.style.opacity = "0";
+          document.body.appendChild(helper);
+          helper.select();
+          document.execCommand("copy");
+          helper.remove();
+        }
+        alert("Terminal output copied.");
+      } catch (err) {
+        alert(`Copy failed: ${describeError(err)}`);
+      }
+    }
+
+    [
+      "wrapperId",
+      "wrapperName",
+      "wrapperClass",
+      "wrapperCode",
+      "jobName",
+      "modelId",
+      "sourceType",
+      "sourceValue",
+      "taskFamily",
+      "modality",
+      "executionBackend",
+      "templateSelect",
+      "templateName",
+      "templateDescription",
+      "pyritProfile",
+      "pyritRuntimeModel",
+      "pyritTimeout",
+      "pyritMaxAttempts",
+      "pyritManyShotExampleCount",
+      "pyritMaxTurns",
+      "pyritMaxBacktracks",
+      "pyritAdversarialModel",
+      "pyritAdversarialEndpoint",
+      "pyritObjectiveScorerMode",
+      "pyritExpectedResponse",
+      "pyritForbiddenLiterals",
+      "pyritExpectedMaxWords",
+      "pyritExpectedMaxSentences",
+      "pyritSkeletonKeyPrompt",
+      "pyritObjective",
+      "pyritSeedText",
+      "pyritSeedImagePath",
+      "pyritFollowUpText",
+      "garakProbe",
+      "garakTimeout",
+      "garakGenerations",
+      "garakRuntimeModel",
+      "garakPromptField",
+      "garakResponseField",
+      "textattackRecipe",
+      "textattackGoalFunction",
+      "textattackMaxExamples",
+      "textattackQueryBudget",
+      "textattackConstraintMode",
+      "extraOptions",
+      "modeBlackbox",
+      "modeWhitebox",
+      "fwArt",
+      "fwFoolbox",
+      "fwPyrit",
+      "fwGarak",
+      "fwTextAttack",
+    ].forEach(id => {
+      const node = document.getElementById(id);
+      if (node) {
+        node.addEventListener("change", () => {
+          node.classList.remove("invalid");
+          setFormError("wrapperFormError", "");
+          setFormError("jobFormError", "");
+          renderFrameworkPanels();
+          renderWrapperOptions();
+        });
+        node.addEventListener("input", () => {
+          node.classList.remove("invalid");
+          setFormError("wrapperFormError", "");
+          setFormError("jobFormError", "");
+          renderFrameworkPanels();
+          renderWrapperOptions();
+        });
+      }
+    });
+
+    const pyritAttackNode = document.getElementById("pyritAttackChoices");
+    if (pyritAttackNode) {
+      pyritAttackNode.addEventListener("change", () => {
+        applyPyritAttackPreset();
+      });
+    }
+    const pyritProfileNode = document.getElementById("pyritProfile");
+    if (pyritProfileNode) {
+      pyritProfileNode.addEventListener("change", () => {
+        applyPyritAttackPreset();
+      });
+    }
+    applyPyritAttackPreset();
+
+    function startAutoRefresh() {
+      if (autoRefreshTimer !== null) {
+        clearInterval(autoRefreshTimer);
+      }
+      autoRefreshTimer = window.setInterval(() => {
+        if (document.getElementById("autoRefreshToggle").checked && !isTemplateInteractionActive()) {
+          refreshData().catch(() => {});
+        }
+      }, 5000);
+    }
+
+    document.getElementById("autoRefreshToggle").addEventListener("change", () => {
+      const enabled = document.getElementById("autoRefreshToggle").checked;
+      document.getElementById("lastRefreshLabel").textContent = enabled
+        ? "Last refresh: auto mode enabled"
+        : "Last refresh: auto mode paused";
+    });
+
+    document.getElementById("artifactJobPicker").addEventListener("change", event => {
+      const jobId = setSelectedJob(event.target.value);
+      if (jobId) {
+        useJob(jobId).catch(() => {});
+      }
+    });
+
+    document.getElementById("normalizedSeverityJobPicker").addEventListener("change", event => {
+      const jobId = setSelectedJob(event.target.value);
+      if (jobId) {
+        useJob(jobId).catch(() => {});
+      }
+    });
+
+    document.getElementById("artifactTableBody").addEventListener("click", event => {
+      const actionTarget = event.target.closest("[data-action='select']");
+      if (actionTarget) {
+        const path = decodeURIComponent(actionTarget.dataset.path || "");
+        if (path) {
+          setSelectedArtifact(path);
+        }
+        return;
+      }
+      const row = event.target.closest("tr[data-path]");
+      if (row) {
+        const path = decodeURIComponent(row.dataset.path || "");
+        if (path) {
+          setSelectedArtifact(path);
+        }
+      }
+    });
+
+    document.getElementById("normalizedSeverityTableBody").addEventListener("click", event => {
+      const actionTarget = event.target.closest("[data-action='select']");
+      if (actionTarget) {
+        const path = decodeURIComponent(actionTarget.dataset.path || "");
+        if (path) {
+          setSelectedNormalizedSeverityArtifact(path);
+        }
+        return;
+      }
+      const row = event.target.closest("tr[data-path]");
+      if (row) {
+        const path = decodeURIComponent(row.dataset.path || "");
+        if (path) {
+          setSelectedNormalizedSeverityArtifact(path);
+        }
+      }
+    });
+
+    ["artifactJobId", "normalizedSeverityJobId", "terminalJobId"].forEach(id => {
+      const node = document.getElementById(id);
+      if (!node) {
+        return;
+      }
+      node.addEventListener("change", () => {
+        const jobId = setSelectedJob(node.value);
+        if (jobId) {
+          useJob(jobId).catch(() => {});
+        }
+      });
+      node.addEventListener("keydown", event => {
+        if (event.key !== "Enter") {
+          return;
+        }
+        event.preventDefault();
+        const jobId = setSelectedJob(node.value);
+        if (jobId) {
+          useJob(jobId).catch(() => {});
+        }
+      });
+    });
+
+    renderFrameworkPanels();
+    startAutoRefresh();
+    refreshData().catch(err => {
+      document.getElementById("wrappersOut").textContent = String(err);
+      document.getElementById("jobsOut").textContent = String(err);
+    });
+  </script>
+</body>
+</html>

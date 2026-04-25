@@ -1,0 +1,182 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800" role="img" aria-label="Sentinel Adversarial Orchestrator architecture diagram">
+  <title>Sentinel Adversarial Orchestrator — Architecture (post-refactor)</title>
+  <desc>
+    Layered architecture diagram showing the UI / API / orchestration facade /
+    extracted modules (templates, preflight, jobs, reporting) / framework registry /
+    per-framework executors / storage / compatibility / wrapper system.
+  </desc>
+  <metadata>
+    Sentinel Adversarial Orchestrator architecture mark.
+    Copyright (c) 2026 Bharath Srinivasan. All rights reserved.
+  </metadata>
+
+  <defs>
+    <linearGradient id="cardGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#0e2138" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#0a1a2e" stop-opacity="0.92"/>
+    </linearGradient>
+    <linearGradient id="facadeGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"  stop-color="#1a8cff" stop-opacity="0.18"/>
+      <stop offset="50%" stop-color="#2fb6ff" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#1a8cff" stop-opacity="0.18"/>
+    </linearGradient>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#040a14"/>
+      <stop offset="100%" stop-color="#081323"/>
+    </linearGradient>
+    <marker id="arrowHead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M2 1L9 5L2 9" fill="none" stroke="#2fb6ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect x="0" y="0" width="1200" height="800" rx="20" fill="url(#bgGrad)"/>
+
+  <!-- Subtle grid -->
+  <g opacity="0.10" stroke="#7ec0ff" stroke-width="0.6">
+    <path d="M0 100 H1200"/><path d="M0 200 H1200"/><path d="M0 300 H1200"/>
+    <path d="M0 400 H1200"/><path d="M0 500 H1200"/><path d="M0 600 H1200"/>
+    <path d="M0 700 H1200"/>
+    <path d="M150 0 V800"/><path d="M300 0 V800"/><path d="M450 0 V800"/>
+    <path d="M600 0 V800"/><path d="M750 0 V800"/><path d="M900 0 V800"/>
+    <path d="M1050 0 V800"/>
+  </g>
+
+  <!-- Title -->
+  <g font-family="Inter, 'SF Pro Display', 'Avenir Next', 'Segoe UI', Arial, sans-serif" fill="#eef7ff">
+    <text x="40" y="48" font-size="22" font-weight="800" letter-spacing="-0.3">Sentinel Adversarial Orchestrator</text>
+    <text x="40" y="72" font-size="12" font-weight="500" letter-spacing="2" fill="#a9bfd6">ARCHITECTURE · POST-REFACTOR (TASK 7 SPLIT)</text>
+  </g>
+
+  <!-- Layer 1: UI -->
+  <g>
+    <rect x="40" y="100" width="1120" height="74" rx="14" fill="url(#cardGrad)" stroke="#2fb6ff" stroke-opacity="0.45" stroke-width="1.2"/>
+    <text x="60" y="124" font-family="Inter, sans-serif" font-size="11" font-weight="700" letter-spacing="2" fill="#a9bfd6">LAYER · 1</text>
+    <text x="60" y="150" font-family="Inter, sans-serif" font-size="20" font-weight="700" fill="#eef7ff">UI Console</text>
+    <text x="60" y="166" font-family="Inter, sans-serif" font-size="12" fill="#a9bfd6">Single-page operator console — ui/index.html</text>
+    <text x="1140" y="150" text-anchor="end" font-family="JetBrains Mono, ui-monospace, Menlo, monospace" font-size="11" fill="#6ae6ff">23 endpoints</text>
+  </g>
+
+  <!-- Layer 2: API -->
+  <g>
+    <rect x="40" y="190" width="1120" height="60" rx="14" fill="url(#cardGrad)" stroke="#2fb6ff" stroke-opacity="0.45" stroke-width="1.2"/>
+    <text x="60" y="214" font-family="Inter, sans-serif" font-size="11" font-weight="700" letter-spacing="2" fill="#a9bfd6">LAYER · 2</text>
+    <text x="60" y="236" font-family="Inter, sans-serif" font-size="18" font-weight="700" fill="#eef7ff">API Surface · app.py</text>
+    <text x="1140" y="236" text-anchor="end" font-family="JetBrains Mono, ui-monospace, Menlo, monospace" font-size="11" fill="#6ae6ff">/api/options · /api/scans · /api/wrappers · /api/templates · /api/install</text>
+  </g>
+
+  <!-- Layer 3: Facade + extracted modules -->
+  <g>
+    <rect x="40" y="266" width="1120" height="180" rx="16" fill="url(#facadeGrad)" stroke="#2fb6ff" stroke-opacity="0.65" stroke-width="1.4"/>
+    <text x="60" y="290" font-family="Inter, sans-serif" font-size="11" font-weight="700" letter-spacing="2" fill="#a9bfd6">LAYER · 3 · FACADE</text>
+    <text x="60" y="314" font-family="Inter, sans-serif" font-size="18" font-weight="700" fill="#eef7ff">executor.py · 1,552 lines · re-exports public API</text>
+    <text x="60" y="332" font-family="Inter, sans-serif" font-size="12" fill="#a9bfd6">Holds execute_job_record + cross-layer mode-summary rendering. Splits below.</text>
+
+    <!-- Four extracted modules -->
+    <g>
+      <rect x="60"  y="356" width="260" height="76" rx="10" fill="#0d2240" stroke="#2fb6ff" stroke-opacity="0.55"/>
+      <text x="74" y="380" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#eef7ff">templates.py</text>
+      <text x="74" y="400" font-family="Inter, sans-serif" font-size="11" fill="#a9bfd6">Template CRUD · 10 defs</text>
+      <text x="74" y="418" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" fill="#6ae6ff">data/builtin_templates.json</text>
+    </g>
+    <g>
+      <rect x="340" y="356" width="260" height="76" rx="10" fill="#0d2240" stroke="#2fb6ff" stroke-opacity="0.55"/>
+      <text x="354" y="380" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#eef7ff">preflight.py</text>
+      <text x="354" y="400" font-family="Inter, sans-serif" font-size="11" fill="#a9bfd6">Runtime / readiness · 15 defs</text>
+      <text x="354" y="418" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" fill="#6ae6ff">FRAMEWORK_RUNTIME_SPECS</text>
+    </g>
+    <g>
+      <rect x="620" y="356" width="260" height="76" rx="10" fill="#0d2240" stroke="#2fb6ff" stroke-opacity="0.55"/>
+      <text x="634" y="380" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#eef7ff">jobs.py</text>
+      <text x="634" y="400" font-family="Inter, sans-serif" font-size="11" fill="#a9bfd6">Wrappers + job lifecycle · 28 defs</text>
+      <text x="634" y="418" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" fill="#6ae6ff">create_job · run_job · reconcile</text>
+    </g>
+    <g>
+      <rect x="900" y="356" width="240" height="76" rx="10" fill="#0d2240" stroke="#2fb6ff" stroke-opacity="0.55"/>
+      <text x="914" y="380" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#eef7ff">reporting/</text>
+      <text x="914" y="400" font-family="Inter, sans-serif" font-size="11" fill="#a9bfd6">7 modules · normalized severity</text>
+      <text x="914" y="418" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" fill="#6ae6ff">utils · normalized · pyrit · …</text>
+    </g>
+  </g>
+
+  <!-- Layer 4: Framework Registry + executors -->
+  <g>
+    <rect x="40" y="466" width="730" height="140" rx="14" fill="url(#cardGrad)" stroke="#2fb6ff" stroke-opacity="0.45" stroke-width="1.2"/>
+    <text x="60" y="490" font-family="Inter, sans-serif" font-size="11" font-weight="700" letter-spacing="2" fill="#a9bfd6">LAYER · 4</text>
+    <text x="60" y="514" font-family="Inter, sans-serif" font-size="18" font-weight="700" fill="#eef7ff">Framework Registry · framework_registry.py</text>
+
+    <g font-family="Inter, sans-serif" font-size="11" fill="#eef7ff">
+      <g>
+        <rect x="60" y="528" width="120" height="60" rx="9" fill="#0a1a2e" stroke="#2fb6ff" stroke-opacity="0.55"/>
+        <text x="120" y="554" text-anchor="middle" font-weight="700">ART</text>
+        <text x="120" y="572" text-anchor="middle" font-size="10" fill="#a9bfd6">art_executor.py</text>
+      </g>
+      <g>
+        <rect x="190" y="528" width="120" height="60" rx="9" fill="#0a1a2e" stroke="#2fb6ff" stroke-opacity="0.55"/>
+        <text x="250" y="554" text-anchor="middle" font-weight="700">Foolbox</text>
+        <text x="250" y="572" text-anchor="middle" font-size="10" fill="#a9bfd6">foolbox_executor.py</text>
+      </g>
+      <g>
+        <rect x="320" y="528" width="120" height="60" rx="9" fill="#0a1a2e" stroke="#2fb6ff" stroke-opacity="0.55"/>
+        <text x="380" y="554" text-anchor="middle" font-weight="700">Garak</text>
+        <text x="380" y="572" text-anchor="middle" font-size="10" fill="#a9bfd6">garak_executor.py</text>
+      </g>
+      <g>
+        <rect x="450" y="528" width="120" height="60" rx="9" fill="#0a1a2e" stroke="#2fb6ff" stroke-opacity="0.55"/>
+        <text x="510" y="554" text-anchor="middle" font-weight="700">PyRIT</text>
+        <text x="510" y="572" text-anchor="middle" font-size="10" fill="#a9bfd6">pyrit_executor.py</text>
+      </g>
+      <g>
+        <rect x="580" y="528" width="170" height="60" rx="9" fill="#0a1a2e" stroke="#2fb6ff" stroke-opacity="0.55"/>
+        <text x="665" y="554" text-anchor="middle" font-weight="700">TextAttack</text>
+        <text x="665" y="572" text-anchor="middle" font-size="10" fill="#a9bfd6">textattack_executor.py</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Wrapper system (right) -->
+  <g>
+    <rect x="790" y="466" width="370" height="140" rx="14" fill="url(#cardGrad)" stroke="#23c788" stroke-opacity="0.55" stroke-width="1.2"/>
+    <text x="810" y="490" font-family="Inter, sans-serif" font-size="11" font-weight="700" letter-spacing="2" fill="#a9bfd6">LAYER · 4 · WRAPPERS</text>
+    <text x="810" y="514" font-family="Inter, sans-serif" font-size="16" font-weight="700" fill="#eef7ff">contracts.BaseScanAdapter</text>
+    <text x="810" y="540" font-family="Inter, sans-serif" font-size="12" fill="#a9bfd6">Built-in adapters under user_wrappers/</text>
+    <text x="810" y="562" font-family="JetBrains Mono, ui-monospace, monospace" font-size="11" fill="#23c788">whisper_tiny_art_adapter</text>
+    <text x="810" y="578" font-family="JetBrains Mono, ui-monospace, monospace" font-size="11" fill="#23c788">hf_ocr_art_adapter · hf_vision_classification_art_adapter</text>
+    <text x="810" y="594" font-family="JetBrains Mono, ui-monospace, monospace" font-size="11" fill="#23c788">hf_vision_foolbox_adapter · trocr_small_art_adapter</text>
+  </g>
+
+  <!-- Layer 5: Storage + Compatibility -->
+  <g>
+    <rect x="40" y="626" width="555" height="120" rx="14" fill="url(#cardGrad)" stroke="#ffb347" stroke-opacity="0.5" stroke-width="1.2"/>
+    <text x="60" y="650" font-family="Inter, sans-serif" font-size="11" font-weight="700" letter-spacing="2" fill="#a9bfd6">LAYER · 5 · STORAGE</text>
+    <text x="60" y="674" font-family="Inter, sans-serif" font-size="16" font-weight="700" fill="#eef7ff">storage.py · atomic writes · JOB_WRITE_LOCK (RLock)</text>
+    <text x="60" y="694" font-family="Inter, sans-serif" font-size="12" fill="#a9bfd6">tempfile + os.replace + fsync · indexes for jobs / templates / wrappers</text>
+    <text x="60" y="718" font-family="JetBrains Mono, ui-monospace, monospace" font-size="11" fill="#ffb347">data/jobs/ · data/job_reports/ · data/&lt;framework&gt;_runs/</text>
+  </g>
+
+  <g>
+    <rect x="615" y="626" width="545" height="120" rx="14" fill="url(#cardGrad)" stroke="#ff6a7c" stroke-opacity="0.5" stroke-width="1.2"/>
+    <text x="635" y="650" font-family="Inter, sans-serif" font-size="11" font-weight="700" letter-spacing="2" fill="#a9bfd6">LAYER · 5 · COMPATIBILITY</text>
+    <text x="635" y="674" font-family="Inter, sans-serif" font-size="16" font-weight="700" fill="#eef7ff">compatibility.py · per-framework profiles</text>
+    <text x="635" y="694" font-family="Inter, sans-serif" font-size="12" fill="#a9bfd6">Package + import + python requirement + version risks + adapter strategy</text>
+    <text x="635" y="718" font-family="JetBrains Mono, ui-monospace, monospace" font-size="11" fill="#ff6a7c">framework_compatibility_profiles() · framework_runtime_inventory()</text>
+  </g>
+
+  <!-- Connectors -->
+  <g fill="none" stroke="#2fb6ff" stroke-opacity="0.65" stroke-width="1.4" marker-end="url(#arrowHead)">
+    <line x1="600" y1="174" x2="600" y2="190"/>
+    <line x1="600" y1="250" x2="600" y2="266"/>
+    <line x1="190" y1="446" x2="190" y2="466"/>
+    <line x1="470" y1="446" x2="470" y2="466"/>
+    <line x1="750" y1="446" x2="750" y2="466"/>
+    <line x1="975" y1="446" x2="975" y2="466"/>
+    <line x1="975" y1="446" x2="975" y2="465"/>
+    <line x1="600" y1="606" x2="600" y2="626"/>
+  </g>
+
+  <!-- Footer notes -->
+  <g font-family="Inter, sans-serif" font-size="10" fill="#a9bfd6">
+    <text x="40" y="788" letter-spacing="1.5">© 2026 Bharath Srinivasan · Sentinel Adversarial Orchestrator</text>
+    <text x="1160" y="788" text-anchor="end" letter-spacing="1.5">Source: docs/architecture_hld.md (mermaid)</text>
+  </g>
+</svg>

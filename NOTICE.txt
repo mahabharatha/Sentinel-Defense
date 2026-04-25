@@ -1,0 +1,21 @@
+PROPRIETARY SOFTWARE NOTICE
+
+This repository is private-source software.
+
+Access is granted only for internal review, evaluation, testing, and approved development work.
+
+No production use, customer use, redistribution, resale, sublicensing, hosting, or derivative commercial use is permitted without a separate written paid license from the rights holder.
+
+Before publishing this repository privately on GitHub, replace the placeholders in:
+
+- LICENSE.txt
+- README.md
+- SECURITY.md
+- .github/CODEOWNERS
+
+Recommended placeholders to replace:
+
+- Bharath Srinivasan
+- bharath.mailbox1@gmail.com
+- REPLACE_WITH_GOVERNING_LAW_JURISDICTION
+- BartAttack

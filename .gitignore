@@ -1,0 +1,134 @@
+# =============================================================================
+# Sentinel Adversarial Orchestrator — .gitignore
+#
+# Cross-platform Python project ignores. No OS-specific entries; works
+# identically on Linux, macOS, and Windows (any host you can run a Python
+# 3.11+ venv on).
+# =============================================================================
+
+# ----- Python bytecode & build artefacts -----
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.pyd
+
+# ----- Virtual environments (all common variants) -----
+venv/
+.venv/
+.venv311/
+.venv312/
+env/
+ENV/
+.env
+
+# ----- Distribution & packaging -----
+build/
+dist/
+sdist/
+*.egg
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# ----- Test, coverage, type, and lint caches -----
+.pytest_cache/
+.mypy_cache/
+.dmypy.json
+.ruff_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+nosetests.xml
+.cache/
+
+# ----- IDE / editor scratch files (cross-platform) -----
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.spyderproject
+.spyproject
+
+# ----- Logs & temp files -----
+*.log
+*.tmp
+
+# ----- Cross-platform metadata pollution -----
+# .DS_Store appears whenever someone opens a repo folder on macOS, so it's
+# universally worth ignoring even on Linux/Windows-only collaborators.
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =============================================================================
+# Sentinel runtime artefacts.
+# These directories are regenerated every time a scan runs. Their contents
+# are job-specific and not portable across machines.
+# =============================================================================
+data/jobs/
+data/job_reports/
+data/art_runs/
+data/foolbox_runs/
+data/garak_runs/
+data/ocr_runs/
+data/pyrit_runs/
+data/pyrit_multimodal_smoke/
+data/textattack_runs/
+data/test_runs/
+data/smoke_runs/
+data/wrappers.json
+
+# Caches (HF model cache, matplotlib cache, etc.)
+data/textattack_cache/
+data/matplotlib/
+data/matplotlib_cache/
+.matplotlib/
+.pyrit_home/
+.art/
+
+# Demo data: keep the small smoke-sample JSONL, ignore everything else
+# (binaries like demo_tone.wav and ocr_sample.png are regeneratable via
+# scripts/warm_hf_cache.py / generate_demo_assets).
+data/demo/
+!data/demo/textattack_smoke_samples.jsonl
+
+# Audio demo source samples (large binary, optional regeneration).
+/rhel_art_audio_demo/samples/*.wav
+
+# Garak per-run JSONL reports that sometimes land at the repo root
+garak.*.report.jsonl
+
+# =============================================================================
+# Models / weights — must NOT live in source control.
+# Use scripts/warm_hf_cache.py to populate the local cache instead.
+# =============================================================================
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.onnx
+*.ckpt
+
+# =============================================================================
+# Repo-local runs / notebooks
+# =============================================================================
+runs/
+*.ipynb_checkpoints/
+
+# =============================================================================
+# Compatibility shim mirror (regeneratable; not a source artefact)
+# =============================================================================
+/whitebox_scan_platform/
+
+# Stale relative-path artefacts (from earlier CWD bug)
+/Library/
+
+# Runtime state — user-saved templates index, regenerated on first use
+data/templates.json
+# Stale build archive
+sentinel_patch.zip

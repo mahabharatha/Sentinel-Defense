@@ -1,0 +1,45 @@
+{
+  "job_name": "pyrit multimodal case 02 prompt sending sample path fallback",
+  "model": {
+    "model_id": "gemma3:4b",
+    "source_type": "api",
+    "source_value": "http://127.0.0.1:11434/api/generate",
+    "task_family": "multimodal-chat",
+    "modality": "multimodal"
+  },
+  "configuration": {
+    "execution_backend": "api_based",
+    "scan_modes": [
+      "blackbox"
+    ],
+    "frameworks": [
+      "pyrit"
+    ],
+    "reports": [
+      "json",
+      "html",
+      "txt_log"
+    ],
+    "sample_path": "/Users/macmacmac/Documents/whitebox_scan_platform/docs/images/product-screenshot.png",
+    "min_samples": 1,
+    "max_iter": 1,
+    "batch_size": 1,
+    "include_all_applicable_attacks": true,
+    "target_text": "Answer in one short sentence and include screenshot and dashboard.",
+    "extra_options": {
+      "pyrit_profile": "multimodal",
+      "pyrit_attack_type": "prompt_sending",
+      "pyrit_endpoint_uri": "http://127.0.0.1:11434/api/generate",
+      "pyrit_model_name": "gemma3:4b",
+      "pyrit_seed_text": "What does this image show?",
+      "pyrit_request_timeout": 120,
+      "pyrit_max_attempts_on_failure": 0,
+      "pyrit_objective_scorer_mode": "contains_literal",
+      "pyrit_expected_responses": [
+        "screenshot",
+        "dashboard"
+      ]
+    }
+  },
+  "wrapper_id": null
+}
