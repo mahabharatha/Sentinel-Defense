@@ -168,6 +168,23 @@
     }
     .primary-grid {
       grid-template-columns: minmax(0, 1.55fr) minmax(320px, 0.95fr);
+      /* Stretch both columns to the row's tallest content so Create Scan Job
+         (left) and the right-column stack always end at the same vertical
+         baseline. The flex column inside .right-column-stack continues to
+         render its cards at natural height; the grid stretch only affects
+         the outer columns. */
+      align-items: stretch;
+    }
+    .primary-grid > #scanJobCard,
+    .primary-grid > .right-column-stack {
+      min-height: 100%;
+    }
+    .primary-grid > #scanJobCard {
+      display: flex;
+      flex-direction: column;
+    }
+    .primary-grid > #scanJobCard > .toolbar {
+      margin-top: auto;
     }
     .utility-grid {
       grid-template-columns: minmax(0, 1fr);
@@ -719,51 +736,8 @@
     .terminal-summary-title {
       letter-spacing: 0.01em;
     }
-    .terminal-tree {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-top: 10px;
-    }
-    .terminal-section {
-      border: 1px solid var(--line, rgba(112, 170, 221, 0.16));
-      border-radius: 10px;
-      background: rgba(8, 18, 32, 0.65);
-      overflow: hidden;
-    }
-    .terminal-section > summary {
-      cursor: pointer;
-      padding: 9px 14px;
-      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-      font-size: 12.5px;
-      color: var(--ink, #eef7ff);
-      list-style: none;
-      position: relative;
-      user-select: none;
-    }
-    .terminal-section > summary::-webkit-details-marker { display: none; }
-    .terminal-section > summary::before {
-      content: "▶";
-      display: inline-block;
-      width: 14px;
-      margin-right: 6px;
-      transition: transform 0.15s ease;
-      color: var(--accent, #2fb6ff);
-    }
-    .terminal-section[open] > summary::before { transform: rotate(90deg); }
-    .terminal-section-body {
-      margin: 0;
-      padding: 8px 14px 12px 32px;
-      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-      font-size: 12px;
-      line-height: 1.55;
-      white-space: pre-wrap;
-      word-break: break-word;
-      color: var(--ink-soft, #a9bfd6);
-      background: transparent;
-      max-height: 420px;
-      overflow: auto;
-    }
+    /* Inner tree-view styles removed — Terminal View is now a single
+       outer collapsible with read-only text inside. */
 
     /* =====================================================================
        Polish layer — typography, elevation, micro-interactions.
@@ -1076,40 +1050,9 @@
       padding: 0;
     }
 
-    /* Register Wrapper compact card — collapsed by default, removes the
-       big visual gap that used to appear when this card was shorter than
-       Create Scan Job in the same grid row. */
-    #registerWrapperCard.compact-card {
-      padding: 14px 18px;
-    }
-    .register-panel {
-      margin: 0;
-      border: none;
-      background: transparent;
-      border-radius: 0;
-    }
-    .register-panel:hover { border: none; }
-    .register-panel > summary {
-      padding: 4px 4px;
-      gap: 12px;
-      align-items: baseline;
-    }
-    .register-summary-title {
-      font-size: 20px;
-      font-weight: 700;
-      letter-spacing: -0.018em;
-      color: var(--ink);
-    }
-    .register-summary-hint {
-      font-size: 11px;
-      color: var(--muted);
-      font-weight: 500;
-      letter-spacing: 0.02em;
-      margin-left: 6px;
-    }
-    .register-panel > .collapsible-panel-body {
-      padding: 12px 0 0;
-    }
+    /* Register Wrapper renders as a regular always-expanded card (per the
+       UI spec change). The previous compact-card / register-panel rules
+       were removed when the form was unwrapped from <details>. */
 
     /* =====================================================================
        Right-column stack: Register Wrapper + Runtime Environment +
@@ -1168,6 +1111,72 @@
     @media (max-width: 960px) {
       .right-column-stack { order: 0; }
     }
+
+    /* =====================================================================
+       Preflight status indicator: small dot next to the Preflight button.
+       Idle = neutral (muted). Running = pulsing accent. Pass = success.
+       Fail = danger.
+       ===================================================================== */
+    .preflight-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 12px 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      background: rgba(17, 38, 61, 0.92);
+      border: 1px solid var(--line);
+      color: var(--ink-soft);
+      min-height: 24px;
+      cursor: default;
+    }
+    .preflight-indicator::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--ink-soft);
+    }
+    .preflight-indicator::after {
+      content: "Idle";
+      font-family: inherit;
+    }
+    .preflight-indicator[data-state="running"] {
+      color: var(--accent);
+      background: var(--accent-soft);
+      border-color: rgba(47,182,255,0.32);
+    }
+    .preflight-indicator[data-state="running"]::before {
+      background: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+      animation: pulse 1.6s ease-in-out infinite;
+    }
+    .preflight-indicator[data-state="running"]::after { content: "Running"; }
+
+    .preflight-indicator[data-state="pass"] {
+      color: var(--success);
+      background: var(--success-soft);
+      border-color: rgba(35,199,136,0.34);
+    }
+    .preflight-indicator[data-state="pass"]::before {
+      background: var(--success);
+      box-shadow: 0 0 0 3px rgba(35,199,136,0.22);
+    }
+    .preflight-indicator[data-state="pass"]::after { content: "Passed"; }
+
+    .preflight-indicator[data-state="fail"] {
+      color: var(--danger);
+      background: var(--danger-soft);
+      border-color: rgba(255,106,124,0.36);
+    }
+    .preflight-indicator[data-state="fail"]::before {
+      background: var(--danger);
+      box-shadow: 0 0 0 3px rgba(255,106,124,0.22);
+    }
+    .preflight-indicator[data-state="fail"]::after { content: "Failed"; }
   </style>
 </head>
 <body>
@@ -1235,10 +1244,8 @@
 
     <div class="grid primary-grid">
       <div class="right-column-stack">
-      <section class="card compact-card" id="registerWrapperCard">
-        <details class="collapsible-panel register-panel">
-          <summary><span class="register-summary-title">Register Wrapper</span><span class="register-summary-hint">Open to register a custom adapter</span></summary>
-          <div class="collapsible-panel-body">
+      <section class="card" id="registerWrapperCard">
+        <h2>Register Wrapper</h2>
         <div class="muted-block">Fields marked <span class="required-mark">*</span> are required.</div>
 
         <label>Wrapper ID <span class="required-mark">*</span></label>
@@ -1338,8 +1345,6 @@ class CustomScanAdapter(BaseScanAdapter):
         </details>
         <div class="form-error" id="wrapperFormError"></div>
         <button type="button" onclick="registerWrapper()">Save Wrapper</button>
-          </div>
-        </details>
       </section>
 
       <section class="card runtime-card" id="runtimeEnvCard">
@@ -1495,20 +1500,21 @@ class CustomScanAdapter(BaseScanAdapter):
 
         <div class="form-error" id="jobFormError"></div>
 
-        <label>Scan Modes <span class="selection-note">Multi-select allowed</span></label>
+        <label>Frameworks <span class="selection-note">Multi-select allowed</span> <span class="hint" style="display:inline; margin:0; font-weight:500;">— framework selection determines which scan modes are valid</span></label>
         <div class="checks">
-          <label><input type="checkbox" id="modeBlackbox" /> blackbox</label>
-          <label><input type="checkbox" id="modeWhitebox" /> whitebox</label>
+          <label><input type="checkbox" id="fwArt" onchange="updateScanModeAvailability()" /> art</label>
+          <label><input type="checkbox" id="fwFoolbox" onchange="updateScanModeAvailability()" /> foolbox</label>
+          <label><input type="checkbox" id="fwPyrit" onchange="updateScanModeAvailability()" /> pyrit</label>
+          <label><input type="checkbox" id="fwGarak" onchange="updateScanModeAvailability()" /> garak</label>
+          <label><input type="checkbox" id="fwTextAttack" onchange="updateScanModeAvailability()" /> textattack</label>
         </div>
 
-        <label>Frameworks <span class="selection-note">Multi-select allowed</span></label>
-        <div class="checks">
-          <label><input type="checkbox" id="fwArt" /> art</label>
-          <label><input type="checkbox" id="fwFoolbox" /> foolbox</label>
-          <label><input type="checkbox" id="fwPyrit" /> pyrit</label>
-          <label><input type="checkbox" id="fwGarak" /> garak</label>
-          <label><input type="checkbox" id="fwTextAttack" /> textattack</label>
+        <label>Scan Modes <span class="selection-note">Multi-select allowed</span></label>
+        <div class="checks" id="scanModesGroup">
+          <label id="scanModeBlackboxLabel"><input type="checkbox" id="modeBlackbox" /> blackbox</label>
+          <label id="scanModeWhiteboxLabel"><input type="checkbox" id="modeWhitebox" /> whitebox</label>
         </div>
+        <div class="hint" id="scanModeHint" style="display:none;">Whitebox is not available for the selected framework(s); only ART and Foolbox expose model internals through the wrapper boundary.</div>
 
         <section class="framework-panel" id="garakPanel">
           <h3>Garak Options</h3>
@@ -1736,6 +1742,7 @@ class CustomScanAdapter(BaseScanAdapter):
 
         <div class="toolbar">
           <button type="button" onclick="preflightCheck()">Preflight Check</button>
+          <span id="preflightStatusIndicator" class="preflight-indicator" data-state="idle" title="Run a preflight to see readiness."></span>
           <button type="button" onclick="submitScan()">Click Go</button>
           <button type="button" onclick="refreshData()">Refresh Data</button>
         </div>
@@ -1912,7 +1919,9 @@ class CustomScanAdapter(BaseScanAdapter):
 
     <div class="grid utility-grid" style="margin-top:14px;">
       <section class="card span-full">
-        <h2>Wrapper Capability Matrix</h2>
+        <details class="collapsible-panel matrix-panel">
+          <summary><span class="matrix-summary-title">Wrapper Capability Matrix</span></summary>
+          <div class="collapsible-panel-body">
         <div class="muted-block">Compare registered wrapper support for backend types, frameworks, and white-box signals before you choose one for a job.</div>
         <h3>Framework Runtime Matrix</h3>
         <div class="hint" id="frameworkRuntimeNote">Shows which framework engines are installed in the current platform environment. Local inference servers such as Ollama remain external even when the scan framework itself is bundled.</div>
@@ -1970,6 +1979,8 @@ class CustomScanAdapter(BaseScanAdapter):
             <pre id="wrappersOut">Loading...</pre>
           </div>
         </details>
+          </div>
+        </details>
       </section>
     </div>
 
@@ -1985,22 +1996,21 @@ class CustomScanAdapter(BaseScanAdapter):
       </section>
     </div>
 
-    <!-- Terminal View: collapsible tree at bottom of page. The hidden raw <pre>
-         is preserved for the Copy Terminal action. -->
+    <!-- Terminal View: single collapsible at bottom of page; plain
+         read-only text inside. -->
     <div class="grid utility-grid" style="margin-top:14px;">
       <section class="card span-full">
         <details class="collapsible-panel terminal-panel">
           <summary><span class="terminal-summary-title">Terminal View</span></summary>
           <div class="collapsible-panel-body">
-            <div class="muted-block">Tree view of the selected job's terminal output. Each section is collapsible. The raw text remains available via Copy Terminal.</div>
+            <div class="muted-block">Read-only terminal output for the selected job. Use Copy Terminal to copy the full transcript to the clipboard.</div>
             <label>Job ID</label>
             <input id="terminalJobId" placeholder="Enter a job id or refresh to use the latest job" />
             <div class="toolbar">
               <button type="button" onclick="loadTerminalView()">Load Terminal</button>
               <button type="button" onclick="copyTerminalView()">Copy Terminal</button>
             </div>
-            <div id="terminalTree" class="terminal-tree">Terminal-style execution details will appear here.</div>
-            <pre id="terminalOut" class="terminal-view" style="display:none;">Terminal-style execution details will appear here.</pre>
+            <pre id="terminalOut" class="terminal-view">Terminal-style execution details will appear here.</pre>
           </div>
         </details>
       </section>
@@ -2289,6 +2299,12 @@ class CustomScanAdapter(BaseScanAdapter):
       setCheckboxValue("fwPyrit", frameworks.includes("pyrit"));
       setCheckboxValue("fwGarak", frameworks.includes("garak"));
       setCheckboxValue("fwTextAttack", frameworks.includes("textattack"));
+      // Re-evaluate Whitebox visibility now that the framework checkboxes
+      // reflect the applied template, not the prior selection.
+      updateScanModeAvailability();
+      // Reset the preflight indicator to neutral whenever the form changes
+      // shape, so an old result doesn't claim relevance to the new payload.
+      setPreflightIndicator("idle");
 
       setCheckboxValue("repJson", reports.includes("json"));
       setCheckboxValue("repHtml", reports.includes("html"));
@@ -4072,17 +4088,69 @@ class CustomScanAdapter(BaseScanAdapter):
         return;
       }
 
+      setPreflightIndicator("running");
       try {
         parseExtraOptions({ strict: true });
         const payload = scanPayload();
         const result = await api("/api/scans/preflight", {method: "POST", body: JSON.stringify(payload)});
         document.getElementById("preflightOut").textContent = pretty(result.preflight);
         renderWrapperOptions();
+        // Decide pass/fail from the preflight verdict.
+        const pre = result.preflight || {};
+        const blockers = (pre.blockers || []).length;
+        const passed = pre.status === "ready" && blockers === 0;
+        setPreflightIndicator(passed ? "pass" : "fail",
+          passed
+            ? "Preflight passed — safe to launch."
+            : `Preflight blocked${blockers ? ` (${blockers} issue${blockers===1?"":"s"})` : ""}. See Preflight panel for details.`);
       } catch (err) {
         const message = `Preflight failed: ${describeError(err)}`;
         setFormError("jobFormError", message);
         document.getElementById("preflightOut").textContent = message;
+        setPreflightIndicator("fail", message);
       }
+    }
+
+    /**
+     * Drive the small dot next to the Preflight button.
+     * State machine: idle (neutral) -> running (pulse) -> pass | fail.
+     */
+    function setPreflightIndicator(state, tooltip) {
+      const node = document.getElementById("preflightStatusIndicator");
+      if (!node) return;
+      const valid = new Set(["idle", "running", "pass", "fail"]);
+      node.dataset.state = valid.has(state) ? state : "idle";
+      if (typeof tooltip === "string") {
+        node.title = tooltip;
+      } else if (state === "idle") {
+        node.title = "Run a preflight to see readiness.";
+      } else if (state === "running") {
+        node.title = "Preflight in progress…";
+      }
+    }
+
+    /**
+     * Whitebox is only meaningful for ART and Foolbox in the current
+     * scaffold. Garak / PyRIT / TextAttack are blackbox-only. When the
+     * selected frameworks include none that support whitebox, hide the
+     * Whitebox checkbox (and uncheck it so the validator doesn't fail).
+     */
+    const WHITEBOX_CAPABLE_FRAMEWORKS = ["fwArt", "fwFoolbox"];
+    function updateScanModeAvailability() {
+      const wbLabel = document.getElementById("scanModeWhiteboxLabel");
+      const wbInput = document.getElementById("modeWhitebox");
+      const hint    = document.getElementById("scanModeHint");
+      if (!wbLabel || !wbInput) return;
+      const anyFrameworkSelected = ["fwArt","fwFoolbox","fwPyrit","fwGarak","fwTextAttack"]
+        .some(id => { const el = document.getElementById(id); return el && el.checked; });
+      const supportsWhitebox = WHITEBOX_CAPABLE_FRAMEWORKS
+        .some(id => { const el = document.getElementById(id); return el && el.checked; });
+      // Show whitebox if either nothing is selected (so the user can still
+      // explore) or at least one whitebox-capable framework is selected.
+      const show = (!anyFrameworkSelected) || supportsWhitebox;
+      wbLabel.style.display = show ? "" : "none";
+      if (!show && wbInput.checked) wbInput.checked = false;
+      if (hint) hint.style.display = show ? "none" : "block";
     }
 
     async function submitScan() {
@@ -4229,114 +4297,12 @@ class CustomScanAdapter(BaseScanAdapter):
           terminal.artifact_path ? `[terminal] artifact=${terminal.artifact_path}` : "[terminal] artifact=none",
           terminal.truncated ? "[terminal] note=output truncated to the most recent content" : "",
         ].filter(Boolean).join("\n");
-        const fullText = `${header}\n\n${terminal.content || ""}`;
-        // Keep the hidden <pre> in sync — Copy Terminal reads from it.
-        document.getElementById("terminalOut").textContent = fullText;
-        // Render the visible tree.
-        renderTerminalTree(fullText);
+        document.getElementById("terminalOut").textContent = `${header}\n\n${terminal.content || ""}`;
       } catch (err) {
         if (!options.silent) {
           throw err;
         }
       }
-    }
-
-    /**
-     * Parse a terminal-style transcript into a tree of collapsible sections.
-     * Sections are detected by lightweight markers in the synthesized output
-     * built by build_job_terminal_view():
-     *   - lines starting with "$ "                          -> Header
-     *   - lines starting with "[blackbox]" / "[whitebox]"   -> per-mode sections
-     *   - lines starting with "[framework:NAME]"            -> per-framework sections
-     *   - lines starting with "[notes]" / "[errors]"        -> notes/errors sections
-     *   - line "--- artifact log ---"                       -> Raw log delimiter
-     *   - line "[terminal] ..."                             -> Terminal meta header
-     * Anything else falls into the last open section.
-     */
-    function renderTerminalTree(text) {
-      const node = document.getElementById("terminalTree");
-      if (!node) return;
-      const trimmed = String(text || "").trim();
-      if (!trimmed) {
-        node.textContent = "Terminal-style execution details will appear here.";
-        return;
-      }
-      const lines = trimmed.split("\n");
-      const sections = [];
-      let current = {label: "Terminal Meta", body: [], openByDefault: true};
-      sections.push(current);
-
-      const flush = (newSection) => {
-        current = newSection;
-        sections.push(current);
-      };
-
-      for (let i = 0; i < lines.length; i++) {
-        const line = lines[i];
-        if (line.startsWith("[terminal]")) {
-          // collect terminal meta into the first section
-          if (current.label !== "Terminal Meta") {
-            flush({label: "Terminal Meta", body: [], openByDefault: true});
-          }
-          current.body.push(line);
-          continue;
-        }
-        if (line.startsWith("$ ")) {
-          if (current.label !== "Header") {
-            flush({label: "Header", body: [], openByDefault: true});
-          }
-          current.body.push(line);
-          continue;
-        }
-        if (line === "--- artifact log ---") {
-          flush({label: "Artifact Log", body: [], openByDefault: false});
-          continue;
-        }
-        const modeMatch = /^\[(blackbox|whitebox)\]/.exec(line);
-        if (modeMatch) {
-          flush({label: `Mode: ${modeMatch[1]}`, body: [line], openByDefault: false});
-          continue;
-        }
-        const fwMatch = /^\[framework:([^\]]+)\]/.exec(line);
-        if (fwMatch) {
-          flush({label: `Framework: ${fwMatch[1]}`, body: [line], openByDefault: false});
-          continue;
-        }
-        if (line === "[notes]") {
-          flush({label: "Notes", body: [], openByDefault: false});
-          continue;
-        }
-        if (line === "[errors]") {
-          flush({label: "Errors", body: [], openByDefault: true});
-          continue;
-        }
-        // default: append to last section
-        current.body.push(line);
-      }
-
-      // Drop empty sections
-      const filled = sections.filter(s => s.body.some(x => String(x).trim() !== ""));
-      if (filled.length === 0) {
-        node.textContent = trimmed;
-        return;
-      }
-      // Build DOM
-      const frag = document.createDocumentFragment();
-      for (const s of filled) {
-        const det = document.createElement("details");
-        det.className = "terminal-section";
-        if (s.openByDefault) det.open = true;
-        const sum = document.createElement("summary");
-        const lineCount = s.body.length;
-        sum.textContent = lineCount > 1 ? `${s.label}  (${lineCount} lines)` : s.label;
-        det.appendChild(sum);
-        const pre = document.createElement("pre");
-        pre.className = "terminal-section-body";
-        pre.textContent = s.body.join("\n").replace(/^\n+|\n+$/g, "");
-        det.appendChild(pre);
-        frag.appendChild(det);
-      }
-      node.replaceChildren(frag);
     }
 
     async function copyTerminalView() {
@@ -4546,6 +4512,8 @@ class CustomScanAdapter(BaseScanAdapter):
     });
 
     renderFrameworkPanels();
+    updateScanModeAvailability();   // initial pass for the Whitebox visibility rule
+    setPreflightIndicator("idle");  // initial neutral state for the Preflight indicator
     startAutoRefresh();
     refreshData().catch(err => {
       document.getElementById("wrappersOut").textContent = String(err);
