@@ -1,4 +1,4 @@
-<img width="2490" height="5947" alt="Sentinel Adversarial Orchestrator" src="https://github.com/user-attachments/assets/89bcddf1-8137-46e1-9828-abf2700b5b94" /># Sentinel Adversarial Orchestrator
+
 
 ![Sentinel Adversarial Orchestrator logo](docs/images/sentinel-orchestrator-logo.svg)
 
@@ -237,7 +237,7 @@ This section calls out the real boundaries for each framework as the platform ex
 
 ## Product Screenshot
 
-![Sentinel Adversarial Orchestrator product screenshot](docs/images/Sentinel Adversarial Orchestrator.jpg)
+<img width="2490" height="5947" alt="Sentinel Adversarial Orchestrator" src="https://github.com/user-attachments/assets/89bcddf1-8137-46e1-9828-abf2700b5b94" /># Sentinel Adversarial Orchestrator
 
 The GitHub README and the Pages site both use the same screenshot asset:
 
