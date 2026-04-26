@@ -613,8 +613,28 @@ Current artifact output:
 
 ## Architecture
 
+![Sentinel Adversarial Orchestrator architecture](docs/images/architecture.svg)
+
+The orchestrator is layered so each concern can evolve independently:
+
+- **UI Console** (`ui/index.html`) — single-page operator surface.
+- **API Surface** (`app.py`) — 23 endpoints under `/api/`.
+- **Orchestration Facade** (`executor.py`) — preserves every public import.
+  Splits into:
+  - `templates.py` — template CRUD backed by `data/builtin_templates.json`.
+  - `preflight.py` — runtime evaluation, the single source of truth for `FRAMEWORK_RUNTIME_SPECS`.
+  - `jobs.py` — wrapper registry, job lifecycle, artefact collection.
+  - `reporting/` — seven-module subpackage covering severity normalization and per-framework HTML rendering.
+- **Framework Registry** (`framework_registry.py`) — dispatch contract.
+  Routes to **ART**, **Foolbox**, **PyRIT**, **Garak**, and **TextAttack** executors under `executors/`.
+- **Wrapper System** (`contracts.BaseScanAdapter`, built-ins under `user_wrappers/`).
+- **Storage Layer** (`storage.py`) — atomic writes, `JOB_WRITE_LOCK` (RLock) shared with reconciliation.
+- **Compatibility Layer** (`compatibility.py`) — per-framework profiles with version risks and adapter strategy.
+
 - High-level design: [`docs/architecture_hld.md`](docs/architecture_hld.md)
 - Compatibility layer: [`docs/tool_compatibility_layer.md`](docs/tool_compatibility_layer.md)
+- Repo navigation: [`docs/REPO_STRUCTURE.md`](docs/REPO_STRUCTURE.md)
+- Setup: [`docs/SETUP.md`](docs/SETUP.md) · Usage: [`docs/USAGE.md`](docs/USAGE.md) · Troubleshooting: [`docs/TROUBLESHOOTING.md`](docs/TROUBLESHOOTING.md) · Release notes: [`docs/RELEASE_NOTES.md`](docs/RELEASE_NOTES.md)
 
 Current format status:
 
