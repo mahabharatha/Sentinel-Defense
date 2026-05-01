@@ -59,13 +59,49 @@
     <path d="M860 0 V320"/>
   </g>
 
-  <!-- Conjoined-twin octopus mark on the left — embeds the canonical PNG
-       and recolors via #cyanize so the silhouette reads clearly on the
-       deep-blue banner. -->
-  <image href="sentinel-octopus.png" xlink:href="sentinel-octopus.png"
-         x="20" y="40" width="280" height="240"
-         preserveAspectRatio="xMidYMid meet"
-         filter="url(#cyanize)"/>
+  <!-- Conjoined-twin octopus mark inspired by the canonical PNG.
+       Inline vector so GitHub markdown renders it natively. -->
+  <g transform="translate(40 70) scale(2.6)">
+    <path d="M 6 22 Q 6 7 26 7 Q 46 7 48 22 Q 46 37 26 37 Q 6 37 6 22 Z" fill="url(#bell)"/>
+    <path d="M 48 22 Q 50 7 70 7 Q 90 7 90 22 Q 90 37 70 37 Q 50 37 48 22 Z" fill="url(#bell)"/>
+    <ellipse cx="48" cy="22" rx="4" ry="9" fill="url(#pulse)"/>
+    <path d="M 14 12 Q 22 10 32 12 Q 24 14 18 16 Z" fill="#eef7ff" fill-opacity="0.18"/>
+    <path d="M 60 12 Q 70 10 80 12 Q 72 14 66 16 Z" fill="#eef7ff" fill-opacity="0.18"/>
+    <g fill="none" stroke="url(#tent)" stroke-width="2.4" stroke-linecap="round">
+      <path d="M 8 34 Q 4 44 4 56"/>
+      <path d="M 13 36 Q 10 46 10 58"/>
+      <path d="M 18 37 Q 16 48 16 60"/>
+      <path d="M 23 37 Q 22 49 22 61"/>
+      <path d="M 28 37 Q 28 49 30 61"/>
+      <path d="M 33 37 Q 34 48 36 60"/>
+      <path d="M 38 36 Q 40 46 40 58"/>
+      <path d="M 43 34 Q 46 44 46 56"/>
+    </g>
+    <g fill="none" stroke="url(#tent)" stroke-width="2.4" stroke-linecap="round">
+      <path d="M 50 34 Q 50 44 50 56"/>
+      <path d="M 55 36 Q 56 46 56 58"/>
+      <path d="M 60 37 Q 60 48 60 60"/>
+      <path d="M 65 37 Q 66 49 66 61"/>
+      <path d="M 70 37 Q 72 49 74 61"/>
+      <path d="M 75 37 Q 78 48 80 60"/>
+      <path d="M 80 36 Q 84 46 86 58"/>
+      <path d="M 85 34 Q 90 44 92 56"/>
+    </g>
+    <g fill="#6ae6ff">
+      <circle cx="4"  cy="56" r="1.1"/><circle cx="10" cy="58" r="1.1"/>
+      <circle cx="16" cy="60" r="1.1"/><circle cx="22" cy="61" r="1.1"/>
+      <circle cx="30" cy="61" r="1.1"/><circle cx="36" cy="60" r="1.1"/>
+      <circle cx="40" cy="58" r="1.1"/><circle cx="46" cy="56" r="1.1"/>
+      <circle cx="50" cy="56" r="1.1"/><circle cx="56" cy="58" r="1.1"/>
+      <circle cx="60" cy="60" r="1.1"/><circle cx="66" cy="61" r="1.1"/>
+      <circle cx="74" cy="61" r="1.1"/><circle cx="80" cy="60" r="1.1"/>
+      <circle cx="86" cy="58" r="1.1"/><circle cx="92" cy="56" r="1.1"/>
+    </g>
+    <ellipse cx="20" cy="22" rx="2.2" ry="3" fill="#eef7ff"/>
+    <ellipse cx="26" cy="22" rx="2.2" ry="3" fill="#eef7ff"/>
+    <ellipse cx="70" cy="22" rx="2.2" ry="3" fill="#eef7ff"/>
+    <ellipse cx="76" cy="22" rx="2.2" ry="3" fill="#eef7ff"/>
+  </g>
 
   <!-- Wordmark -->
   <g fill="#eef7ff">

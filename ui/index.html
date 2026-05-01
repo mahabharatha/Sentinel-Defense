@@ -881,17 +881,17 @@
     }
     .hero-kicker { backdrop-filter: blur(6px); font-size: 11px; }
     .hero-logo {
-      width: 64px;
+      width: 128px;
       height: auto;
       display: inline-block;
-      margin-right: 10px;
-      vertical-align: -14px;
+      margin-right: 12px;
+      vertical-align: -28px;
       object-fit: contain;
-      /* The PNG ships as a dark-navy silhouette on transparent. The hero
-         background is also dark navy → invisible. This filter chain
-         flattens the silhouette to black (via brightness 0), preserves
-         alpha, then tints to the cyan accent (#2fb6ff) so the mark reads
-         clearly on the dark hero. Generated via standard CSS-tint recipe. */
+      /* The PNG ships as a dark-navy silhouette. After
+         scripts/make_logo_transparent.py removes the white background,
+         the silhouette has alpha. This filter chain flattens to black
+         (preserving alpha) and tints to the cyan accent so the mark
+         reads clearly on the dark hero. */
       filter: brightness(0) saturate(100%)
               invert(67%) sepia(99%) saturate(4014%)
               hue-rotate(170deg) brightness(101%) contrast(101%);
