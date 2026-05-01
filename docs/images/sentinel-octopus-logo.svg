@@ -1,86 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Sentinel Defense">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 1536 1024" width="1536" height="1024" role="img"
+     aria-label="Sentinel Defense">
   <title>Sentinel Defense</title>
-  <desc>Sentinel octopus brand mark. AI-watchful cephalopod with eight tentacles, two sensor eyes, and a neural pulse marker. Built strictly from the Sentinel cyan palette tokens.</desc>
+  <desc>Conjoined-twin octopus brand mark — two cephalopods joined at the head, tracing an infinity loop. Each twin has one eye and eight tentacles.</desc>
   <metadata>
-    Sentinel Defense octopus mark.
+    Sentinel Defense — Adversarial AI Scan Orchestration Platform.
+    Brand mark.
     Copyright (c) 2026 Bharath Srinivasan. All rights reserved.
     Proprietary brand asset; redistribution requires prior written license.
   </metadata>
-
-  <defs>
-    <linearGradient id="sentinelBell" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%"  stop-color="#6ae6ff"/>
-      <stop offset="55%" stop-color="#2fb6ff"/>
-      <stop offset="100%" stop-color="#1a8cff"/>
-    </linearGradient>
-    <linearGradient id="sentinelTentacle" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%"  stop-color="#2fb6ff"/>
-      <stop offset="100%" stop-color="#1a8cff" stop-opacity="0.65"/>
-    </linearGradient>
-    <radialGradient id="sentinelPulse" cx="0.5" cy="0.5" r="0.6">
-      <stop offset="0%"  stop-color="#eef7ff" stop-opacity="0.95"/>
-      <stop offset="60%" stop-color="#6ae6ff" stop-opacity="0.35"/>
-      <stop offset="100%" stop-color="#2fb6ff" stop-opacity="0"/>
-    </radialGradient>
-  </defs>
-
-  <!-- Back tentacles (peek out from behind the mantle, lower opacity) -->
-  <g fill="none" stroke="url(#sentinelTentacle)" stroke-width="2.6" stroke-linecap="round" opacity="0.6">
-    <path d="M14 28 Q  8 34 10 42"/>
-    <path d="M50 28 Q 56 34 54 42"/>
-  </g>
-
-  <!-- Mantle / bell -->
-  <path d="M12 30
-           Q 12 10 32 10
-           Q 52 10 52 30
-           Q 52 38 46 40
-           L 18 40
-           Q 12 38 12 30 Z"
-        fill="url(#sentinelBell)"/>
-
-  <!-- Subtle highlight on bell -->
-  <path d="M22 14
-           Q 28 12 36 14
-           Q 30 16 24 18 Z"
-        fill="#eef7ff" fill-opacity="0.18"/>
-
-  <!-- Six front tentacles, each a smooth S-curve with a sensor node tip -->
-  <g fill="none" stroke="url(#sentinelTentacle)" stroke-width="3" stroke-linecap="round">
-    <path d="M16 38 Q 10 46 12 56"/>
-    <path d="M22 40 Q 18 50 22 58"/>
-    <path d="M28 41 Q 26 50 28 60"/>
-    <path d="M36 41 Q 38 50 36 60"/>
-    <path d="M42 40 Q 46 50 42 58"/>
-    <path d="M48 38 Q 54 46 52 56"/>
-  </g>
-
-  <!-- Sensor / suction node tips on the front tentacles (AI cue) -->
-  <g fill="#6ae6ff">
-    <circle cx="12" cy="56" r="1.3"/>
-    <circle cx="22" cy="58" r="1.3"/>
-    <circle cx="28" cy="60" r="1.3"/>
-    <circle cx="36" cy="60" r="1.3"/>
-    <circle cx="42" cy="58" r="1.3"/>
-    <circle cx="52" cy="56" r="1.3"/>
-  </g>
-
-  <!-- Eyes (dark sensor lenses) -->
-  <g>
-    <circle cx="24" cy="25" r="4.2" fill="#07111f"/>
-    <circle cx="40" cy="25" r="4.2" fill="#07111f"/>
-    <!-- Outer iris ring -->
-    <circle cx="24" cy="25" r="4.2" fill="none" stroke="#1a8cff" stroke-width="0.6"/>
-    <circle cx="40" cy="25" r="4.2" fill="none" stroke="#1a8cff" stroke-width="0.6"/>
-    <!-- Pupil highlight -->
-    <circle cx="25" cy="24" r="1.4" fill="#eef7ff"/>
-    <circle cx="41" cy="24" r="1.4" fill="#eef7ff"/>
-  </g>
-
-  <!-- Forehead neural pulse — AI cue -->
-  <g>
-    <circle cx="32" cy="15" r="6" fill="url(#sentinelPulse)"/>
-    <circle cx="32" cy="15" r="1.6" fill="#eef7ff"/>
-    <circle cx="32" cy="15" r="3.2" fill="none" stroke="#eef7ff" stroke-width="0.5" stroke-opacity="0.45"/>
-  </g>
+  <image href="sentinel-octopus.png" xlink:href="sentinel-octopus.png"
+         x="0" y="0" width="1536" height="1024"
+         preserveAspectRatio="xMidYMid meet"/>
 </svg>

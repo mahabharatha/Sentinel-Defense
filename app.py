@@ -54,6 +54,21 @@ def home() -> str:
     )
 
 
+_BRAND_IMAGE_RE = __import__("re").compile(r"^[A-Za-z0-9_-]+\.(png|svg|jpg|jpeg|webp)$")
+
+
+@app.get("/images/{name}")
+def serve_brand_image(name: str):
+    """Serve brand assets out of docs/images/ to the UI. Locked to a safe
+    filename pattern so this can't be abused as a generic file fetcher."""
+    if not _BRAND_IMAGE_RE.fullmatch(name):
+        raise HTTPException(status_code=404, detail="not found")
+    path = Path(__file__).resolve().parent / "docs" / "images" / name
+    if not path.exists() or not path.is_file():
+        raise HTTPException(status_code=404, detail="not found")
+    return FileResponse(path)
+
+
 @app.get("/api/options")
 def options() -> dict:
     return {"options": default_options(), "wrappers": list_wrappers(), "templates": list_templates()}
