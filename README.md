@@ -2,7 +2,9 @@
 
 **Adversarial AI Scan Orchestration Platform**
 
-![Sentinel Defense logo](docs/images/sentinel-orchestrator-logo.svg)
+<p align="center">
+  <img src="docs/images/sentinel-octopus.png" alt="Sentinel Defense" width="380" />
+</p>
 
 Private-source adversarial AI orchestration console. It gives you a local web UI and API to choose a model, pick a wrapper, run black-box or white-box scans, and inspect original evidence beside normalized artifacts.
 
