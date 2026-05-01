@@ -43,6 +43,39 @@
                 0 0 0 0 1.000
                 0 0 0 1 0"/>
     </filter>
+    <!-- Original polished octopus: rounded mantle, two side hidden tentacles,
+         six front tentacles with sensor tips, two eyes, AI pulse on
+         forehead. Defined once and instantiated twice via <use>. -->
+    <symbol id="octopus" viewBox="0 0 64 64" overflow="visible">
+      <g fill="none" stroke="url(#tent)" stroke-width="2.6" stroke-linecap="round" opacity="0.6">
+        <path d="M14 28 Q  8 34 10 42"/>
+        <path d="M50 28 Q 56 34 54 42"/>
+      </g>
+      <path d="M12 30 Q 12 10 32 10 Q 52 10 52 30 Q 52 38 46 40 L 18 40 Q 12 38 12 30 Z" fill="url(#bell)"/>
+      <path d="M22 14 Q 28 12 36 14 Q 30 16 24 18 Z" fill="#eef7ff" fill-opacity="0.18"/>
+      <g fill="none" stroke="url(#tent)" stroke-width="3" stroke-linecap="round">
+        <path d="M16 38 Q 10 46 12 56"/>
+        <path d="M22 40 Q 18 50 22 58"/>
+        <path d="M28 41 Q 26 50 28 60"/>
+        <path d="M36 41 Q 38 50 36 60"/>
+        <path d="M42 40 Q 46 50 42 58"/>
+        <path d="M48 38 Q 54 46 52 56"/>
+      </g>
+      <g fill="#6ae6ff">
+        <circle cx="12" cy="56" r="1.3"/><circle cx="22" cy="58" r="1.3"/>
+        <circle cx="28" cy="60" r="1.3"/><circle cx="36" cy="60" r="1.3"/>
+        <circle cx="42" cy="58" r="1.3"/><circle cx="52" cy="56" r="1.3"/>
+      </g>
+      <circle cx="24" cy="25" r="4.2" fill="#07111f"/>
+      <circle cx="40" cy="25" r="4.2" fill="#07111f"/>
+      <circle cx="24" cy="25" r="4.2" fill="none" stroke="#1a8cff" stroke-width="0.6"/>
+      <circle cx="40" cy="25" r="4.2" fill="none" stroke="#1a8cff" stroke-width="0.6"/>
+      <circle cx="25" cy="24" r="1.4" fill="#eef7ff"/>
+      <circle cx="41" cy="24" r="1.4" fill="#eef7ff"/>
+      <circle cx="32" cy="15" r="6" fill="url(#pulse)"/>
+      <circle cx="32" cy="15" r="1.6" fill="#eef7ff"/>
+      <circle cx="32" cy="15" r="3.2" fill="none" stroke="#eef7ff" stroke-width="0.5" stroke-opacity="0.45"/>
+    </symbol>
   </defs>
 
   <!-- Card background -->
@@ -59,64 +92,11 @@
     <path d="M860 0 V320"/>
   </g>
 
-  <!-- Sentinel Defense mark — single continuous infinity ribbon traced
-       as one closed path. Two octopus eyes inside the loops. Eight
-       tentacles flowing from below each loop. -->
-  <g transform="translate(40 70) scale(2.6)">
-    <!-- Infinity ribbon: figure-8 silhouette pinched at center -->
-    <path d="M 8 22
-             C 8 8, 24 6, 32 14
-             C 38 20, 44 22, 48 22
-             C 52 22, 58 20, 64 14
-             C 72 6, 88 8, 88 22
-             C 88 36, 72 38, 64 30
-             C 58 24, 52 22, 48 22
-             C 44 22, 38 24, 32 30
-             C 24 38, 8 36, 8 22 Z"
-          fill="url(#bell)"/>
-    <!-- Highlights along upper edge of each loop -->
-    <path d="M 14 11 Q 22 9 30 12" fill="none" stroke="#eef7ff" stroke-opacity="0.22" stroke-width="0.8"/>
-    <path d="M 66 11 Q 74 9 82 12" fill="none" stroke="#eef7ff" stroke-opacity="0.22" stroke-width="0.8"/>
-    <!-- One eye inside each loop -->
-    <circle cx="20" cy="22" r="3.2" fill="#07111f"/>
-    <circle cx="20" cy="22" r="3.2" fill="none" stroke="#1a8cff" stroke-width="0.6"/>
-    <circle cx="21" cy="21" r="1.1" fill="#eef7ff"/>
-    <circle cx="76" cy="22" r="3.2" fill="#07111f"/>
-    <circle cx="76" cy="22" r="3.2" fill="none" stroke="#1a8cff" stroke-width="0.6"/>
-    <circle cx="77" cy="21" r="1.1" fill="#eef7ff"/>
-    <!-- 8 tentacles per octopus, flowing from beneath each loop -->
-    <g fill="none" stroke="url(#tent)" stroke-width="2.2" stroke-linecap="round">
-      <path d="M 9 30 Q 5 42 6 56"/>
-      <path d="M 13 33 Q 11 44 12 58"/>
-      <path d="M 17 34 Q 16 46 17 60"/>
-      <path d="M 21 34 Q 21 47 22 61"/>
-      <path d="M 26 34 Q 26 47 28 61"/>
-      <path d="M 31 33 Q 32 46 33 60"/>
-      <path d="M 35 32 Q 37 44 38 58"/>
-      <path d="M 40 30 Q 43 42 42 56"/>
-    </g>
-    <g fill="none" stroke="url(#tent)" stroke-width="2.2" stroke-linecap="round">
-      <path d="M 56 30 Q 53 42 54 56"/>
-      <path d="M 61 32 Q 59 44 58 58"/>
-      <path d="M 65 33 Q 64 46 63 60"/>
-      <path d="M 70 34 Q 70 47 68 61"/>
-      <path d="M 75 34 Q 75 47 73 61"/>
-      <path d="M 79 34 Q 80 46 79 60"/>
-      <path d="M 83 33 Q 85 44 84 58"/>
-      <path d="M 87 30 Q 91 42 90 56"/>
-    </g>
-    <!-- Sensor tips -->
-    <g fill="#6ae6ff">
-      <circle cx="6" cy="56" r="1"/><circle cx="12" cy="58" r="1"/>
-      <circle cx="17" cy="60" r="1"/><circle cx="22" cy="61" r="1"/>
-      <circle cx="28" cy="61" r="1"/><circle cx="33" cy="60" r="1"/>
-      <circle cx="38" cy="58" r="1"/><circle cx="42" cy="56" r="1"/>
-      <circle cx="54" cy="56" r="1"/><circle cx="58" cy="58" r="1"/>
-      <circle cx="63" cy="60" r="1"/><circle cx="68" cy="61" r="1"/>
-      <circle cx="73" cy="61" r="1"/><circle cx="79" cy="60" r="1"/>
-      <circle cx="84" cy="58" r="1"/><circle cx="90" cy="56" r="1"/>
-    </g>
-  </g>
+  <!-- Two of the original polished octopuses, side-by-side conjoined.
+       Each is the same #octopus symbol; the second is offset so the
+       mantles overlap in the middle, forming an alien-infinity silhouette. -->
+  <use href="#octopus" xlink:href="#octopus" x="20"  y="60" width="160" height="160"/>
+  <use href="#octopus" xlink:href="#octopus" x="100" y="60" width="160" height="160"/>
 
   <!-- Wordmark -->
   <g fill="#eef7ff">
