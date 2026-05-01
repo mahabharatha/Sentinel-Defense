@@ -169,7 +169,7 @@ is how the shipped code maps to each one.
    ART, Foolbox, Garak, PyRIT, TextAttack under a single
    Critical/High/Medium/Low model. `ReportName` literal covers json,
    html, pdf, xlsx, and txt_log. Native evidence stays intact; normalized
-   artefacts are additive.
+   artifacts are additive.
 7. **Production-ready delivery & documentation.** Private repo, pinned
    dependencies, atomic job writes (tempfile + os.replace + fsync),
    module-level RLock serializing reader/writer paths (Task 10), collision-

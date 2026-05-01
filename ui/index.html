@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sentinel Adversarial Orchestrator</title>
+  <title>Sentinel Defense</title>
   <style>
-    /* Bharath Srinivasan | Sentinel Adversarial Orchestrator UI system. Proprietary material. */
+    /* Bharath Srinivasan | Sentinel Defense UI system. Proprietary material. */
     :root {
       --bg: #07111f;
       --bg-accent: #10243d;
@@ -126,6 +126,13 @@
       color: rgba(255, 255, 255, 0.9);
       line-height: 1.55;
       font-size: 14px;
+    }
+    .hero-tagline {
+      font-size: 16px !important;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      color: rgba(174, 220, 255, 0.92) !important;
+      margin: 0 0 14px !important;
     }
     .hero p:last-child {
       margin-bottom: 0;
@@ -737,7 +744,7 @@
       }
     }
 
-    /* ---- Live Job Status nested artefact panels (Task 9 layout) ---- */
+    /* ---- Live Job Status nested artifact panels (Task 9 layout) ---- */
     .collapsible-panel.nested-panel {
       margin-top: 14px;
       border: 1px solid var(--line-strong, rgba(112, 170, 221, 0.28));
@@ -1034,10 +1041,10 @@
     }
 
     /* =====================================================================
-       Layout refinements: side-by-side artefacts, collapsible heavy cards.
+       Layout refinements: side-by-side artifacts, collapsible heavy cards.
        ===================================================================== */
 
-    /* Original + Normalized Artefacts side-by-side, Original on the left.
+    /* Original + Normalized Artifacts side-by-side, Original on the left.
        Collapses to single column on narrower viewports. */
     .live-artifacts-grid {
       display: grid;
@@ -1246,7 +1253,8 @@
             </svg>
             Sentinel
           </div>
-          <h1>Sentinel Adversarial Orchestrator</h1>
+          <h1>Sentinel Defense</h1>
+          <p class="hero-tagline">Adversarial AI Scan Orchestration Platform</p>
           <p>Plan, launch, and audit adversarial AI evaluations from one local-first command surface with cleaner defaults, collapsible evidence, and report-first workflows.</p>
           <p><strong>Live engines:</strong> IBM ART, Foolbox, PyRIT, Garak, and TextAttack are orchestrated through version-aware compatibility boundaries.</p>
         </div>
@@ -1264,7 +1272,7 @@
           <div class="hero-stat">
             <div class="hero-stat-label">Audit Layer</div>
             <div class="hero-stat-value">Norm</div>
-            <div class="hero-stat-note">Original evidence and normalized artefacts stay separated for cleaner review.</div>
+            <div class="hero-stat-note">Original evidence and normalized artifacts stay separated for cleaner review.</div>
           </div>
         </div>
       </div>
@@ -1778,7 +1786,7 @@ class CustomScanAdapter(BaseScanAdapter):
     </div>
 
     <!-- Live Job Status: directly under Create Scan Job. Original + Normalized
-         Artefacts are nested inside as collapsible sub-panels (open by default). -->
+         Artifacts are nested inside as collapsible sub-panels (open by default). -->
     <div class="grid live-status-grid" style="margin-top:14px;">
       <section class="card span-full">
         <h2>Live Job Status</h2>
@@ -1821,9 +1829,9 @@ class CustomScanAdapter(BaseScanAdapter):
 
         <div class="live-artifacts-grid">
         <details class="collapsible-panel nested-panel" open>
-          <summary>Original Artefacts</summary>
+          <summary>Original Artifacts</summary>
           <div class="collapsible-panel-body">
-            <div class="muted-block">Load original framework and platform artefacts by job id. Open previews the real file in a new tab, and Download sends it to the browser as an attachment.</div>
+            <div class="muted-block">Load original framework and platform artifacts by job id. Open previews the real file in a new tab, and Download sends it to the browser as an attachment.</div>
             <div class="row">
               <div>
                 <label>Job ID</label>
@@ -1837,7 +1845,7 @@ class CustomScanAdapter(BaseScanAdapter):
               </div>
             </div>
             <div class="toolbar">
-              <button type="button" onclick="loadArtifacts()">Load Original Artefacts</button>
+              <button type="button" onclick="loadArtifacts()">Load Original Artifacts</button>
               <button type="button" onclick="viewArtifact()">Preview Selected</button>
               <button type="button" onclick="downloadArtifact()">Download Selected</button>
             </div>
@@ -1847,11 +1855,11 @@ class CustomScanAdapter(BaseScanAdapter):
                 <div class="artifact-stat-value">None</div>
               </div>
               <div class="artifact-stat">
-                <div class="artifact-stat-label">Artefact Count</div>
+                <div class="artifact-stat-label">Artifact Count</div>
                 <div class="artifact-stat-value">0</div>
               </div>
               <div class="artifact-stat">
-                <div class="artifact-stat-label">Selected Artefact</div>
+                <div class="artifact-stat-label">Selected Artifact</div>
                 <div class="artifact-stat-value">None</div>
               </div>
             </div>
@@ -1867,24 +1875,24 @@ class CustomScanAdapter(BaseScanAdapter):
                   </tr>
                 </thead>
                 <tbody id="artifactTableBody">
-                  <tr><td colspan="5">No original artefacts loaded yet.</td></tr>
+                  <tr><td colspan="5">No original artifacts loaded yet.</td></tr>
                 </tbody>
               </table>
             </div>
-            <pre id="artifactPreview">Selected original artefact details will appear here.</pre>
+            <pre id="artifactPreview">Selected original artifact details will appear here.</pre>
             <details class="collapsible-panel">
-              <summary>Original Artefact JSON</summary>
+              <summary>Original Artifact JSON</summary>
               <div class="collapsible-panel-body">
-                <pre id="artifactMeta">No original artefacts loaded yet.</pre>
+                <pre id="artifactMeta">No original artifacts loaded yet.</pre>
               </div>
             </details>
           </div>
         </details>
 
         <details class="collapsible-panel nested-panel" open>
-          <summary>Normalized Artefacts</summary>
+          <summary>Normalized Artifacts</summary>
           <div class="collapsible-panel-body">
-            <div class="muted-block">Review the additive normalized-severity artefacts separately from original framework evidence.</div>
+            <div class="muted-block">Review the additive normalized-severity artifacts separately from original framework evidence.</div>
             <div class="row">
               <div>
                 <label>Job ID</label>
@@ -1898,7 +1906,7 @@ class CustomScanAdapter(BaseScanAdapter):
               </div>
             </div>
             <div class="toolbar">
-              <button type="button" onclick="loadNormalizedSeverityArtifacts()">Load Normalized Artefacts</button>
+              <button type="button" onclick="loadNormalizedSeverityArtifacts()">Load Normalized Artifacts</button>
               <button type="button" onclick="viewNormalizedSeverityArtifact()">Preview Selected</button>
               <button type="button" onclick="downloadNormalizedSeverityArtifact()">Download Selected</button>
             </div>
@@ -1908,11 +1916,11 @@ class CustomScanAdapter(BaseScanAdapter):
                 <div class="artifact-stat-value">None</div>
               </div>
               <div class="artifact-stat">
-                <div class="artifact-stat-label">Artefact Count</div>
+                <div class="artifact-stat-label">Artifact Count</div>
                 <div class="artifact-stat-value">0</div>
               </div>
               <div class="artifact-stat">
-                <div class="artifact-stat-label">Selected Artefact</div>
+                <div class="artifact-stat-label">Selected Artifact</div>
                 <div class="artifact-stat-value">None</div>
               </div>
             </div>
@@ -1928,15 +1936,15 @@ class CustomScanAdapter(BaseScanAdapter):
                   </tr>
                 </thead>
                 <tbody id="normalizedSeverityTableBody">
-                  <tr><td colspan="5">No normalized artefacts loaded yet.</td></tr>
+                  <tr><td colspan="5">No normalized artifacts loaded yet.</td></tr>
                 </tbody>
               </table>
             </div>
-            <pre id="normalizedSeverityPreview">Selected normalized artefact details will appear here.</pre>
+            <pre id="normalizedSeverityPreview">Selected normalized artifact details will appear here.</pre>
             <details class="collapsible-panel">
-              <summary>Normalized Artefact JSON</summary>
+              <summary>Normalized Artifact JSON</summary>
               <div class="collapsible-panel-body">
-                <pre id="normalizedSeverityMeta">No normalized artefacts loaded yet.</pre>
+                <pre id="normalizedSeverityMeta">No normalized artifacts loaded yet.</pre>
               </div>
             </details>
           </div>
@@ -2638,7 +2646,7 @@ class CustomScanAdapter(BaseScanAdapter):
           <div class="artifact-stat-value">${escapeHtml(jobId || "None")}</div>
         </div>
         <div class="artifact-stat">
-          <div class="artifact-stat-label">Artefact Count</div>
+          <div class="artifact-stat-label">Artifact Count</div>
           <div class="artifact-stat-value">${String(availableCount)} / ${String(totalCount)}</div>
         </div>
         <div class="artifact-stat">
@@ -2646,7 +2654,7 @@ class CustomScanAdapter(BaseScanAdapter):
           <div class="artifact-stat-value">${String(Math.max(totalCount - availableCount, 0))}</div>
         </div>
         <div class="artifact-stat">
-          <div class="artifact-stat-label">Selected Artefact</div>
+          <div class="artifact-stat-label">Selected Artifact</div>
           <div class="artifact-stat-value">${escapeHtml(artifact ? artifactFileName(artifact.path) : "None")}</div>
         </div>
       `;
@@ -2663,7 +2671,7 @@ class CustomScanAdapter(BaseScanAdapter):
           <div class="artifact-stat-value">${escapeHtml(jobId || "None")}</div>
         </div>
         <div class="artifact-stat">
-          <div class="artifact-stat-label">Artefact Count</div>
+          <div class="artifact-stat-label">Artifact Count</div>
           <div class="artifact-stat-value">${String(availableCount)} / ${String(totalCount)}</div>
         </div>
         <div class="artifact-stat">
@@ -2671,7 +2679,7 @@ class CustomScanAdapter(BaseScanAdapter):
           <div class="artifact-stat-value">${String(Math.max(totalCount - availableCount, 0))}</div>
         </div>
         <div class="artifact-stat">
-          <div class="artifact-stat-label">Selected Artefact</div>
+          <div class="artifact-stat-label">Selected Artifact</div>
           <div class="artifact-stat-value">${escapeHtml(artifact ? artifactFileName(artifact.path) : "None")}</div>
         </div>
       `;
@@ -2681,7 +2689,7 @@ class CustomScanAdapter(BaseScanAdapter):
       const artifact = selectedArtifact();
       const preview = document.getElementById("artifactPreview");
       if (!artifact) {
-        preview.textContent = "Selected original artefact details will appear here.";
+        preview.textContent = "Selected original artifact details will appear here.";
         return;
       }
       preview.textContent = [
@@ -2699,7 +2707,7 @@ class CustomScanAdapter(BaseScanAdapter):
       const artifact = selectedNormalizedSeverityArtifact();
       const preview = document.getElementById("normalizedSeverityPreview");
       if (!artifact) {
-        preview.textContent = "Selected normalized artefact details will appear here.";
+        preview.textContent = "Selected normalized artifact details will appear here.";
         return;
       }
       preview.textContent = [
@@ -2733,22 +2741,22 @@ class CustomScanAdapter(BaseScanAdapter):
       });
     }
 
-    function resetArtifactPanel(message = "Selected original artefact details will appear here.") {
+    function resetArtifactPanel(message = "Selected original artifact details will appear here.") {
       selectedArtifactPath = "";
       lastArtifacts = [];
-      document.getElementById("artifactTableBody").innerHTML = "<tr><td colspan='5'>No original artefacts loaded yet.</td></tr>";
+      document.getElementById("artifactTableBody").innerHTML = "<tr><td colspan='5'>No original artifacts loaded yet.</td></tr>";
       renderArtifactSummary(selectedJobId());
-      document.getElementById("artifactMeta").textContent = "No original artefacts loaded yet.";
+      document.getElementById("artifactMeta").textContent = "No original artifacts loaded yet.";
       document.getElementById("artifactPreview").textContent = message;
-      resetNormalizedSeverityPanel("Selected normalized artefact details will appear here.");
+      resetNormalizedSeverityPanel("Selected normalized artifact details will appear here.");
     }
 
-    function resetNormalizedSeverityPanel(message = "Selected normalized artefact details will appear here.") {
+    function resetNormalizedSeverityPanel(message = "Selected normalized artifact details will appear here.") {
       selectedNormalizedSeverityPath = "";
       lastNormalizedSeverityArtifacts = [];
-      document.getElementById("normalizedSeverityTableBody").innerHTML = "<tr><td colspan='5'>No normalized artefacts loaded yet.</td></tr>";
+      document.getElementById("normalizedSeverityTableBody").innerHTML = "<tr><td colspan='5'>No normalized artifacts loaded yet.</td></tr>";
       renderNormalizedSeveritySummary(selectedJobId());
-      document.getElementById("normalizedSeverityMeta").textContent = "No normalized artefacts loaded yet.";
+      document.getElementById("normalizedSeverityMeta").textContent = "No normalized artifacts loaded yet.";
       document.getElementById("normalizedSeverityPreview").textContent = message;
     }
 
@@ -2785,7 +2793,7 @@ class CustomScanAdapter(BaseScanAdapter):
     function renderArtifactTable(jobId) {
       const body = document.getElementById("artifactTableBody");
       if (!lastArtifacts.length) {
-        body.innerHTML = "<tr><td colspan='5'>No original artefacts were recorded for this job yet.</td></tr>";
+        body.innerHTML = "<tr><td colspan='5'>No original artifacts were recorded for this job yet.</td></tr>";
         renderArtifactSummary(jobId);
         renderArtifactSelectionDetails();
         return;
@@ -2819,7 +2827,7 @@ class CustomScanAdapter(BaseScanAdapter):
     function renderNormalizedSeverityTable(jobId) {
       const body = document.getElementById("normalizedSeverityTableBody");
       if (!lastNormalizedSeverityArtifacts.length) {
-        body.innerHTML = "<tr><td colspan='5'>No normalized artefacts were recorded for this job yet.</td></tr>";
+        body.innerHTML = "<tr><td colspan='5'>No normalized artifacts were recorded for this job yet.</td></tr>";
         renderNormalizedSeveritySummary(jobId);
         renderNormalizedSeveritySelectionDetails();
         return;
@@ -2855,7 +2863,7 @@ class CustomScanAdapter(BaseScanAdapter):
       if (!normalized) {
         return;
       }
-        document.getElementById("artifactMeta").textContent = `Loading original artefacts for ${normalized}...`;
+        document.getElementById("artifactMeta").textContent = `Loading original artifacts for ${normalized}...`;
       await Promise.allSettled([
         loadArtifacts({jobId: normalized, silent: true}),
         loadTerminalView({jobId: normalized, silent: true}),
@@ -4202,8 +4210,8 @@ class CustomScanAdapter(BaseScanAdapter):
         const payload = scanPayload();
         const result = await api("/api/scans", {method: "POST", body: JSON.stringify(payload)});
         const jobId = setSelectedJob(result.job.job_id);
-        document.getElementById("artifactMeta").textContent = `Watching ${jobId} for generated original artefacts...`;
-        resetArtifactPanel("Original artefacts for the selected job will appear here as soon as they are written.");
+        document.getElementById("artifactMeta").textContent = `Watching ${jobId} for generated original artifacts...`;
+        resetArtifactPanel("Original artifacts for the selected job will appear here as soon as they are written.");
         alert(`Scan job queued: ${jobId}`);
         await refreshData({jobId});
         watchJob(jobId);
@@ -4233,9 +4241,9 @@ class CustomScanAdapter(BaseScanAdapter):
         if (!options.silent) {
           throw err;
         }
-        document.getElementById("artifactMeta").textContent = `Original artefact load failed for ${jobId}: ${describeError(err)}`;
-        document.getElementById("normalizedSeverityMeta").textContent = `Normalized artefact load failed for ${jobId}: ${describeError(err)}`;
-        resetArtifactPanel("Selected original artefact details will appear here once the selected job has previewable outputs.");
+        document.getElementById("artifactMeta").textContent = `Original artifact load failed for ${jobId}: ${describeError(err)}`;
+        document.getElementById("normalizedSeverityMeta").textContent = `Normalized artifact load failed for ${jobId}: ${describeError(err)}`;
+        resetArtifactPanel("Selected original artifact details will appear here once the selected job has previewable outputs.");
       }
     }
 
@@ -4263,7 +4271,7 @@ class CustomScanAdapter(BaseScanAdapter):
       const artifact = selectedArtifact();
       const path = artifact ? artifact.path : "";
       if (!path) {
-        alert("Load a job and select an original artefact first.");
+        alert("Load a job and select an original artifact first.");
         return;
       }
       openArtifactPath(path);
@@ -4274,7 +4282,7 @@ class CustomScanAdapter(BaseScanAdapter):
       const artifact = selectedArtifact();
       const path = artifact ? artifact.path : "";
       if (!path) {
-        alert("Load a job and select an original artefact first.");
+        alert("Load a job and select an original artifact first.");
         return;
       }
       triggerArtifactDownload(path);
@@ -4289,7 +4297,7 @@ class CustomScanAdapter(BaseScanAdapter):
       const artifact = selectedNormalizedSeverityArtifact();
       const path = artifact ? artifact.path : "";
       if (!path) {
-        alert("Load a job and select a normalized artefact first.");
+        alert("Load a job and select a normalized artifact first.");
         return;
       }
       openArtifactPath(path);
@@ -4300,7 +4308,7 @@ class CustomScanAdapter(BaseScanAdapter):
       const artifact = selectedNormalizedSeverityArtifact();
       const path = artifact ? artifact.path : "";
       if (!path) {
-        alert("Load a job and select a normalized artefact first.");
+        alert("Load a job and select a normalized artifact first.");
         return;
       }
       triggerArtifactDownload(path);

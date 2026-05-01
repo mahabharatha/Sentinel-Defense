@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Sentinel Adversarial Orchestrator — launcher.
+Sentinel Defense — launcher.
 
 Usage:
     python run.py              # default: http://127.0.0.1:8000
@@ -21,7 +21,7 @@ if str(ROOT) not in sys.path:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Sentinel Adversarial Orchestrator")
+    parser = argparse.ArgumentParser(description="Sentinel Defense")
     parser.add_argument("--host", default="127.0.0.1", help="Bind host (default: 127.0.0.1)")
     parser.add_argument("--port", type=int, default=8000, help="Bind port (default: 8000)")
     parser.add_argument("--reload", action="store_true", help="Enable auto-reload for development")
@@ -33,7 +33,7 @@ def main() -> None:
         print("uvicorn is not installed. Run: pip install uvicorn", file=sys.stderr)
         sys.exit(1)
 
-    print(f"Starting Sentinel Adversarial Orchestrator at http://{args.host}:{args.port}")
+    print(f"Starting Sentinel Defense at http://{args.host}:{args.port}")
     uvicorn.run(
         "sentinel.app:app",
         host=args.host,

@@ -1,5 +1,5 @@
 """
-whitebox_scan_platform — compatibility shim for Sentinel Adversarial Orchestrator.
+whitebox_scan_platform — compatibility shim for Sentinel Defense.
 
 The real package lives at the sentinel root. This shim registers all
 sentinel.* modules under the whitebox_scan_platform.* namespace so that:

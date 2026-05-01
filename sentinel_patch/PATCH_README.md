@@ -1,4 +1,4 @@
-# Sentinel Adversarial Orchestrator — Patch
+# Sentinel Defense — Patch
 
 ## Files and where they go in ~/Documents/sentinel/
 

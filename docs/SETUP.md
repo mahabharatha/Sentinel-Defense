@@ -1,4 +1,4 @@
-# Sentinel Adversarial Orchestrator — Setup Guide
+# Sentinel Defense — Setup Guide
 
 This document is the canonical install reference for the orchestrator. It
 covers prerequisites, the one-command installer, manual installation, the
@@ -91,7 +91,7 @@ large vision/audio targets, which benefit (but do not require) GPU / MPS.
 | HF cache (+ vision)            |      +1.6 GB  | ART OCR / vision-classification templates               |
 | HF cache (+ audio)             |     +200 MB  | Whisper Tiny speech-to-text demos                       |
 | NLTK data                      |        12 MB  | TextAttack POS / tokenization / lemma constraints       |
-| Per-job artefacts              |  10 KB–5 MB  | Per scan in `data/job_reports/<job_id>/`                |
+| Per-job artifacts              |  10 KB–5 MB  | Per scan in `data/job_reports/<job_id>/`                |
 
 8 GB of free disk and 8 GB of RAM are comfortable for routine usage. White-box
 runs against larger targets benefit from 16 GB+.
@@ -218,7 +218,7 @@ python run.py --port 8888                # custom port
 python run.py --reload                   # uvicorn autoreload (dev only)
 ```
 
-The server logs `Starting Sentinel Adversarial Orchestrator at http://...`
+The server logs `Starting Sentinel Defense at http://...`
 and serves the single-page UI at `/`. All API endpoints live under `/api/`
 (see [USAGE.md](USAGE.md) for the API reference).
 

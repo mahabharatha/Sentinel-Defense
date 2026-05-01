@@ -1,10 +1,10 @@
-# Normalized Artefacts Framework
+# Normalized Artifacts Framework
 
-This document defines the additive `Normalized Artefacts` layer used by Sentinel Adversarial Orchestrator.
+This document defines the additive `Normalized Artifacts` layer used by Sentinel Defense.
 
 It is intentionally separate from native framework reports. Existing tool outputs remain unchanged. The platform adds:
 
-- a new `Normalized Artefacts` report section inside standardized per-mode reports
+- a new `Normalized Artifacts` report section inside standardized per-mode reports
 - a new `Severity Mapping Log` subsection
 - new sibling artifacts per mode:
   - `*_normalized_severity.json`

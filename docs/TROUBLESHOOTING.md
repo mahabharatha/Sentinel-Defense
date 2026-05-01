@@ -1,4 +1,4 @@
-# Sentinel Adversarial Orchestrator — Troubleshooting Guide
+# Sentinel Defense — Troubleshooting Guide
 
 A symptom-to-root-cause-to-fix lookup for every failure mode we have hit
 during install, smoke, and operator usage. Every entry includes (a) the

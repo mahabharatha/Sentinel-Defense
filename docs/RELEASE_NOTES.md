@@ -1,4 +1,4 @@
-# Sentinel Adversarial Orchestrator — Release Notes
+# Sentinel Defense — Release Notes
 
 This document is the canonical changelog for the orchestrator. It is
 organized around the consolidated refactor plan (Phases 1–6 of the
@@ -34,7 +34,7 @@ touches and to the principle from the design ethos that motivated it.
 | Local Service Health chips     | Each loaded model rendered as its own monospaced chip on its own line.                             |
 | Documentation suite            | `SETUP.md`, `USAGE.md`, `REPO_STRUCTURE.md`, `TROUBLESHOOTING.md`, `RELEASE_NOTES.md`, refreshed   |
 |                                | architecture HLD with mermaid diagram.                                                             |
-| Rebrand                        | "Sentinel RedTeam Console" → "Sentinel Adversarial Orchestrator" across every user-visible string.|
+| Rebrand                        | "Sentinel RedTeam Console" → "Sentinel Defense" across every user-visible string.|
 | API naming                     | "FastAPI" replaced with "API" in docs/comments. Runtime imports preserved.                         |
 
 ---
@@ -107,7 +107,7 @@ that had nothing to do with orchestration.
 - `reporting/utils.py` — `_RawHtml`, `_first_present`,
   `_resolve_mode_framework_payload`, `_html_scalar`, `_html_table`.
 - `reporting/normalized.py` — severity normalization (Foolbox, ART, Garak,
-  PyRIT, TextAttack), HTML rendering, artefact writers.
+  PyRIT, TextAttack), HTML rendering, artifact writers.
 - `reporting/pyrit.py`, `reporting/garak.py`, `reporting/textattack.py`,
   `reporting/foolbox.py`, `reporting/art.py` — framework-specific
   renderers.
@@ -285,7 +285,7 @@ are best-effort and fall back gracefully.
 1. Loads every template from `data/builtin_templates.json`.
 2. POSTs each to `/api/scans` and polls `/api/scans/{id}` every 3 s with
    a 15-second heartbeat in the log.
-3. Validates each completed report: status, errors, mode artefacts,
+3. Validates each completed report: status, errors, mode artifacts,
    normalized severity payload (`overall_normalized_verdict`,
    `normalized_findings`), JSON parse success, run-log error markers,
    HTML report length / error panels, framework-run status.
@@ -425,7 +425,7 @@ log.
 **Change.** Comprehensive layout pass on `ui/index.html`:
 
 - Live Job Status moved directly under Create Scan Job.
-- Original Artefacts (left) and Normalized Artefacts (right) nested
+- Original Artifacts (left) and Normalized Artifacts (right) nested
   side-by-side inside Live Job Status; collapses to single column under
   1100 px viewport.
 - Wrapper Capability Matrix kept as an always-visible full-width section.
@@ -481,7 +481,7 @@ All changes use existing palette tokens (`--accent`, `--ink`,
 ### Task — Rebrand
 
 **Change.** "Sentinel RedTeam Console" / "Sentinel Red Team Console" →
-"Sentinel Adversarial Orchestrator" across every user-visible string in:
+"Sentinel Defense" across every user-visible string in:
 README, app.py title/description, run.py launcher banner, ui/index.html,
 docs/index.html, docs/*.md, executor.py + reporting/normalized.py + 6
 framework executor/runner CSS comments, executors/__init__.py docstring,

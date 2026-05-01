@@ -23,7 +23,7 @@ def main() -> None:
     os.chdir(str(ROOT))
     if str(parent) not in sys.path:
         sys.path.insert(0, str(parent))
-    print(f"Starting Sentinel Adversarial Orchestrator at http://{args.host}:{args.port}")
+    print(f"Starting Sentinel Defense at http://{args.host}:{args.port}")
     uvicorn.run(f"{ROOT.name}.app:app", host=args.host, port=args.port, reload=args.reload)
 
 if __name__ == "__main__":

@@ -260,7 +260,7 @@ def _write_html_report(destination: Path, payload: dict[str, Any]) -> None:
         "<meta name='viewport' content='width=device-width, initial-scale=1' />",
         "<title>TextAttack Report</title>",
         "<style>",
-        "/* Bharath Srinivasan | Sentinel Adversarial Orchestrator TextAttack report presentation. Proprietary material. */",
+        "/* Bharath Srinivasan | Sentinel Defense TextAttack report presentation. Proprietary material. */",
         ":root { --bg: #07111f; --panel: rgba(11, 23, 39, 0.94); --panel-strong: #10233a; --ink: #eef7ff; --ink-soft: #a9bfd6; --line: rgba(112, 170, 221, 0.16); --line-strong: rgba(112, 170, 221, 0.28); --accent: #2fb6ff; --success: #23c788; --warn: #ffb347; --danger: #ff6a7c; }",
         "* { box-sizing: border-box; }",
         "body { margin: 0; font-family: 'Avenir Next', 'Segoe UI', sans-serif; color: var(--ink); background: radial-gradient(circle at top left, rgba(47, 182, 255, 0.16), transparent 24%), linear-gradient(180deg, #040a14 0%, #081323 46%, #0a1729 100%); }",

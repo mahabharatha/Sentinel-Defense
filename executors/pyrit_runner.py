@@ -1553,7 +1553,7 @@ def _render_source_report(payload: dict[str, Any]) -> str:
             "<meta name='viewport' content='width=device-width, initial-scale=1' />",
             "<title>PyRIT Source Report</title>",
             "<style>",
-            "/* Bharath Srinivasan | Sentinel Adversarial Orchestrator PyRIT report presentation. Proprietary material. */",
+            "/* Bharath Srinivasan | Sentinel Defense PyRIT report presentation. Proprietary material. */",
             ":root { --bg: #07111f; --panel: rgba(11, 23, 39, 0.94); --panel-strong: #10233a; --ink: #eef7ff; --ink-soft: #a9bfd6; --line: rgba(112, 170, 221, 0.16); --line-strong: rgba(112, 170, 221, 0.28); --accent: #2fb6ff; --success: #23c788; --warn: #ffb347; --danger: #ff6a7c; }",
             "* { box-sizing: border-box; }",
             "body { font-family: 'Avenir Next', 'Segoe UI', sans-serif; margin: 0; padding: 24px; color: var(--ink); background: radial-gradient(circle at top left, rgba(47, 182, 255, 0.16), transparent 24%), linear-gradient(180deg, #040a14 0%, #081323 46%, #0a1729 100%); }",

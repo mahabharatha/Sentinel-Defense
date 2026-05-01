@@ -1245,7 +1245,7 @@ def _render_mode_summary_html(
                 ),
             ),
             (
-                "Original Artefacts",
+                "Original Artifacts",
                 _html_table(["Artifact", "File", "Path"], _artifact_rows(mode_result.get("artifacts") or {})),
             ),
         ]
@@ -1268,7 +1268,7 @@ def _render_mode_summary_html(
             "<meta name='viewport' content='width=device-width, initial-scale=1' />",
             f"<title>{html.escape(title)}</title>",
             "<style>",
-            "/* Bharath Srinivasan | Sentinel Adversarial Orchestrator report presentation. Proprietary material. */",
+            "/* Bharath Srinivasan | Sentinel Defense report presentation. Proprietary material. */",
             ":root { --bg: #07111f; --bg-accent: #10243d; --panel: rgba(11, 23, 39, 0.94); --panel-strong: #10233a; --ink: #eef7ff; --ink-soft: #a9bfd6; --line: rgba(112, 170, 221, 0.16); --line-strong: rgba(112, 170, 221, 0.28); --accent: #2fb6ff; --accent-strong: #1a8cff; --accent-soft: rgba(47, 182, 255, 0.14); --success: #23c788; --success-soft: rgba(35, 199, 136, 0.16); --warn: #ffb347; --warn-soft: rgba(255, 179, 71, 0.18); --danger: #ff6a7c; --danger-soft: rgba(255, 106, 124, 0.16); }",
             "* { box-sizing: border-box; }",
             "body { margin: 0; font-family: 'Avenir Next', 'Segoe UI', sans-serif; color: var(--ink); background: radial-gradient(circle at top left, rgba(47, 182, 255, 0.16), transparent 24%), radial-gradient(circle at top right, rgba(0, 120, 255, 0.14), transparent 30%), linear-gradient(180deg, #040a14 0%, #081323 46%, #0a1729 100%); }",

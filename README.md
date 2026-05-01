@@ -1,8 +1,10 @@
+# Sentinel Defense
 
+**Adversarial AI Scan Orchestration Platform**
 
-![Sentinel Adversarial Orchestrator logo](docs/images/sentinel-orchestrator-logo.svg)
+![Sentinel Defense logo](docs/images/sentinel-orchestrator-logo.svg)
 
-Private-source adversarial AI orchestration console. It gives you a local web UI and API to choose a model, pick a wrapper, run black-box or white-box scans, and inspect original evidence beside normalized artefacts.
+Private-source adversarial AI orchestration console. It gives you a local web UI and API to choose a model, pick a wrapper, run black-box or white-box scans, and inspect original evidence beside normalized artifacts.
 
 This repository is best understood as:
 
@@ -237,7 +239,7 @@ This section calls out the real boundaries for each framework as the platform ex
 
 ## Product Screenshot
 
-<img width="2490" height="5947" alt="Sentinel Adversarial Orchestrator" src="https://github.com/user-attachments/assets/89bcddf1-8137-46e1-9828-abf2700b5b94" /># Sentinel Adversarial Orchestrator
+<img width="2490" height="5947" alt="Sentinel Defense" src="https://github.com/user-attachments/assets/89bcddf1-8137-46e1-9828-abf2700b5b94" /># Sentinel Defense
 
 The GitHub README and the Pages site both use the same screenshot asset:
 
@@ -560,7 +562,7 @@ Use this for the current real Foolbox route.
 - `Copy Terminal`
   Copies the terminal panel contents.
 
-## Reports and Artefacts
+## Reports and Artifacts
 
 Current artifact behavior:
 
@@ -592,14 +594,14 @@ Typical report shapes:
   expect the main framework-level ART files
   do not expect the same split summary behavior as the OCR and vision adapters
 
-### Normalized Artefacts
+### Normalized Artifacts
 
-Sentinel adds separate `Normalized Artefacts` so outputs from Foolbox, IBM ART, Garak, PyRIT, and TextAttack can be compared without pretending that the tools use the same native scoring model.
+Sentinel adds separate `Normalized Artifacts` so outputs from Foolbox, IBM ART, Garak, PyRIT, and TextAttack can be compared without pretending that the tools use the same native scoring model.
 
 Design decision:
 
 - native framework reports remain intact and are not rewritten;
-- normalized severity is additive and stored beside the original report artefacts;
+- normalized severity is additive and stored beside the original report artifacts;
 - severity is derived from behavior, evidence, and measurable impact instead of attack names alone;
 - every normalized finding carries a mapping log so the decision is audit-reviewable;
 - tool-native severity, where present, is treated as source evidence, not as the final platform severity;
@@ -613,7 +615,7 @@ Current artifact output:
 
 ## Architecture
 
-![Sentinel Adversarial Orchestrator architecture](docs/images/architecture.svg)
+![Sentinel Defense architecture](docs/images/architecture.svg)
 
 The orchestrator is layered so each concern can evolve independently:
 
@@ -623,7 +625,7 @@ The orchestrator is layered so each concern can evolve independently:
   Splits into:
   - `templates.py` — template CRUD backed by `data/builtin_templates.json`.
   - `preflight.py` — runtime evaluation, the single source of truth for `FRAMEWORK_RUNTIME_SPECS`.
-  - `jobs.py` — wrapper registry, job lifecycle, artefact collection.
+  - `jobs.py` — wrapper registry, job lifecycle, artifact collection.
   - `reporting/` — seven-module subpackage covering severity normalization and per-framework HTML rendering.
 - **Framework Registry** (`framework_registry.py`) — dispatch contract.
   Routes to **ART**, **Foolbox**, **PyRIT**, **Garak**, and **TextAttack** executors under `executors/`.

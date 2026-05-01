@@ -33,9 +33,9 @@ from .storage import BASE_DIR, ensure_dirs, load_job
 ensure_dirs()
 sync_builtin_wrappers()
 reconcile_job_statuses()
-# Bharath Srinivasan | Sentinel Adversarial Orchestrator application surface and connected UI are proprietary material.
+# Bharath Srinivasan | Sentinel Defense application surface and connected UI are proprietary material.
 app = FastAPI(
-    title="Sentinel Adversarial Orchestrator",
+    title="Sentinel Defense",
     description="Sentinel's local-first orchestration platform for black-box and white-box AI security scanning.",
     version="0.1.0",
 )

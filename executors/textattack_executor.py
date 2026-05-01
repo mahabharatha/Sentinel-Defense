@@ -194,7 +194,7 @@ def _write_fallback_html(destination: Path, summary: dict[str, Any]) -> None:
         "<html lang='en'><head><meta charset='utf-8' /><meta name='viewport' content='width=device-width, initial-scale=1' />",
         f"<title>{title}</title>",
         "<style>",
-        "/* Bharath Srinivasan | Sentinel Adversarial Orchestrator TextAttack fallback report presentation. Proprietary material. */",
+        "/* Bharath Srinivasan | Sentinel Defense TextAttack fallback report presentation. Proprietary material. */",
         ":root { --bg: #07111f; --panel: rgba(11, 23, 39, 0.94); --ink: #eef7ff; --line: rgba(112, 170, 221, 0.16); }",
         "body { margin: 0; font-family: 'Avenir Next', 'Segoe UI', sans-serif; color: var(--ink); background: radial-gradient(circle at top left, rgba(47, 182, 255, 0.16), transparent 24%), linear-gradient(180deg, #040a14 0%, #081323 46%, #0a1729 100%); }",
         ".page { max-width: 1180px; margin: 0 auto; padding: 24px; }",

@@ -834,7 +834,7 @@ def _render_normalized_severity_html(payload: dict[str, Any]) -> str:
     non_scored_attacks = payload.get("non_scored_attacks") or []
     sections = [
         (
-            "Normalized Artefacts Overview",
+            "Normalized Artifacts Overview",
             _html_table(
                 ["Field", "Value"],
                 [
@@ -976,7 +976,7 @@ def _write_normalized_severity_artifacts(
 ) -> dict[str, str]:
     json_text = json.dumps(normalized_payload, indent=2) + "\n"
     body_html = _render_normalized_severity_html(normalized_payload)
-    title = f"{mode.title()} Normalized Artefacts"
+    title = f"{mode.title()} Normalized Artifacts"
     html_text = "\n".join(
         [
             "<!DOCTYPE html>",
@@ -986,7 +986,7 @@ def _write_normalized_severity_artifacts(
             "<meta name='viewport' content='width=device-width, initial-scale=1' />",
             f"<title>{html.escape(title)}</title>",
             "<style>",
-            "/* Bharath Srinivasan | Sentinel Adversarial Orchestrator normalized artefact report. Proprietary material. */",
+            "/* Bharath Srinivasan | Sentinel Defense normalized artifact report. Proprietary material. */",
             ":root { --bg: #07111f; --bg-accent: #10243d; --panel: rgba(11, 23, 39, 0.94); --panel-strong: #10233a; --ink: #eef7ff; --ink-soft: #a9bfd6; --line: rgba(112, 170, 221, 0.16); --line-strong: rgba(112, 170, 221, 0.28); --accent: #2fb6ff; }",
             "* { box-sizing: border-box; }",
             "body { margin: 0; font-family: 'Avenir Next', 'Segoe UI', sans-serif; color: var(--ink); background: radial-gradient(circle at top left, rgba(47, 182, 255, 0.16), transparent 24%), linear-gradient(180deg, #040a14 0%, #081323 46%, #0a1729 100%); }",
@@ -1011,7 +1011,7 @@ def _write_normalized_severity_artifacts(
             f"<p>Ruleset: {html.escape(str(normalized_payload.get('mapping_ruleset_version') or '-'))}</p>",
             "</header>",
             body_html,
-            "<details><summary>Raw Normalized Artefact JSON</summary><pre>",
+            "<details><summary>Raw Normalized Artifact JSON</summary><pre>",
             html.escape(json.dumps(normalized_payload, indent=2)),
             "</pre></details>",
             "</div></body></html>",

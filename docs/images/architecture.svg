@@ -1,12 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800" role="img" aria-label="Sentinel Adversarial Orchestrator architecture diagram">
-  <title>Sentinel Adversarial Orchestrator — Architecture (post-refactor)</title>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800" role="img" aria-label="Sentinel Defense architecture diagram">
+  <title>Sentinel Defense — Architecture (post-refactor)</title>
   <desc>
     Layered architecture diagram showing the UI / API / orchestration facade /
     extracted modules (templates, preflight, jobs, reporting) / framework registry /
     per-framework executors / storage / compatibility / wrapper system.
   </desc>
   <metadata>
-    Sentinel Adversarial Orchestrator architecture mark.
+    Sentinel Defense architecture mark.
     Copyright (c) 2026 Bharath Srinivasan. All rights reserved.
   </metadata>
 
@@ -44,7 +44,7 @@
 
   <!-- Title -->
   <g font-family="Inter, 'SF Pro Display', 'Avenir Next', 'Segoe UI', Arial, sans-serif" fill="#eef7ff">
-    <text x="40" y="48" font-size="22" font-weight="800" letter-spacing="-0.3">Sentinel Adversarial Orchestrator</text>
+    <text x="40" y="48" font-size="22" font-weight="800" letter-spacing="-0.3">Sentinel Defense</text>
     <text x="40" y="72" font-size="12" font-weight="500" letter-spacing="2" fill="#a9bfd6">ARCHITECTURE · POST-REFACTOR (TASK 7 SPLIT)</text>
   </g>
 
@@ -176,7 +176,7 @@
 
   <!-- Footer notes -->
   <g font-family="Inter, sans-serif" font-size="10" fill="#a9bfd6">
-    <text x="40" y="788" letter-spacing="1.5">© 2026 Bharath Srinivasan · Sentinel Adversarial Orchestrator</text>
+    <text x="40" y="788" letter-spacing="1.5">© 2026 Bharath Srinivasan · Sentinel Defense</text>
     <text x="1160" y="788" text-anchor="end" letter-spacing="1.5">Source: docs/architecture_hld.md (mermaid)</text>
   </g>
 </svg>

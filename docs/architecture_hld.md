@@ -1,11 +1,11 @@
-# Sentinel Adversarial Orchestrator Architecture HLD
+# Sentinel Defense Architecture HLD
 
 This high-level design reflects the current shipped architecture after the
 orchestration split (executor.py → templates.py + preflight.py + jobs.py +
 reporting/ subpackage). executor.py is now a thin facade that re-exports every
 public symbol, so existing integrations keep working unchanged.
 
-![Sentinel Adversarial Orchestrator architecture](images/architecture.svg)
+![Sentinel Defense architecture](images/architecture.svg)
 
 ## Goals
 
@@ -13,7 +13,7 @@ public symbol, so existing integrations keep working unchanged.
 - keep orchestration logic separate from framework-specific runtime logic;
 - keep template CRUD, preflight/runtime evaluation, job lifecycle, and report
   rendering in separate modules so each can evolve independently;
-- preserve additive reporting and normalized artefacts without rewriting source
+- preserve additive reporting and normalized artifacts without rewriting source
   evidence;
 - let the UI, API, storage, and execution layers evolve independently;
 - version-independent tool management: frameworks are addressed via
@@ -76,15 +76,15 @@ flowchart TD
 ### 1. UI Layer
 
 - Single-page operator console in [`ui/index.html`](../ui/index.html).
-- Handles form state, preflight, job launch, live status, original artefacts,
-  normalized artefacts, and terminal view.
+- Handles form state, preflight, job launch, live status, original artifacts,
+  normalized artifacts, and terminal view.
 - Presentation-focused; no framework decision logic here.
 
 ### 2. API Layer
 
 - API endpoints in [`app.py`](../app.py).
-- Responsibilities: serve UI; expose templates, wrappers, scans, artefacts,
-  terminal data; enforce workspace-local artefact boundaries; return file
+- Responsibilities: serve UI; expose templates, wrappers, scans, artifacts,
+  terminal data; enforce workspace-local artifact boundaries; return file
   responses with security headers.
 - Imports always go through `executor.py`, not the split modules, so the API
   layer is insulated from internal re-organizations.
@@ -119,7 +119,7 @@ flowchart TD
 - Responsibilities: wrapper registration, sync of built-in wrappers (cached
   and invalidated on mutation), wrapper listing with per-framework
   `installed_versions`, execution plan building, job creation / run /
-  listing / reconciliation, artefact mirroring and collection.
+  listing / reconciliation, artifact mirroring and collection.
 
 ### 7. Framework Registry
 
@@ -161,8 +161,8 @@ flowchart TD
   `utils.py` (scalar/table helpers), `normalized.py` (unified severity
   rollup — Critical/High/Medium/Low across ART, Foolbox, Garak, PyRIT,
   TextAttack), and one module per framework for its native renderers.
-- Reports are additive: native artefacts stay untouched, normalized
-  artefacts sit beside them.
+- Reports are additive: native artifacts stay untouched, normalized
+  artifacts sit beside them.
 
 ## Data Flow
 
@@ -172,11 +172,11 @@ flowchart TD
 4. On launch, `jobs.create_job` persists the record and `jobs.run_job` starts
    background execution under `JOB_WRITE_LOCK` protection.
 5. Framework registry dispatches to the appropriate executor boundary.
-6. Framework executor writes native artefacts into framework-specific run
+6. Framework executor writes native artifacts into framework-specific run
    directories.
 7. `reporting.*` modules synthesize mode reports, unified severity summaries,
    and terminal views beside the originals.
-8. API serves reports and downloadable artefacts back to the UI.
+8. API serves reports and downloadable artifacts back to the UI.
 
 ## Design Ethos Mapping
 
@@ -204,7 +204,7 @@ flowchart TD
 - **World-class reporting** — `reporting/normalized.py` unifies severity
   rollups across all frameworks; `ReportName` literal covers json, html,
   pdf, xlsx, and txt_log; per-framework renderers keep native evidence
-  intact alongside normalized artefacts.
+  intact alongside normalized artifacts.
 - **Production-ready delivery** — private repo, pinned dependencies,
   atomic writes, module-level locking, AST-validated refactor, and
   comprehensive architecture + compatibility + deployment docs.
@@ -231,7 +231,7 @@ flowchart TD
 ## Next Safe Refactor Targets
 
 1. Move API routes into focused route modules once response shapes are stable.
-2. Introduce typed artefact/report models so report assembly is less
+2. Introduce typed artifact/report models so report assembly is less
    dict-driven.
 3. Extract UI sections into small static partials or a light component
    build step if the current single-file UI becomes harder to maintain.

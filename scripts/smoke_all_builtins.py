@@ -3,7 +3,7 @@
 
 Loads each template from data/builtin_templates.json, POSTs it to the running
 server, polls until the job reaches a terminal state, then validates every
-report artefact. Produces a verdict table and a detailed per-template log.
+report artifact. Produces a verdict table and a detailed per-template log.
 
 Usage:
     # Server must already be running (python run.py)
@@ -120,17 +120,17 @@ def validate_report(job_record: dict, audit: dict) -> list[str]:
         issues.append("job.result is empty — no scan output recorded")
         return issues
 
-    # For each mode present, verify the expected artefacts
+    # For each mode present, verify the expected artifacts
     for mode_name in ("blackbox", "whitebox"):
         mode = result.get(mode_name)
         if not isinstance(mode, dict):
             continue
-        artefacts = mode.get("artifacts") or {}
+        artifacts = mode.get("artifacts") or {}
         # Summary HTML + JSON + run_log should all exist
         for expected_key in ("summary_report_html", "summary_results_json", "summary_run_log"):
-            path_str = artefacts.get(expected_key)
+            path_str = artifacts.get(expected_key)
             if not path_str:
-                issues.append(f"{mode_name}: missing artefact '{expected_key}'")
+                issues.append(f"{mode_name}: missing artifact '{expected_key}'")
                 continue
             p = Path(path_str)
             if not p.exists():
@@ -160,7 +160,7 @@ def validate_report(job_record: dict, audit: dict) -> list[str]:
                 issues.append(f"{mode_name}.overall_normalized_verdict is an empty dict (no findings produced)")
 
         # results_json should be readable as JSON
-        rj = artefacts.get("summary_results_json")
+        rj = artifacts.get("summary_results_json")
         if rj and Path(rj).exists():
             try:
                 json.loads(Path(rj).read_text(encoding="utf-8"))
@@ -169,7 +169,7 @@ def validate_report(job_record: dict, audit: dict) -> list[str]:
 
         # run_log should not contain tracebacks / FATAL markers (line-aware;
         # skips JSON-value lines where config strings might contain the words).
-        rl = artefacts.get("summary_run_log")
+        rl = artifacts.get("summary_run_log")
         if rl and Path(rl).exists():
             try:
                 log_text = Path(rl).read_text(encoding="utf-8", errors="replace")
@@ -180,7 +180,7 @@ def validate_report(job_record: dict, audit: dict) -> list[str]:
                 issues.append(f"{mode_name}.summary_run_log: read failed ({exc})")
 
         # HTML report: must be non-trivial; scan for obvious error panels
-        rh = artefacts.get("summary_report_html")
+        rh = artifacts.get("summary_report_html")
         if rh and Path(rh).exists():
             try:
                 html_text = Path(rh).read_text(encoding="utf-8", errors="replace")

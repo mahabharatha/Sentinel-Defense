@@ -1,4 +1,4 @@
-# Sentinel Adversarial Orchestrator — Operator Usage Guide
+# Sentinel Defense — Operator Usage Guide
 
 This document is the canonical end-to-end walkthrough for an operator running
 adversarial scans through the Sentinel UI and API. It covers the registered
@@ -9,7 +9,7 @@ endpoint exposed by `app.py`, and how to read the generated reports.
 > need to launch a scan, inspect its evidence, and compare normalized
 > findings across frameworks.
 
-![Sentinel Adversarial Orchestrator console](images/product-screenshot-current.png)
+![Sentinel Defense console](images/product-screenshot-current.png)
 
 ---
 
@@ -42,8 +42,8 @@ gradients, logits, or model internals exposed by the wrapper. Not every
 framework supports every mode — the orchestrator's preflight check tells you
 which combinations are real before you launch.
 
-**A report** is the assembled artefacts produced by a scan. Each scan
-produces (a) the framework's native artefacts (in `data/<framework>_runs/`),
+**A report** is the assembled artifacts produced by a scan. Each scan
+produces (a) the framework's native artifacts (in `data/<framework>_runs/`),
 (b) a Sentinel-styled summary report HTML/JSON/log per mode, and (c) a
 unified normalized-severity payload (`Critical/High/Medium/Low`) that is
 comparable across frameworks. The reporting layer lives entirely in the
@@ -69,8 +69,8 @@ After the layout refactor, the console flow reads top-down as:
 4. **Live Job Status.** Auto-refreshing every 5 s. Status pills (queued,
    running with pulse animation, completed, failed). Inside the same card,
    nested side-by-side:
-   - **Original Artefacts** (left) — framework-native evidence.
-   - **Normalized Artefacts** (right) — additive Sentinel severity report.
+   - **Original Artifacts** (left) — framework-native evidence.
+   - **Normalized Artifacts** (right) — additive Sentinel severity report.
 5. **Wrapper Capability Matrix.** Always visible, full-width. Lists every
    registered wrapper with capability flags, plus the Wrapper Registry JSON.
 6. **Preflight.** Last preflight result for the selected job.
@@ -101,10 +101,10 @@ generated report HTML.
    and renders the new job at the top of the **Live Job Status** table with
    a pulsing `running` pill.
 6. **Watch the row turn green.** The pill flips to `completed` and the JSON
-   detail (Job JSON) populates with the framework runs and artefact map.
+   detail (Job JSON) populates with the framework runs and artifact map.
 7. **Open the report.** Inside Live Job Status, the nested **Original
-   Artefacts** panel auto-loads the latest job's artefacts. Click an
-   artefact name then **Preview Selected** to open the generated HTML in
+   Artifacts** panel auto-loads the latest job's artifacts. Click an
+   artifact name then **Preview Selected** to open the generated HTML in
    a new tab.
 
 For the same flow scripted, see `scripts/run_full_smoke.sh` and
@@ -236,10 +236,10 @@ even with warnings, so use them as advice, not gates.
 ## 7. Reading a report
 
 Every completed scan produces, per mode (`blackbox` / `whitebox`), three
-linked artefacts plus a normalized severity payload, all addressable through
+linked artifacts plus a normalized severity payload, all addressable through
 the API:
 
-| Artefact key                    | Path under `data/job_reports/<job_id>/reports/`                    | What's in it                                                                                  |
+| Artifact key                    | Path under `data/job_reports/<job_id>/reports/`                    | What's in it                                                                                  |
 |---------------------------------|---------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|
 | `summary_report_html`           | `<mode>_summary_report.html`                                        | Sentinel-styled HTML overview: model card, attack outcomes, framework-specific evidence       |
 | `summary_results_json`          | `<mode>_summary_results.json`                                       | Same content as JSON for ingestion                                                            |
@@ -268,7 +268,7 @@ The unified severity model lives in `sentinel/reporting/normalized.py`:
   `recommendation`.
 - `_build_normalized_severity_payload` aggregates findings into the
   `overall_normalized_verdict` block, attaches schema/engine/ruleset version
-  metadata, and writes the artefacts.
+  metadata, and writes the artifacts.
 
 For docs on the normalization itself, see
 [normalized_severity_framework.md](normalized_severity_framework.md).
@@ -316,7 +316,7 @@ shapes:
 | POST    | `/api/scans/demo/whisper-art`              | One-click demo: launches the Whisper Tiny ART template                                                      |
 | GET     | `/api/scans`                               | List jobs newest-first                                                                                      |
 | GET     | `/api/scans/{id}`                          | Single job record (status, result, errors)                                                                  |
-| GET     | `/api/scans/{id}/artifacts`                | Collected artefacts (job + per-mode + per-framework) with size and existence flags                          |
+| GET     | `/api/scans/{id}/artifacts`                | Collected artifacts (job + per-mode + per-framework) with size and existence flags                          |
 | GET     | `/api/scans/{id}/terminal`                 | Synthesized terminal payload for the tree view                                                              |
 | GET     | `/api/artifacts/content`                   | `?path=…` returns the raw file with security checks (workspace-local only)                                  |
 | GET     | `/api/artifacts/view`                      | `?path=…` returns the file with `Content-Disposition: inline` for in-browser preview                        |
@@ -328,7 +328,7 @@ shapes:
 All POST/PUT bodies are validated through `pydantic` schemas (`schemas.py`).
 The 4xx error bodies surface the validation message; the 5xx bodies surface
 a serialized exception. Path/JSON safety: `resolve_workspace_path` rejects
-any artefact path that climbs out of the repo root.
+any artifact path that climbs out of the repo root.
 
 ### 8.1 Calling the API directly
 
@@ -377,12 +377,12 @@ modality matches; otherwise register a custom one. Save a template once your
 preflight comes back clean. Re-use the template for repeat runs.
 
 **Investigating a regression.** Open the failing job's row → click into
-Original Artefacts → preview the framework-native report. If the framework's
+Original Artifacts → preview the framework-native report. If the framework's
 own report is empty/unhelpful, fall back to the Terminal View tree and read
 the **Errors** + **Artifact Log** sections.
 
 **Comparing across frameworks.** Run the same target with two framework
-templates; open both Normalized Artefacts side-by-side from the Live Job
+templates; open both Normalized Artifacts side-by-side from the Live Job
 Status panel. The unified `overall_normalized_verdict` is the apples-to-
 apples comparison point.
 

@@ -10,7 +10,7 @@ the manual cleanup steps an operator must run before the first push.
 
 **Ready to ship.** Every required file is present, no secrets are tracked,
 the source-only tree is 4.4 MB, and the new `.gitignore` covers every
-runtime artefact path the orchestrator generates.
+runtime artifact path the orchestrator generates.
 
 | Check                                            | Status                                 |
 |--------------------------------------------------|----------------------------------------|
@@ -58,7 +58,7 @@ ls data/jobs                    # should NOT contain 0643edbb*, 5734521f*,
 python scripts/cleanup_failed_jobs.py --apply
 ```
 
-Failed-job records are runtime artefacts under `data/jobs/` — already
+Failed-job records are runtime artifacts under `data/jobs/` — already
 ignored by `.gitignore`, but the cleanup script keeps the working tree
 tidy.
 
@@ -78,7 +78,7 @@ The complete set, grouped by origin:
 | IDE / editor              | `.idea/`, `.vscode/`, `*.swp`, `*.swo`, `*~`, `.spyderproject`, `.spyproject`            |
 | Cross-platform metadata   | `.DS_Store`, `Thumbs.db`, `desktop.ini`                                                  |
 | Logs / temp               | `*.log`, `*.tmp`                                                                         |
-| Runtime job artefacts     | `data/jobs/`, `data/job_reports/`, `data/<framework>_runs/`, `data/smoke_runs/`,         |
+| Runtime job artifacts     | `data/jobs/`, `data/job_reports/`, `data/<framework>_runs/`, `data/smoke_runs/`,         |
 |                           | `data/wrappers.json`                                                                     |
 | Caches                    | `data/textattack_cache/`, `data/matplotlib*`, `.matplotlib/`, `.pyrit_home/`, `.art/`    |
 | Demo data                 | `data/demo/` (with explicit allow-list for `textattack_smoke_samples.jsonl`)             |
@@ -201,7 +201,7 @@ git add -A
 git status --short | head -60
 
 # 5. Commit
-git commit -m "Sentinel Adversarial Orchestrator: refactor, polish, docs"
+git commit -m "Sentinel Defense: refactor, polish, docs"
 
 # 6. Push to your private remote
 git remote -v                         # confirm origin

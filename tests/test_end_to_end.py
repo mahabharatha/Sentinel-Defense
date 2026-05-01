@@ -233,7 +233,7 @@ class SmokeAdapter(BaseScanAdapter):
     def test_root_and_options(self) -> None:
         home = self.client.get("/")
         home.raise_for_status()
-        self.assertIn("Sentinel Adversarial Orchestrator", home.text)
+        self.assertIn("Sentinel Defense", home.text)
         self.assertIn("PyRIT Options", home.text)
         self.assertIn("Objective Override", home.text)
         self.assertIn("structured PyRIT runs", home.text)
@@ -363,7 +363,7 @@ class SmokeAdapter(BaseScanAdapter):
         normalized_artifact = self._artifact_for(artifacts, "blackbox", "normalized_severity_report_html")
         normalized_inline = self.client.get(f"/api/artifacts/view?path={normalized_artifact['path']}")
         normalized_inline.raise_for_status()
-        self.assertIn("Normalized Artefacts", normalized_inline.text)
+        self.assertIn("Normalized Artifacts", normalized_inline.text)
 
         terminal = self.client.get(f"/api/scans/{job_id}/terminal")
         terminal.raise_for_status()
