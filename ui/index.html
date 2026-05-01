@@ -880,18 +880,32 @@
       -webkit-text-fill-color: transparent;
     }
     .hero-kicker { backdrop-filter: blur(6px); font-size: 11px; }
+    .hero-brand {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 16px;
+    }
+    .hero-brand-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .hero-brand-text h1 {
+      margin: 0 !important;
+      line-height: 1;
+    }
+    .hero-brand-text .hero-tagline {
+      margin: 0 !important;
+    }
     .hero-logo {
-      width: 128px;
+      width: 96px;
       height: auto;
-      display: inline-block;
-      margin-right: 12px;
-      vertical-align: -28px;
+      flex: 0 0 auto;
       object-fit: contain;
-      /* The PNG ships as a dark-navy silhouette. After
-         scripts/make_logo_transparent.py removes the white background,
-         the silhouette has alpha. This filter chain flattens to black
-         (preserving alpha) and tints to the cyan accent so the mark
-         reads clearly on the dark hero. */
+      /* PNG ships as a silhouette; after scripts/make_logo_transparent.py
+         strips the white bg, the alpha is meaningful. Filter recolors the
+         silhouette to the cyan brand accent so it reads on the dark hero. */
       filter: brightness(0) saturate(100%)
               invert(67%) sepia(99%) saturate(4014%)
               hue-rotate(170deg) brightness(101%) contrast(101%);
@@ -1228,12 +1242,13 @@
     <section class="hero">
       <div class="hero-grid">
         <div class="hero-copy">
-          <div class="hero-kicker">
+          <div class="hero-brand">
             <img class="hero-logo" src="/images/sentinel-octopus.png" alt="Sentinel Defense — conjoined octopus mark"/>
-            Sentinel
+            <div class="hero-brand-text">
+              <h1>Sentinel Defense</h1>
+              <p class="hero-tagline">Adversarial AI Scan Orchestration Platform</p>
+            </div>
           </div>
-          <h1>Sentinel Defense</h1>
-          <p class="hero-tagline">Adversarial AI Scan Orchestration Platform</p>
           <p>Plan, launch, and audit adversarial AI evaluations from one local-first command surface with cleaner defaults, collapsible evidence, and report-first workflows.</p>
           <p><strong>Live engines:</strong> IBM ART, Foolbox, PyRIT, Garak, and TextAttack are orchestrated through version-aware compatibility boundaries.</p>
         </div>
